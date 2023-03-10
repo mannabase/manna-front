@@ -1,0 +1,42 @@
+@font-face {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  src: url("../fonts/Lato/Lato-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: 500;
+  src: url("../fonts/Lato/Lato-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: 300;
+  src: url("../fonts/Lato/Lato-Light.ttf") format("truetype");
+}
+@font-face {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/Lato/Lato-Black.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Nexa;
+  font-style: normal;
+  font-weight: 500;
+  src: url("../fonts/Nexa/Nexa Bold.otf") format("truetype");
+}
+@font-face {
+  font-family: Nexa;
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/Nexa/Nexa Light.otf") format("truetype");
+}
+
+*:not(i) {
+  font-family: "Nexa";
+  font-weight: 400;
+}

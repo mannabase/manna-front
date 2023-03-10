@@ -1,0 +1,50 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  height: 20vh;
+  // position: relative;
+  background-color: $heading-color;
+  padding: $base-padding;
+  &__logo {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    &__image {
+      height: 35px;
+      width: auto;
+    }
+    &__name {
+      font-weight: 300;
+      margin: 0 10px;
+    }
+  }
+  &__about {
+    position: sticky;
+    // width: 130px;
+    display: inline-block;
+  }
+  &__center-logo {
+    position: absolute;
+    top: 7vw;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &__image {
+      width: 3.5vw;
+    }
+    &__name {
+      font-size: 3vw;
+      margin: 0.2em;
+    }
+    &__motto {
+      margin: 0.3em;
+      font-size: 1.1vw;
+      font-weight: 600;
+      color:rgb(140, 140, 140);
+    }
+  }
+}

@@ -1,0 +1,135 @@
+a {
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  color: $primary-color;
+}
+
+body {
+  margin: 0;
+}
+
+footer {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  a {
+    color: #fff;
+    font-family: "Lato";
+  }
+}
+
+.gradient-border {
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  box-sizing: border-box;
+  padding: $base-border-padding;
+  $border: 3px;
+  background-clip: padding-box;
+  /* !importanté */
+  border: solid $border transparent;
+  /* !importanté */
+  border-radius: $border-radius-gradient;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: -$border;
+    /* !importanté */
+    border-radius: inherit;
+    /* !importanté */
+    background: $border-gradient;
+  }
+}
+
+.btn {
+  background-color: white;
+  color: $thirdinary-color;
+  cursor: pointer;
+}
+
+.btn-selected {
+  background-color: $secondary-color;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-gradient {
+  background-image: $button-background-color-gradient;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-orange {
+  color: $secondary-color;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
+.white-text {
+  color: white;
+  text-decoration: none;
+}
+
+.qrcode {
+    // height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    box-sizing: border-box;
+    padding: $base-border-padding;
+    $border: 3px;
+    background-clip: padding-box;
+    /* !importanté */
+    border: solid $border transparent;
+    /* !importanté */
+    border-radius: 30px;
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+      margin: -$border;
+      /* !importanté */
+      border-radius: inherit;
+      /* !importanté */
+      background: $border-gradient;
+    }
+}
+
+.gray-text {
+  color: gray;
+  text-decoration: none;
+  font-weight: 1000;
+}
+.qrcode_img{
+  padding: -10;
+  
+}

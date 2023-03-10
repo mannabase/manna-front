@@ -1,0 +1,84 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  background: $footer-color;
+  &__keep-me-updated {
+    font-size: 60px;
+    margin: 0.35em;
+  }
+  &__news-paragraph {
+    font-weight: 300;
+    line-height: 25px;
+    font-size: 20px;
+    text-align: center;
+  }
+  &__news-email {
+    margin: 5vh 0;
+    &__input {
+      height: 40px;
+      width: 16vw;
+      border: none;
+      border-radius: 5px 0 0 5px;
+      font-size: 14px;
+      border-right: 1px solid #00000010;
+      padding: 0 10px;
+      font-weight: 500;
+      color: $thirdinary-color;
+      &::placeholder {
+        color: $footer-color;
+        font-weight: 500;
+      }
+    }
+    &__submit {
+      height: 40px;
+      border: none;
+      border-radius: 0 5px 5px 0;
+      padding: 0 15px;
+      font-weight: 500;
+      color: #fff;
+      background: $secondary-color;
+      &:focus {
+        border: none;
+        outline: none;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  &__links {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 15vh;
+    width: 100%;
+    & a {
+      font-weight: 300;
+      margin: 0 10px;
+      padding: 0 20px;
+      text-align: center;
+    }
+    &__hedge-for-humanity {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      left: 13vw;
+      &__image {
+        height: 40px;
+      }
+      &__text {
+        font-size: 18px;
+        line-height: 24px;
+        margin: 0 5px;
+      }
+    }
+  }
+  &__rights {
+    color: #ffffff50;
+    font-weight: 300;
+  }
+}

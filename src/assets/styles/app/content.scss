@@ -1,0 +1,71 @@
+.content {
+  position: relative;
+  display: felx;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 200vh;
+  background-image: url("../images/background.png"), $page-body-gradient;
+  background-size: cover;
+  background-position: center;
+  &__top-curve {
+    &__image {
+      width: 100%;
+    }
+  }
+  &__head-text {
+    width: fit-content;
+    margin: 1.7em auto;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #fff;
+  }
+  &__head-text--version-two {
+    width: fit-content;
+    margin: 1.7em auto;
+    font-size: 3rem;
+    font-weight: 300;
+    color: #fff;
+  }
+  &__card-container {
+    width: 450px;
+    margin: 5vh auto;
+  }
+  &__version-two-container {
+    width: 95vh;
+    height: 95vh;
+    margin: 5vh auto;
+  }
+  &__logo {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    // position: absolute;
+    bottom: 43vh;
+    z-index: 0;
+    &__image {
+      width: 140px;
+      height: auto;
+    }
+    &__name {
+      font-size: 70px;
+      margin: 0.3em;
+      color: #fff;
+      font-weight: 300;
+    }
+  }
+  &__footer-curve {
+    position: absolute;
+    bottom: -2px;
+    transform: rotate(180deg);
+  }
+}
+
+@media (min-width: 1700px) {
+  .content {
+    height: 160vh;
+  }
+}
