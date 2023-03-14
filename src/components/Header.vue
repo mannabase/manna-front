@@ -98,6 +98,17 @@
           </div>
         </div>
       </div>
+      <span
+      class="header__buttons__connect-wallet"
+      >
+      <div
+          v-if="!selectedAddress"
+          @click="goToMannaOne()"
+          class="gradient-border btn  bold-text"
+        >
+        Claim Manna 1.0
+        </div>
+      </span>
       <span class="header__buttons__connect-wallet">
         <div
           v-if="!selectedAddress"
@@ -105,13 +116,6 @@
           class="gradient-border btn btn-back-orange bold-text"
         >
           CONNECT WALLET
-        </div>
-        <div
-          v-if="!selectedAddress"
-          @click="goToMannaOne()"
-          class="gradient-border btn  bold-text"
-        >
-        Claim Manna 1.0
         </div>
         <div
           v-else-if="$store.state.chainId && $store.state.chainId != '0x4a'"
@@ -127,13 +131,7 @@
           {{ getAddress().slice(0, 6) + "...." + getAddress().slice(-4) }}
         </div>
       </span>
-      <span
-        data-text="learn more about manna"
-        class="header__buttons__more-info"
-        @click="visitLink('https://medium.com/@hedgeforhumanity')"
-      >
-        <i class="fa fa-question-circle-o" aria-hidden="true"></i>
-      </span>
+      
     </div>
 
     <div class="header__hamburger" @click="showNavLinks = !showNavLinks">
