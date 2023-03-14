@@ -9,7 +9,9 @@
     justify-content: space-evenly;
 
     gap: 1rem;
-
+    &__coming{
+      display: flex;
+    }
     &__field {
       flex: 1;
       display: flex;
@@ -51,10 +53,11 @@
       &__text {
         padding-inline-end: .5rem;
         color: white;
-        font-size: 1.2rem;
+        font-size: 1.8rem;
         max-width: 26vw;
         overflow-wrap: break-word;
         text-align: center;
+        font-weight: 600;
         &:hover {
           cursor: pointer;
         }
@@ -84,6 +87,7 @@
         cursor: pointer;
       }
     }
+    
   }
 
   &__barcode {
@@ -140,7 +144,9 @@
       width: 100%;
       gap: 0rem;
       margin-bottom: 3rem;
-
+      &__coming {
+        display: none;
+      }
       &__field {
         flex: unset;
         display: flex;

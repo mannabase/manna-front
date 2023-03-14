@@ -16,7 +16,8 @@
 
       <!-- <Mannabase v-if="selectedStore == 'mannabase'" /> -->
       <Mannabase2 v-if="selectedStore == 'mannabase2'" />
-      <PaperWallet v-if="selectedStore == 'wallet' || selectedStore == 'exchange'" />
+      <PaperWallet v-if="selectedStore == 'wallet'" />
+      <Exchange  v-if=" selectedStore == 'exchange'"/>
     </div>
   </div>
 </template>
@@ -25,12 +26,14 @@
 import PaperWallet from "@/components/PaperWallet.vue";
 // import Mannabase from "@/components/Mannabase.vue";
 import Mannabase2 from "@/components/Mannabase2.vue";
+import Exchange from "./Exchange.vue";
 
 export default {
   components: {
     // Mannabase,
     Mannabase2,
     PaperWallet,
+    Exchange
   },
   data() {
     return {

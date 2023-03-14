@@ -1,5 +1,11 @@
 <template>
   <footer class="footer">
+    <div class="footer__keep-me-updated">
+      Keep Me Updated!
+    </div>
+    <div class="footer__news-paragraph">
+      Interested in news and updates about Manna and related projects?Enter your e-mail to receive our occasional newsletter on project updates and news.
+    </div>
     <div class="footer__links">
       <a href="https://www.hedgeforhumanity.org/manna/" target="blank">About</a>
       <a href="https://discord.gg/HjHBYkfSfJ" target="blank">Discord</a>

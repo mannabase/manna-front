@@ -25,7 +25,7 @@
           @click="visitLink('https://www.brightid.org')"
           class="guide-home__top__field__text"
         >
-Get a Verified BrightID</pre
+1. Get BrightID</pre
         >
       </div>
       <div class="guide-home__top__field">
@@ -36,7 +36,7 @@ Get a Verified BrightID</pre
           />
         </div>
         <p @click="connectMetamask()" class="guide-home__top__field__text">
-          Get Metamask & Connect
+          2. Connect
           <span class="mobile-break"> <br /> </span> Wallet
         </p>
       </div>
@@ -94,7 +94,25 @@ Scan Your Verified BrightID</pre
 Connect to Mannabase & IDChain</pre
         > -->
         <pre v-else class="guide-home__top__field__text">
-Connect to Mannabase</pre
+3. Get Mannabase</pre
+        >
+      </div>
+    </div>
+    <div  class="guide-home__top ">
+      <div class="guide-home__top__field">
+        <pre
+          class="guide-home__top__field__text"
+        >
+        <span
+      class="header__buttons__connect-wallet"
+      >
+      <div
+          class="gradient-border btn  bold-text"
+          style="height: 30vh; width: 50vh;"
+        >
+        Manna Distributions Coming Soon
+        </div>
+      </span></pre
         >
       </div>
     </div>

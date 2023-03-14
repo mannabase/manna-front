@@ -9,11 +9,15 @@
   &__keep-me-updated {
     font-size: 40px;
     margin: 0.3em;
+    color: $heading-color;
+    font-weight: 600;
   }
   &__news-paragraph {
     font-weight: 300;
     line-height: 25px;
     text-align: center;
+    color: $heading-color;
+    width: 85vh;
   }
   &__news-email {
     margin: 3vh 0;
