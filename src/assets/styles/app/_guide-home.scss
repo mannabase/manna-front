@@ -1,0 +1,237 @@
+.guide-home {
+  margin-top: 3rem;
+
+  &__top {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-evenly;
+
+    gap: 1rem;
+
+    &__field {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      max-width: 30vw;
+
+      &__icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background-color: white;
+        margin-bottom: 1rem;
+        border-radius: 100%;
+        width: 17vw;
+        height: 17vw;
+
+        margin-bottom: 2rem;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        &__brightID {
+          width: 10vw;
+          height: auto;
+        }
+        &__metamask {
+          width: 11vw;
+          height: auto;
+        }
+        &__logo {
+          width: 7.5vw;
+          height: auto;
+        }
+      }
+      &__text {
+        padding-inline-end: .5rem;
+        color: white;
+        font-size: 1.2rem;
+        max-width: 26vw;
+        overflow-wrap: break-word;
+        text-align: center;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  &__connected {
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &__app-center-massage {
+      color: white;
+      font-size: 3.5rem;
+      font-weight: 500;
+    }
+
+    &__learn-more {
+      color: white;
+      text-decoration: underline;
+      margin-top: 0.5rem;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__barcode {
+    margin: 15px 0 5px !important;
+    height: 14vw;
+    width: 14vw;
+    border-radius: 100%;
+    background-color: white;
+
+    & > div {
+      height: 130px;
+      width: 140px;
+    }
+  }
+
+  &__bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    min-height: 30vh;
+
+    &__text {
+      border: 2px solid #82c0d9;
+      border-radius: 10px;
+      padding: 50px 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 1.4rem;
+    }
+  }
+}
+.mobile-break {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .mobile-break {
+    display: inline;
+  }
+  .guide-home {
+    margin-top: 5rem;
+
+    &__top {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-evenly;
+
+      width: 100%;
+      gap: 0rem;
+      margin-bottom: 3rem;
+
+      &__field {
+        flex: unset;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        max-width: unset;
+
+        &__icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          background-color: white;
+          margin-bottom: 1rem;
+          border-radius: 100%;
+          width: 51vw;
+          height: 51vw;
+
+          margin-bottom: 0.5rem;
+
+          &__brightID {
+            width: 30vw;
+            height: auto;
+          }
+          &__metamask {
+            width: 32vw;
+            height: auto;
+          }
+          &__logo {
+            width: 23vw;
+            height: auto;
+          }
+        }
+        &__text {
+          color: white;
+          font-size: 1.2rem;
+          margin-bottom: 3rem;
+          font-weight: 500;
+          max-width: 90vw;
+          overflow-wrap: break-word;
+          padding-inline-end: unset;
+        }
+      }
+    }
+
+    &__connected {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 40vh;
+
+      &__app-center-massage {
+        color: white;
+        padding: 2rem;
+        font-size: 2.5rem;
+        text-align: center;
+        font-weight: 500;
+      }
+
+      &__learn-more {
+        color: white;
+        display: none;
+        text-decoration: underline;
+        margin-top: 0.5rem;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    &__bottom {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 100%;
+      min-height: 20vh;
+
+      &__text {
+        border: 11px solid #82c0d9;
+        border-radius: 60px;
+        padding: 50px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 1.2rem;
+      }
+    }
+  }
+}

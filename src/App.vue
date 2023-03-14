@@ -5,29 +5,83 @@
 </template>
 
 <script>
+import detectEthereumProvider from "@metamask/detect-provider";
+import ENUMS from "@/javascripts/constants/enums";
+import Web3 from "web3";
+
 export default {
+  data() {
+    return {
+      ENUMS,
+    };
+  },
   methods: {
-    haveMetamask() {
-      return window.ethereum != null;
+    accountsChangedHandler() {
+      window.ethereum.request({ method: "eth_accounts" }).then((res) => {
+        if (this.selectedAddress != res[0]) {
+          if (res.length > 0) {
+            this.$store.commit("setSelectedAddress", res[0]);
+            this.loadInfo();
+          } else {
+            this.$store.commit("setSelectedAddress", null);
+          }
+        }
+        this.$store.commit("resetStore")
+      });
     },
-    isMetamaskConnected() {
-      return window.ethereum.selectedAddress != null;
+    chainChangedHandler() {
+      this.loadInfo();
     },
-    getAddress() {
-      window.ethereum.enable();
-      return window.ethereum.selectedAddress;
+    connectedHandler() {
+      window.ethereum.request({ method: "eth_accounts" }).then((res) => {
+        if (res.length > 0) {
+          if (!window.web3) {
+            window.ethereum.enable();
+            window.web3 = new Web3(window.ethereum);
+          }
+          this.$store.commit("setSelectedAddress", res[0]);
+          this.loadInfo();
+        }
+      });
+    },
+    async checkProvider() {
+      const provider = await detectEthereumProvider();
+
+      if (provider) {
+        this.$store.commit(
+          "setProviderState",
+          ENUMS.providerState.HAS_PROVIDER
+        );
+        window.ethereum.on("accountsChanged", this.accountsChangedHandler);
+        window.ethereum.on("chainChanged", this.chainChangedHandler);
+        window.ethereum.on("connect", this.connectedHandler);
+        if (window.ethereum.selectedAddress) {
+          this.connectedHandler();
+          this.$store.commit("setSelectedAddress", this.getAddress());
+        }
+      } else {
+        this.$store.commit("setProviderState", ENUMS.providerState.NO_PROVIDER);
+      }
     },
   },
-  mounted() {
-    this.$store.commit("setHaveMetamask", this.haveMetamask());
-
-    if (this.haveMetamask()) {
-      this.$store.commit("setIsMetamaskConnected", this.isMetamaskConnected());
-
-      if (this.isMetamaskConnected()) {
-        this.$store.dispatch("isLinked", this.getAddress());
-      }
+  created() {
+    if (window.location.href.includes('https://www.mannabase.com/')) {
+      window.location.href = 'https://mannabase.com/';
     }
+    this.checkProvider();
+  },
+  watch: {
+    selectedAddress(newAddress, oldAddress) {
+      if (newAddress != oldAddress && newAddress != null) {
+        this.$store.dispatch("isLinked", this.selectedAddress);
+        this.$store.dispatch("isBrightIDVerified", this.selectedAddress);
+        if (!window.web3) {
+          window.ethereum.enable();
+          window.web3 = new Web3(window.ethereum);
+        }
+        this.loadInfo();
+      }
+    },
   },
 };
 </script>

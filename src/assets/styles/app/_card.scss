@@ -8,34 +8,56 @@
   background-color: #fff;
   z-index: 10;
   position: sticky;
+
   &__header {
-    color: $thirdinary-color;
-    font-size: 20px;
+    color: $gray-color;
+    font-weight: 500;
+    font-size: 19px;
+    margin: 10px 0 -2px !important;
   }
+
+  &__text {
+    color: $gray-color;
+    font-weight: 400;
+    font-size: 1rem;
+    margin: 10px 0 -2px !important;
+  }
+
+  &__wallet-address {
+    color: $gray-color;
+    font-weight: 400;
+    font-size: 1rem;
+    margin: 5px 0 -2px !important;
+    max-width: 22vw;
+    overflow-wrap: break-word;
+    text-align: center;
+  }
+
   &__buttons {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-around;
-    margin-right: 0;
-    margin-left: 0;
+    margin: 20px 0 10px !important;
   }
+
   &__one {
-    min-width: 280px;
+    min-width: 22vw;
   }
   &__two {
-    min-width: 125px;
+    min-width: 15px;
   }
   &__three {
-    min-width: 120px;
+    min-width: 10vw;
     font-size: 12px;
   }
   &__arrow {
     width: 10px;
     height: 26.5px;
+    margin: 15px 0 5px !important;
   }
   &__input {
-    height: 33px;
+    height: 37px;
     border: none;
     width: 100%;
     margin: 0 -10px;
@@ -62,12 +84,33 @@
     font-weight: 500;
     width: 290px;
   }
+  &__need-help {
+    margin: 1.8rem 0 !important;
+  }
   &__link {
-    color: $secondary-color;
+    color: $thirdinary-color;
     font-size: 16px;
     text-decoration: none;
     &:hover {
       cursor: pointer;
+    }
+    &--small {
+      margin: 0.1rem 0;
+      color: $primary-color;
+      font-size: 12px;
+      font-weight: 500;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    &--small-gray {
+      margin: 0.1rem 0;
+      color: $gray-color;
+      font-size: 12px;
+      font-weight: 500;
+      &:hover {
+        cursor: pointer;
+      }
     }
     &--big {
       margin: 0.3rem 0;
@@ -79,13 +122,10 @@
     }
   }
   &__barcode {
-    height: 160px;
-    width: 160px;
+    margin: 0 0 15px !important;
+    height: 10vw;
+    width: 10vw;
     background-color: white;
-    &>div {
-      height: 140px;
-      width: 140px;
-    }
   }
   &__center {
     width: 100%;
@@ -98,12 +138,12 @@
     font-size: 14px;
     text-align: center;
     width: 400px;
-    margin: 40px 0;
+    margin: 20px 0 10px;
   }
   &__item {
     margin: 5px 0;
     &--with-link {
-      margin-bottom: 5px;
+      margin-bottom: -1px;
     }
   }
   &__email-btn {
@@ -136,4 +176,179 @@
   &:hover {
     cursor: not-allowed;
   }
+  &:before {
+    background: linear-gradient(to bottom,  #b3b3b3, #e8e8e8) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: $base-card-padding;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: $border-radius * 1.8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    z-index: 10;
+    position: sticky;
+  
+    &__header {
+      color: $gray-color;
+      font-weight: 500;
+      font-size: 19px;
+      margin: 10px 0 -2px !important;
+    }
+
+    &__text {
+      color: $gray-color;
+      font-weight: 400;
+      font-size: 1rem;
+      margin: 10px 0 -2px !important;
+    }
+  
+    &__wallet-address {
+      color: $gray-color;
+      font-weight: 400;
+      font-size: 1rem;
+      margin: 5px 0 -2px !important;
+      max-width: 65vw;
+      overflow-wrap: break-word;
+      text-align: center;
+    }
+  
+    &__buttons {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      margin: 20px 0 10px !important;
+    }
+  
+    &__one {
+      min-width: 65vw;
+    }
+    &__two {
+      min-width: 15px;
+    }
+    &__three {
+      min-width: 10vw;
+      font-size: 9px;
+    }
+    &__arrow {
+      width: 10px;
+      height: 26.5px;
+      margin: 15px 0 5px !important;
+    }
+    &__input {
+      height: 25px;
+      border: none;
+      width: 100%;
+      margin: 0 -10px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 500;
+      color: $secondary-color;
+      &:disabled {
+        background-image: $button-background-color-gradient-disabled !important;
+      }
+      &::placeholder {
+        color: #00000060;
+      }
+      &[type="number"]::-webkit-outer-spin-button,
+      &[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      &[type="number"] {
+        -moz-appearance: textfield;
+      }
+    }
+    &__action-button {
+      font-weight: 400;
+      width: 180px;
+    }
+    &__need-help {
+      margin: 1.8rem 0 !important;
+    }
+    &__link {
+      color: $thirdinary-color;
+      font-size: 16px;
+      text-decoration: none;
+      &:hover {
+        cursor: pointer;
+      }
+      &--small {
+        margin: 0.1rem 0;
+        color: $primary-color;
+        font-size: 10px;
+        font-weight: 500;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+      &--small-gray {
+        margin: 0.1rem 0;
+        color: $gray-color;
+        font-size: 10px;
+        font-weight: 500;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+      &--big {
+        margin: 0.3rem 0;
+        color: $primary-color;
+        font-size: 16px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+    &__barcode {
+      margin: 15px 0 5px !important;
+      height: 40vw;
+      width: 40vw;
+      background-color: white;
+    }
+    &__center {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    &__desc {
+      color: $thirdinary-color;
+      font-size: 14px;
+      text-align: center;
+      max-width: 60vw;
+      margin: 1rem 0;
+      overflow-wrap: anywhere;
+      text-align: center;
+    }
+    &__item {
+      margin: 5px 0;
+      &--with-link {
+        margin-bottom: -1px;
+      }
+    }
+    &__email-btn {
+      margin-bottom: 40px;
+    }
+  }
+  .code-msg {
+    word-wrap: break-word !important;
+    display: inline-block;
+    margin: 0.8rem 0;
+    font-weight: 500;
+    font-size: 0.8rem;
+  }
+  
+  .disable-btn {
+    background-image: $button-background-color-gradient-disabled !important;
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+  
 }

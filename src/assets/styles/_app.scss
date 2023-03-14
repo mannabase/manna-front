@@ -30,8 +30,12 @@ footer {
   }
 }
 
+.home {
+  background: $page-body-gradient;
+}
+
 .gradient-border {
-  height: 42px;
+  height: 45px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,9 +45,7 @@ footer {
   padding: $base-border-padding;
   $border: 3px;
   background-clip: padding-box;
-  /* !importanté */
   border: solid $border transparent;
-  /* !importanté */
   border-radius: $border-radius-gradient;
   &:before {
     content: "";
@@ -54,16 +56,44 @@ footer {
     left: 0;
     z-index: -1;
     margin: -$border;
-    /* !importanté */
+
     border-radius: inherit;
-    /* !importanté */
     background: $border-gradient;
+  }
+}
+
+.card-gradient-border {
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  box-sizing: border-box;
+  padding: $base-border-padding;
+  $border: 3px;
+  background-clip: padding-box;
+  border: solid $border transparent;
+  border-radius: $border-radius-gradient;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: -$border;
+
+    border-radius: inherit;
+    background: $card-button-border-gradient;
   }
 }
 
 .btn {
   background-color: white;
-  color: $thirdinary-color;
+  color: $gray-color;
+  font-weight: 500;
   cursor: pointer;
 }
 
@@ -71,6 +101,9 @@ footer {
   background-color: $secondary-color;
   color: white;
   cursor: pointer;
+  &:before {
+    background: $card-button-border-gradient-selected;
+  }
 }
 
 .btn-gradient {
@@ -83,6 +116,20 @@ footer {
   color: $secondary-color;
 }
 
+.btn-back-orange {
+  color: white;
+  background-color: $secondary-color;
+}
+
+.btn-back-red {
+  color: white;
+  background-color: #fc686f;
+}
+
+.bold-text {
+  font-weight: 500;
+}
+
 textarea:focus,
 input:focus {
   outline: none;
@@ -93,8 +140,13 @@ input:focus {
   text-decoration: none;
 }
 
-.qrcode {
-    // height: 42px;
+.address:hover {
+  cursor: default;
+}
+
+@media (max-width: 600px) {
+  .gradient-border {
+    height: 35px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -102,12 +154,10 @@ input:focus {
     position: relative;
     box-sizing: border-box;
     padding: $base-border-padding;
-    $border: 3px;
+    $border: 5px;
     background-clip: padding-box;
-    /* !importanté */
     border: solid $border transparent;
-    /* !importanté */
-    border-radius: 30px;
+    border-radius: $border-radius-gradient * 3;
     &:before {
       content: "";
       position: absolute;
@@ -117,19 +167,82 @@ input:focus {
       left: 0;
       z-index: -1;
       margin: -$border;
-      /* !importanté */
+  
       border-radius: inherit;
-      /* !importanté */
       background: $border-gradient;
     }
-}
-
-.gray-text {
-  color: gray;
-  text-decoration: none;
-  font-weight: 1000;
-}
-.qrcode_img{
-  padding: -10;
+  }
   
+  .card-gradient-border {
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    box-sizing: border-box;
+    padding: $base-border-padding;
+    $border: 4px;
+    background-clip: padding-box;
+    border: solid $border transparent;
+    border-radius: $border-radius-gradient * 2;
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+      margin: -$border;
+  
+      border-radius: inherit;
+      background: $card-button-border-gradient;
+    }
+  }
+  
+  .btn {
+    background-color: white;
+    color: $gray-color;
+    font-weight: 400;
+    cursor: pointer;
+  }
+  
+  .btn-selected {
+    background-color: $secondary-color;
+    color: white;
+    cursor: pointer;
+    &:before {
+      background: $card-button-border-gradient-selected;
+    }
+  }
+  
+  .btn-gradient {
+    background-image: $button-background-color-gradient;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .btn-orange {
+    color: $secondary-color;
+  }
+  
+  .btn-back-orange {
+    color: white;
+    background-color: $secondary-color;
+  }
+  
+  .bold-text {
+    font-weight: 500;
+  }
+  
+  textarea:focus,
+  input:focus {
+    outline: none;
+  }
+  
+  .white-text {
+    color: white;
+    text-decoration: none;
+  }
 }

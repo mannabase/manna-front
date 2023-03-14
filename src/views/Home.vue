@@ -2,24 +2,24 @@
   <div class="home">
     <Header />
     <Content />
-    <!-- <Footer /> -->
-    <!-- <FooterNew /> -->
+    <Footer />
+    <MobileButtons v-if="guidePage"/>
   </div>
 </template>
 
 <script>
-// import FooterNew from "@/components/FooterNew.vue";
 import Content from "@/components/Content.vue";
+import MobileButtons from "@/components/MobileButtons.vue";
 import Header from "@/components/Header.vue";
-// import Footer from "@/components/Footer.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
   name: "Home",
   components: {
-    // FooterNew,
+    MobileButtons,
     Content,
     Header,
-    // Footer
+    Footer
   },
 };
 </script>

@@ -1,0 +1,53 @@
+.mobile-buttons {
+  background-color: white;
+  position: sticky;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  z-index: 20;
+
+  &__content {
+
+    & span {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      width: 100%;
+    }
+
+    &__claim {
+      width: 46vw;
+      font-size: 1rem;
+
+      & div {
+        height: 50px;
+      }
+    }
+    
+    &__manna-amount {
+      width: 46vw;
+      
+      & div {
+        height: 50px;
+        background-color: $forthinary-color !important;
+      }
+    }
+
+    &__connect-wallet {
+      width: 52vw;
+      font-size: 1rem;
+
+      & div {
+        font-family: "Lato" !important;
+        height: 50px;
+      }
+    }
+  }
+}
+
+@media (min-width: 600px) {
+  .mobile-buttons {
+    display: none;
+  }
+}

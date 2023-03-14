@@ -3,20 +3,20 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 60vh;
-  background: $footer-color;
+  min-height: 40vh;
+  position: relative;
+
   &__keep-me-updated {
-    font-size: 60px;
-    margin: 0.35em;
+    font-size: 40px;
+    margin: 0.3em;
   }
   &__news-paragraph {
     font-weight: 300;
     line-height: 25px;
-    font-size: 20px;
     text-align: center;
   }
   &__news-email {
-    margin: 5vh 0;
+    margin: 3vh 0;
     &__input {
       height: 40px;
       width: 16vw;
@@ -26,20 +26,22 @@
       border-right: 1px solid #00000010;
       padding: 0 10px;
       font-weight: 500;
-      color: $thirdinary-color;
+      color: $gray-color;
       &::placeholder {
-        color: $footer-color;
+        color: $footer-background-color;
         font-weight: 500;
       }
     }
     &__submit {
+      font-family: "Lato";
       height: 40px;
       border: none;
+      border-left: 1px solid #80808081;
       border-radius: 0 5px 5px 0;
       padding: 0 15px;
       font-weight: 500;
-      color: #fff;
-      background: $secondary-color;
+      background-color: #fff;
+      color: $secondary-color;
       &:focus {
         border: none;
         outline: none;
@@ -54,13 +56,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 15vh;
+    min-height: 10vh;
     width: 100%;
-    & a {
+    font-size: 0.9em;
+    & a,
+    & .link{
       font-weight: 300;
       margin: 0 10px;
       padding: 0 20px;
       text-align: center;
+      color: #fff;
+      font-family: "Lato";
+      font-size: 1em;
+      &:hover {
+        cursor: pointer;
+      }
     }
     &__hedge-for-humanity {
       position: absolute;
@@ -80,5 +90,99 @@
   &__rights {
     color: #ffffff50;
     font-weight: 300;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 0vh;
+    &__keep-me-updated {
+      font-size: 30px;
+      margin: 0.3em;
+    }
+    &__news-paragraph {
+      display: none;
+      font-weight: 300;
+      line-height: 25px;
+      text-align: center;
+    }
+    &__news-email {
+      margin: 3vh 0;
+      &__input {
+        height: 40px;
+        width: 40vw;
+        border: none;
+        border-radius: 10px 0 0 10px;
+        font-size: 14px;
+        border-right: 1px solid #00000010;
+        padding: 0 10px;
+        font-weight: 500;
+        color: $gray-color;
+        &::placeholder {
+          color: $footer-background-color;
+          font-weight: 500;
+        }
+      }
+      &__submit {
+        font-family: "Lato";
+        height: 40px;
+        border: none;
+        border-left: 1px solid #80808081;
+        border-radius: 0 10px 10px 0;
+        padding: 0 15px;
+        font-weight: 500;
+        background-color: #fff;
+        color: $secondary-color;
+        &:focus {
+          border: none;
+          outline: none;
+        }
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+    &__links {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 5vh;
+      width: 100%;
+      font-size: 1em;
+      & a {
+        font-size: 3.3vw;
+        font-weight: 300;
+        margin: 0 0px;
+        padding: 0 1vw;
+        text-align: center;
+      }
+      & .link {
+        display: none;
+      }
+      &__hedge-for-humanity {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        left: 13vw;
+        &__image {
+          height: 40px;
+        }
+        &__text {
+          font-size: 5vw;
+          line-height: 24px;
+          margin: 0 5px;
+        }
+      }
+    }
+    &__rights {
+      color: #ffffff50;
+      font-weight: 300;
+      font-size: 3vw;
+    }
   }
 }

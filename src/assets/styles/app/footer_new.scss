@@ -4,10 +4,9 @@
     justify-content: center;
     align-items: center;
     min-height: 60vh;
-    // background: $footer-color;
-    // background-image: url("../images/background.png")
+    background: $footer-background-color;
     &__keep-me-updated {
-        font-size: 60px;
+        font-size: 40px;
         margin: 0.35em;
     }
     &__news-paragraph {
@@ -29,7 +28,7 @@
             font-weight: 500;
             color: $thirdinary-color;
             &::placeholder {
-                color: $footer-color;
+                color: $footer-background-color;
                 font-weight: 500;
             }
         }
@@ -59,7 +58,7 @@
         min-height: 15vh;
         width: 100%;
         & a {
-            font-weight: 100;
+            font-weight: 300;
             margin: 0 0px;
             padding: 0 20px;
             text-align: center;
