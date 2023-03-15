@@ -65,7 +65,7 @@ const mixin = {
     },
     async addMannaTokenToWallet() {
       axios
-        .get(configs.baseURL + "/backend/tokenInfo")
+        .get(configs.baseURL + "/backend/manna/tokenInfo")
         .then((res) => {
 
           const tokenAddress = res.data.address;

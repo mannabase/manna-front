@@ -38,7 +38,7 @@
     <Divider
       v-if="
         isLinked &&
-        isLinked.state == 'successful' &&
+        islinked.status == 'SUCCESSFUL' &&
         !hasTaken &&
         hasTakenResult.status == 'not taken'
       "
@@ -46,7 +46,7 @@
     <div
       v-if="
         isLinked &&
-        isLinked.state == 'successful' &&
+        islinked.status == 'SUCCESSFUL' &&
         !hasTaken &&
         hasTakenResult.status == 'not taken'
       "
@@ -66,22 +66,22 @@
     <div
       v-if="
         isLinked &&
-        isLinked.state != 'not linked' &&
-        isLinked.state != 'successful' &&
+        isLinked.status != 'NOT_LINKED' &&
+        isLinked.status != 'SUCCESSFUL' &&
         !hasTaken &&
         hasTakenResult.status != 'not taken'
       "
       class="card__center card__desc"
     >
       <div
-        v-if="isLinked.state == 'not verified'"
+        v-if="isLinked.status == 'NOT_VERIFY'"
         @click="visitLink(isLinked.link)"
         class="gradient-border card__barcode card__item"
       >
         <qrcode-vue :value="isLinked.link" :size="qrCodeSize" level="H"></qrcode-vue>
       </div>
       <div
-        v-if="isLinked.state == 'transferred'"
+        v-if="isLinked.status == 'TRANSFERRED'"
         @click="
           visitLink(
             'brightid://link-verification/http:%2f%2fnode.brightid.org/idchain/' +
@@ -100,7 +100,7 @@
         ></qrcode-vue>
       </div>
       {{
-        isLinked.state == "not verified"
+        islinked.status == "NOT_VERIFIED"
           ? isLinked.msg
           : "This BrightID account is linked to " +
             isLinked.address +
@@ -111,14 +111,14 @@
     <div
       v-if="
         isLinked &&
-        isLinked.state == 'not linked' &&
+        islinked.status == 'NOT_LINKED' &&
         !hasTaken &&
         hasTakenResult.status != 'not taken'
       "
       class="card__center card__desc"
     >
       <div
-        v-if="isLinked.state == 'not linked'"
+        v-if="islinked.status == 'NOT_LINKED'"
         @click="visitLink(isLinked.link)"
         class="gradient-border card__barcode card__item"
       >
@@ -134,7 +134,7 @@
     <Divider
       v-if="
         isLinked &&
-        isLinked.state == 'successful' &&
+        islinked.status == 'SUCCESSFUL' &&
         !hasTaken &&
         hasTakenResult.status != 'not taken'
       "
@@ -142,7 +142,7 @@
     <div
       v-if="
         isLinked &&
-        isLinked.state == 'successful' &&
+        islinked.status == 'SUCCESSFUL' &&
         !hasTaken &&
         hasTakenResult.status != 'not taken'
       "
@@ -153,7 +153,7 @@
     <div
       v-if="
         isLinked &&
-        isLinked.state == 'successful' &&
+        islinked.status == 'SUCCESSFUL' &&
         !hasTaken &&
         hasTakenResult.status != 'not taken'
       "
@@ -170,7 +170,7 @@
     <div
       v-if="
         isLinked &&
-        isLinked.state == 'successful' &&
+        islinked.status == 'SUCCESSFUL' &&
         $store.state.emailSecret &&
         !hasTaken &&
         hasTakenResult.status != 'not taken'
@@ -182,13 +182,13 @@
         placeholder="Enter 6-digit code from email..."
         type="number"
         v-model="code"
-        :disabled="$store.state.sendCodeState == 'successful'"
+        :disabled="$store.state.sendCodeState == 'SUCCESSFUL'"
       />
     </div>
     <div
       v-if="
         isLinked &&
-        isLinked.state == 'successful' &&
+        islinked.status == 'successful' &&
         $store.state.email &&
         $store.state.emailSecret &&
         !hasTaken &&
@@ -198,7 +198,7 @@
         btn-selected
         card-gradient-border card__one card__item card__action-button
       "
-      :class="{ 'disable-btn': $store.state.sendCodeState == 'successful' }"
+      :class="{ 'disable-btn': $store.state.sendCodeState == 'SUCCESSFUL' }"
       @click="submitCode()"
     >
       SUBMIT
@@ -210,7 +210,7 @@
     <div
       v-if="
         isLinked &&
-        isLinked.state == 'successful' &&
+        islinked.status == 'successful' &&
         !$store.state.email &&
         !hasTaken &&
         hasTakenResult.status != 'not taken'
@@ -257,7 +257,7 @@
     <div
       v-if="
         isLinked &&
-        isLinked.state == 'successful' &&
+        islinked.status == 'SUCCESSFUL' &&
         $store.state.email &&
         !hasTaken &&
         hasTakenResult.status != 'not taken'
@@ -299,6 +299,7 @@ export default {
       return window.ethereum.selectedAddress;
     },
     ConnectMetamask() {
+      console.log("salam")
       if (!this.$store.state.email) {
         let connectMetamaskEnable = window.ethereum.enable();
 

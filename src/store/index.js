@@ -57,7 +57,8 @@ export default new Vuex.Store({
     signer: null,
     provider: null,
 
-    isBrightIDVerifiedData: null
+    isBrightIDVerifiedData: null,
+    testurl:'https://mannatest.hedgeforhumanity.org/'
   },
   mutations: {
     setMannaContract(state, payload) {
@@ -193,20 +194,25 @@ export default new Vuex.Store({
   },
   actions: {
     isLinked: (context, payload) => {
+      console.log('omad')
+      console.log(this.testurl)
       context.state.connectLoading = true
       mixin.methods
         .request({
           method: "GET",
-          url: "/backend/isLinked/" + payload
+          url: this.testurl+"/backend/brightId/isLinked/" + payload
         })
         .then(res => {
           context.state.connectLoading = false
           context.commit("setIsLinked", res.data);
+          console.log(res+"resdata")
           if (res.data.state == "successful") {
             context.dispatch("getMannaBalance", context.state.selectedAddress);
           }
+
         })
         .catch(e => {
+          console.log('khar')
           context.state.connectLoading = false
           console.log(e);
         });
@@ -216,7 +222,7 @@ export default new Vuex.Store({
       mixin.methods
         .request({
           method: "POST",
-          url: "/backend/submitMail",
+          url: "/backend/conversion/requestMailCode",
           data: payload
         })
         .then(res => {
@@ -234,12 +240,13 @@ export default new Vuex.Store({
       mixin.methods
         .request({
           method: "POST",
-          url: "/backend/submitCode",
+          url: "/backend/conversion/submitMailCode",
           data: payload
         })
         .then(res => {
           context.state.submitCodeLoading = false
           context.commit("setSubmitCodeResult", res.data);
+          console.log(res.data)
           context.state.retryRequest = 0;
         })
         .catch(e => {
@@ -260,7 +267,7 @@ export default new Vuex.Store({
       mixin.methods
         .request({
           method: "GET",
-          url: "/backend/mannaToClaim/" + payload
+          url: "/backend/conversion/claimable" + payload
         })
         .then(res => {
           context.state.connectLoading = false
@@ -275,7 +282,7 @@ export default new Vuex.Store({
       mixin.methods
         .request({
           method: "GET",
-          url: "/backend/mannaToClaim/" + payload
+          url: "/backend/conversion/claimable" + payload
         })
         .then(res => {
           if (res.data.status == 'error') {
@@ -293,7 +300,7 @@ export default new Vuex.Store({
       mixin.methods
         .request({
           method: "POST",
-          url: "/backend/claim",
+          url: "/backend/manna/claim",
           data: { "walletAddress": payload }
         })
         .then(res => {
@@ -313,7 +320,7 @@ export default new Vuex.Store({
       mixin.methods
         .request({
           method: "GET",
-          url: "/backend/getBalance/" + payload
+          url: "/backend/manna/balance/" + payload
         })
         .then(res => {
           context.commit("setBalance", res.data);
@@ -326,7 +333,7 @@ export default new Vuex.Store({
       mixin.methods
         .request({
           method: "GET",
-          url: "/backend/hasTaken/" + payload,
+          url: "/backend/conversion/getBalence/" + payload,
         })
         .then(res => {
           context.commit('setHasTakenResult', res.data)
@@ -340,7 +347,7 @@ export default new Vuex.Store({
       mixin.methods
         .request({
           method: "GET",
-          url: "/backend/mannaWallet/" + payload,
+          url: "/backend/conversion/mannaWallet/" + payload,
         })
         .then(res => {
           context.state.generateMannaWalletLoading = false
@@ -360,7 +367,7 @@ export default new Vuex.Store({
       mixin.methods
         .request({
           method: "POST",
-          url: "/backend/generateWallet",
+          url: "/backend/conversion/mannaWallet/",
           data: { walletAddress: payload }
         })
         .then(res => {
@@ -378,7 +385,7 @@ export default new Vuex.Store({
       mixin.methods
         .request({
           method: "GET",
-          url: "/backend/verifications/" + payload
+          url:this.testurl+ "/backend/brightId/verifications/" + payload
         })
         .then(res => {
           if (res.data.data) {

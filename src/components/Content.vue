@@ -12,9 +12,8 @@
       <Card />
     </div>
     
-    <div v-else >
+    <div v-else>
       <GuideHome2 />
-      <!-- <GuideHome /> -->
     </div>
   
   </div>
@@ -23,7 +22,6 @@
 <script>
 // import VersionTwo from "@/components/VersionTwo.vue";
 import Card from "@/components/Card.vue";
-// import GuideHome from "@/components/GuideHome.vue";
 import GuideHome2 from "@/components/GuideHome2.vue";
 
 export default {
@@ -36,8 +34,7 @@ export default {
   components: {
     // VersionTwo,
     GuideHome2,
-    Card,
-    // GuideHome,
+    Card
   },
 };
 </script>

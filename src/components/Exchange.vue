@@ -6,13 +6,13 @@
         <Divider />
         
         <div
-          v-if="!(isLinked && isLinked.state != 'not linked')"
+          v-if="!(isLinked && islinked.status != 'not linked')"
           class="card__header card__item card__item--with-link"
         >
           Link Verified BrightID:
         </div>
         
-        <div v-if="!(isLinked && isLinked.state != 'not linked')">
+        <div v-if="!(isLinked && islinked.status != 'not linked')">
           <a
             class="card__link card__link--small card__item"
             href="https://metamask.io/"
@@ -21,7 +21,7 @@
         </div>
   
         <div
-          v-if="isLinked && isLinked.state == 'not linked' || true"
+          v-if="isLinked && islinked.status == 'not linked' || true"
           class="gradient-border card__barcode card__item"
         >
           <qrcode-vue value="isLinked.link" :size="112" level="H"></qrcode-vue>
@@ -101,7 +101,7 @@
         <!-- <div
           v-if="
             (isLinked &&
-              isLinked.state == 'successful' &&
+              islinked.status == 'SUCCESSFUL' &&
               $store.state.emailSecret) ||
             true
           "
@@ -150,7 +150,7 @@
         <!-- <div
           v-if="
             (isLinked &&
-              isLinked.state == 'successful' &&
+              islinked.status == 'SUCCESSFUL' &&
               $store.state.emailSecret) ||
             true
           "
@@ -173,7 +173,7 @@
         <!-- <Divider /> -->
   
         <div
-          v-if="(isLinked && isLinked.state != 'not linked')"
+          v-if="(isLinked && islinked.status != 'not linked')"
           class="card__header card__item card__item--with-link"
         >
           Import Key to Metamask
