@@ -74,7 +74,7 @@ Get a Verified BrightID</pre
           />
         </div>
         <!-- <p
-          v-if="isLinked && islinked.status == 'transferred'"
+          v-if="isLinked && isLinked.status == 'transferred'"
           class="guide-home__top__field__text"
         >
           This BrightID account is linked to {{ isLinked.address }} <br />
@@ -88,7 +88,7 @@ Scan Your Verified BrightID</pre
         >
         <!-- <pre
           @click="visitLink(isLinked.link)"
-          v-else-if="isLinked && islinked.status == 'NOT_LINKED'"
+          v-else-if="isLinked && isLinked.status == 'NOT_LINKED'"
           class="guide-home__top__field__text"
         >
 Connect to Mannabase & IDChain</pre

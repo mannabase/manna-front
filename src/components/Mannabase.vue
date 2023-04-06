@@ -1,4 +1,5 @@
 <template>
+   
   <div class="card__center">
     <Divider />
     <div
@@ -38,17 +39,17 @@
     <Divider
       v-if="
         isLinked &&
-        islinked.status == 'SUCCESSFUL' &&
+        isLinked.status == 'SUCCESSFUL' &&
         !hasTaken &&
-        hasTakenResult.status == 'not taken'
+        hasTakenResult.value > 0
       "
     />
     <div
       v-if="
         isLinked &&
-        islinked.status == 'SUCCESSFUL' &&
+        isLinked.status == 'SUCCESSFUL' &&
         !hasTaken &&
-        hasTakenResult.status == 'not taken'
+        hasTakenResult.value > 0
       "
       class="
         btn-selected
@@ -69,7 +70,7 @@
         isLinked.status != 'NOT_LINKED' &&
         isLinked.status != 'SUCCESSFUL' &&
         !hasTaken &&
-        hasTakenResult.status != 'not taken'
+        hasTakenResult.value > 0
       "
       class="card__center card__desc"
     >
@@ -100,7 +101,7 @@
         ></qrcode-vue>
       </div>
       {{
-        islinked.status == "NOT_VERIFIED"
+        isLinked.status == "NOT_VERIFIED"
           ? isLinked.msg
           : "This BrightID account is linked to " +
             isLinked.address +
@@ -111,14 +112,14 @@
     <div
       v-if="
         isLinked &&
-        islinked.status == 'NOT_LINKED' &&
+        isLinked.status == 'NOT_LINKED' &&
         !hasTaken &&
-        hasTakenResult.status != 'not taken'
+        hasTakenResult.value > 0
       "
       class="card__center card__desc"
     >
       <div
-        v-if="islinked.status == 'NOT_LINKED'"
+        v-if="isLinked.status == 'NOT_LINKED'"
         @click="visitLink(isLinked.link)"
         class="gradient-border card__barcode card__item"
       >
@@ -134,17 +135,17 @@
     <Divider
       v-if="
         isLinked &&
-        islinked.status == 'SUCCESSFUL' &&
+        isLinked.status == 'SUCCESSFUL' &&
         !hasTaken &&
-        hasTakenResult.status != 'not taken'
+        hasTakenResult.value > 0
       "
     />
     <div
       v-if="
         isLinked &&
-        islinked.status == 'SUCCESSFUL' &&
+        isLinked.status == 'SUCCESSFUL' &&
         !hasTaken &&
-        hasTakenResult.status != 'not taken'
+        hasTakenResult.value > 0
       "
       class="card__center card__desc"
     >
@@ -153,9 +154,9 @@
     <div
       v-if="
         isLinked &&
-        islinked.status == 'SUCCESSFUL' &&
+        isLinked.status == 'SUCCESSFUL' &&
         !hasTaken &&
-        hasTakenResult.status != 'not taken'
+        hasTakenResult.value > 0
       "
       class="card-gradient-border card__item"
     >
@@ -170,10 +171,10 @@
     <div
       v-if="
         isLinked &&
-        islinked.status == 'SUCCESSFUL' &&
+        isLinked.status == 'SUCCESSFUL' &&
         $store.state.emailSecret &&
         !hasTaken &&
-        hasTakenResult.status != 'not taken'
+        hasTakenResult.value > 0
       "
       class="card-gradient-border card__item"
     >
@@ -188,11 +189,11 @@
     <div
       v-if="
         isLinked &&
-        islinked.status == 'successful' &&
+        isLinked.status == 'SUCCESSFUL' &&
         $store.state.email &&
         $store.state.emailSecret &&
         !hasTaken &&
-        hasTakenResult.status != 'not taken'
+        hasTakenResult.value > 0
       "
       class="
         btn-selected
@@ -210,10 +211,10 @@
     <div
       v-if="
         isLinked &&
-        islinked.status == 'successful' &&
+        isLinked.status == 'SUCCESSFUL' &&
         !$store.state.email &&
         !hasTaken &&
-        hasTakenResult.status != 'not taken'
+        hasTakenResult.value > 0
       "
       class="
         btn-selected
@@ -231,14 +232,14 @@
       v-if="
         $store.state.sendCodeState &&
         !hasTaken &&
-        hasTakenResult.status != 'not taken'
+        hasTakenResult.value > 0
       "
     />
     <div
       v-if="
         $store.state.sendCodeState &&
         !hasTaken &&
-        hasTakenResult.status != 'not taken'
+        hasTakenResult.value > 0
       "
     >
       <p
@@ -247,7 +248,7 @@
       >
         {{ $store.state.sendCodeMsg }}
         <a
-          v-if="$store.state.sendCodeState == 'successful'"
+          v-if="$store.state.sendCodeState == 'SUCCESSFUL'"
           class="green"
           :href="$store.state.txLink"
           >{{ $store.state.txLink }}</a
@@ -257,10 +258,10 @@
     <div
       v-if="
         isLinked &&
-        islinked.status == 'SUCCESSFUL' &&
+        isLinked.status == 'SUCCESSFUL' &&
         $store.state.email &&
         !hasTaken &&
-        hasTakenResult.status != 'not taken'
+        hasTakenResult.value > 0
       "
     >
       <div
@@ -275,24 +276,27 @@
 </template>
 
 <script>
-import Divider from "@/components/Divider.vue";
+import Divider from './Divider.vue'
 
 export default {
-  name: "CardMannabase",
+  name: "Mannabase",
   components: {
     Divider,
   },
   data() {
     return {
       interval: null,
+      isLinked: false,
     };
   },
+  
   methods: {
     changeStore(key) {
       this.selectedStore = key;
     },
     isMetamaskConnected() {
       return window.ethereum.selectedAddress != null;
+      
     },
     getAddress() {
       window.ethereum.enable();
@@ -329,7 +333,7 @@ export default {
       }
     },
     submitCode() {
-      if (this.$store.state.sendCodeState != "successful") {
+      if (this.$store.state.sendCodeState != "SUCCESSFUL") {
         if (this.code.length > 0) {
           this.$store.dispatch("submitCode", {
             secret: this.$store.state.emailSecret,
@@ -361,9 +365,24 @@ export default {
         }, 5000);
       }
     },
+    ConnectMetamask2() {
+      this.$ethereum.request({ method: 'eth_requestAccounts' })
+        .then((accounts) => {
+          this.selectedAddress = accounts[0];
+          console.log(this.selectedAddress+" this.selectedAddress"); // log selected address to console
+        })
+        .catch((error) => {
+          console.error(error +"this.selectedAddress");
+        });
+    }
+  },
+  created() {
+    const hasTakenResult = window.localStorage.getItem('hasTakenResult');
+      console.log(hasTakenResult +" hasTakenResult");
   },
   computed: {
     hasTaken() {
+      console.log(this.hasTakenResult.status+"hasTakenResult.status")
       if (this.$store.state.hasTakenResult) {
         if (this.$store.state.hasTakenResult.status == "error") {
           return true;
@@ -382,6 +401,7 @@ export default {
   mounted() {
     this.$store.dispatch("getMannaToClaim", this.getAddress());
     this.$store.dispatch("hasTaken", this.getAddress());
+    this.ConnectMetamask2(); // call ConnectMetamask() method on mount
   },
 };
 </script>

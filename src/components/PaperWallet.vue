@@ -6,13 +6,13 @@
       <Divider />
       
       <div
-        v-if="!(isLinked && islinked.status != 'NOT_LINKED')"
+        v-if="!(isLinked && isLinked.status != 'NOT_LINKED')"
         class="card__header card__item card__item--with-link"
       >
         Link Verified BrightID:
       </div>
       
-      <div v-if="!(isLinked && islinked.status != 'NOT_LINKED')">
+      <div v-if="!(isLinked && isLinked.status != 'NOT_LINKED')">
         <a
           class="card__link card__link--small card__item"
           href="https://metamask.io/"
@@ -21,7 +21,7 @@
       </div>
 
       <div
-        v-if="isLinked && islinked.status == 'NOT_LINKED' || true"
+        v-if="isLinked && isLinked.status == 'NOT_LINKED' || true"
         class="gradient-border card__barcode card__item"
       >
         <qrcode-vue value="isLinked.link" :size="112" level="H"></qrcode-vue>
@@ -101,7 +101,7 @@
       <!-- <div
         v-if="
           (isLinked &&
-            islinked.status == 'SUCCESSFUL' &&
+            isLinked.status == 'SUCCESSFUL' &&
             $store.state.emailSecret) ||
           true
         "
@@ -111,7 +111,7 @@
           class="card__input card__one"
           placeholder="Enter your paper wallet share address"
           v-model="paperWalletShare"
-          :disabled="$store.state.sendCodeState == 'successful'"
+          :disabled="$store.state.sendCodeState == 'SUCCESSFUL'"
         />
       </div> -->
 
@@ -150,7 +150,7 @@
       <!-- <div
         v-if="
           (isLinked &&
-            islinked.status == 'SUCCESSFUL' &&
+            isLinked.status == 'SUCCESSFUL' &&
             $store.state.emailSecret) ||
           true
         "
@@ -160,20 +160,20 @@
           class="card__header card__item card__item--with-link"
           placeholder="Import Key to Metamask"
           v-model="signedShareAddress"
-          :disabled="$store.state.sendCodeState == 'successful'"
+          :disabled="$store.state.sendCodeState == 'SUCCESSFUL'"
         />
       </div> -->
-      <div
+      <!-- <div
        
         class="card__header card__item card__item--with-link"
       >
       Import Key to Metamask
-      </div>
+      </div> -->
 
       <!-- <Divider /> -->
 
       <div
-        v-if="(isLinked && islinked.status != 'NOT_LINKED')"
+        v-if="(isLinked && isLinked.status != 'NOT_LINKED')"
         class="card__header card__item card__item--with-link"
       >
         Import Key to Metamask
@@ -197,6 +197,7 @@
 import Divider from "@/components/Divider.vue";
 
 export default {
+  name: "PaperWallet",
   components: {
     Divider,
   },

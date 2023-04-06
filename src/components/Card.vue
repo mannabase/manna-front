@@ -14,28 +14,35 @@
         </div>
       </div>
 
-      <Mannabase v-if="selectedStore == 'mannabase'" />
-      <PaperWallet v-if="selectedStore == 'wallet' || selectedStore == 'exchange'" />
+      <!-- <Mannabase v-if="selectedStore == 'mannabase'" /> -->
+      <Mannabase2 v-if="selectedStore == 'mannabase2'" />
+      <PaperWallet v-if="selectedStore == 'wallet'" />
+      <Exchange  v-if=" selectedStore == 'exchange'"/>
     </div>
   </div>
 </template>
 
 <script>
 import PaperWallet from "@/components/PaperWallet.vue";
-import Mannabase from "@/components/Mannabase.vue";
-
+// import Mannabase from "@/components/Mannabase.vue";
+import Mannabase2 from "@/components/Mannabase2.vue";
+import Exchange from "./Exchange.vue";
 export default {
   components: {
-    Mannabase,
+    // Mannabase,
+    Mannabase2,
     PaperWallet,
+    Exchange
   },
   data() {
     return {
-      selectedStore: "mannabase",
+      // selectedStore: "mannabase",
+      selectedStore: "mannabase2",
       storeType: [
         {
           title: "Mannabase.com",
-          key: "mannabase",
+          // key: "mannabase",
+          key: "mannabase2",
         },
         {
           title: "An Exchange",
@@ -46,11 +53,9 @@ export default {
           key: "wallet",
         },
       ],
-
       qrcodeValue: null,
       email: "",
       code: "",
-
       interval: null
     };
   },
@@ -68,7 +73,6 @@ export default {
     ConnectMetamask() {
       if (!this.$store.state.email) {
         let connectMetamaskEnable = window.ethereum.enable();
-
         if (this.isMetamaskConnected()) {
           this.$store.dispatch("isLinked", this.getAddress());
         } else {
@@ -82,7 +86,6 @@ export default {
             }, 500);
           }
         }
-
         return connectMetamaskEnable;
       }
     },
@@ -95,7 +98,7 @@ export default {
       }
     },
     submitCode() {
-      if (this.$store.state.sendCodeState != "successful") {
+      if (this.$store.state.sendCodeState != "SUCCESSFUL") {
         if (this.code.length > 0) {
           this.$store.dispatch("submitCode", {
             secret: this.$store.state.emailSecret,
@@ -118,11 +121,9 @@ export default {
         this.$store.state.connectLoading = true;
         setTimeout(() => {
           let connectMetamaskEnable = window.ethereum.enable();
-
           if (this.isMetamaskConnected()) {
             this.$store.dispatch("isLinked", this.getAddress());
           }
-
           return connectMetamaskEnable;
         }, 5000);
       }
