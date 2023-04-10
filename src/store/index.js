@@ -101,7 +101,7 @@ export default new Vuex.Store({
         };
       } else if (payload.status == "error") {
         state.sendCodeState = payload.status;
-        state.sendCodeMsg = payload.msg;
+        state.sendCodeMsg = payload.message;
         state.txHash = null;
         state.txLink = null;
       }
@@ -239,6 +239,7 @@ export default new Vuex.Store({
           console.log('setEmail',payload.mailAddress);
           context.commit("setEmailSecret", res.data);
           console.log("setEmailSecret", res.data);
+          console.log(JSON.stringify(res))
         })
         .catch(e => {
           context.state.submitEmailLoading = false;
@@ -247,6 +248,7 @@ export default new Vuex.Store({
     },
     submitCode: (context, payload) => {
       context.state.submitCodeLoading = true;
+      console.log('paylod-status: ',payload.status)
       mixin.methods
         .request({
           method: "POST",
@@ -254,22 +256,48 @@ export default new Vuex.Store({
             "https://mannatest.hedgeforhumanity.org/backend/conversion/submitMailCode",
           data: payload,
         })
-        .then((res) => {
+        .then(res => {
+          // res.data.status = 'SUCCESSFUL';
           context.state.submitCodeLoading = false;
           context.commit("setSubmitCodeResult", res.data);
-          console.log(res.data);
+          console.log('submitCode',res.data);
+          console.log('submitCode-message', res.data.message)
+          console.log('submitCode-status', res.data.status)
+          console.log('submitCode-txLink', res.data.txLink)
+          console.log('submitCode-txHash', res.data.txHash)
           context.state.retryRequest = 0;
         })
-        .catch((e) => {
+        .catch(e => {
           context.state.submitCodeLoading = false;
+          // e.response.message = 
+          console.log('submitCode-catch-paylod', payload)
+          console.log('submitCode-catch-response' , e.response)
+          //   console.log('submitCode-message-catch', e.response.data.message)
+          console.log('submitCode-data-catch', e.data)
+          
+          // console.log(JSON.stringify(e))
+          if(!e.response){
+            e.response.data = 'Error: Unable to submit code';
+            console.log('not response found')
+          }
           if (e.response.status == 502) {
             if (context.state.retryRequest < 3) {
               context.dispatch("submitCode", payload);
               context.state.retryRequest++;
             }
           } else {
-            context.commit("setSubmitCodeResult", e.response.data);
+
+            // if(e.response.data == undefined){
+            //   e.response.date = {}
+            // }
+            console.log('submitCode-else' )
+          //   console.log('submitCode-message-else', e.response.data.message)
+          // console.log('submitCode-status-else', e.response.data.status)
+            // e.response.data.status = 'error';
+            context.commit("setSubmitCodeResult", e.response ? e.response.data : 'Error: Unable to submit code');
             context.state.retryRequest = 0;
+            // console.log('submitCode-status-else', e.response.data)
+            
           }
         });
     },

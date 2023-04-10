@@ -251,26 +251,26 @@
       v-if="
         $store.state.sendCodeState &&
           // !hasTaken &&
-          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
+          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0 || hasTakenResult.message == 'Email is not set')
       "
     />
     <div
       v-if="
         $store.state.sendCodeState &&
           // !hasTaken &&
-          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
+          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0 || hasTakenResult.message == 'Email is not set')
       "
     >
       <p
         class="card__center card__desc code-msg"
         :class="{ green: $store.state.txLink, red: !$store.state.txLink }"
       >
-        {{ $store.state.sendCodeMsg }}
+        {{ $store.state.sendCodeMsg }}-sendCodeMsg
         <a
           v-if="$store.state.sendCodeState == 'SUCCESSFUL'"
           class="green"
           :href="$store.state.txLink"
-          >{{ $store.state.txLink }}</a
+          >{{ $store.state.txLink }} </a
         >
       </p>
     </div>
@@ -280,7 +280,7 @@
         isLinked.status == 'SUCCESSFUL' &&
           $store.state.email &&
           // !hasTaken &&
-          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
+          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0 || hasTakenResult.message == 'Email is not set')
       "
     >
       <div
@@ -298,7 +298,7 @@
 import Divider from "./Divider.vue";
 
 export default {
-  name: "Mannabase",
+  name: "Mannabase2",
   components: {
     Divider,
   },
@@ -306,7 +306,7 @@ export default {
     return {
       interval: null,
       email:'',
-      // code:''
+      code:''
       // isLinked: false,
     };
   },
@@ -355,7 +355,10 @@ export default {
     },
     submitCode() {
       if (this.$store.state.sendCodeState != "SUCCESSFUL") {
+        console.log('not successful' ,this.$store.state.sendCodeState )
+        console.log('this.$store.state.email',this.$store.state.email)
         if (this.code.length > 0) {
+          console.log('not successful-codeLength' ,this.$store.state.emailSecret , this.code)
           this.$store.dispatch("submitCode", {
             secret: this.$store.state.emailSecret,
             code: this.code,
@@ -403,6 +406,9 @@ export default {
     console.log(hasTakenResult + " hasTakenResult");
   },
   computed: {
+    handleChangeEmaill() {
+    return 'this.$store.state.email'+this.$store.state.email
+    },
     hasTaken() {
       console.log(this.hasTakenResult.status + "hasTakenResult.status");
       if (this.$store.state.hasTakenResult) {
