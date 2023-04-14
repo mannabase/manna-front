@@ -6,6 +6,16 @@
         <Divider />
         
         <div
+          @click="signingMessage()"
+          class="btn-selected card-gradient-border card__one card__item card__action-button"
+          
+        >
+        signingMessage
+          <i
+           
+          ></i>
+        </div>
+        <div
           v-if="!(isLinked && isLinked.status != 'not linked')"
           class="card__header card__item card__item--with-link"
         >
@@ -211,6 +221,21 @@
       generateMannaWallet() {
         this.$store.dispatch("generateMannaWallet", this.getAddress());
       },
+    //   async signingMessage() {
+    //   const exampleMessage = 'Example personal_sign message.';
+    //   try {
+    //     const from = window.accounts[0];
+    //     const msg = `0x${Buffer.from(exampleMessage, 'utf8').toString('hex')}`;
+    //     const sign = await window.ethereum.request({
+    //       method: 'personal_sign',
+    //       params: [msg, from, 'Example password'],
+    //     });
+    //     this.$store.state.personalSignResult = sign;
+    //     this.$store.state.personalSignVerify = false;
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
     },
     computed: {
       mannaWallet() {

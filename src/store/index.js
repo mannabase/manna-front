@@ -45,6 +45,8 @@ export default new Vuex.Store({
     coinbase: null,
     balance: null,
     chainId: null,
+    personalSignResult:null,
+    personalSignVerify:null,
 
     contractData: {
       isVerified: null,

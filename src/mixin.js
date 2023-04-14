@@ -44,6 +44,27 @@ const mixin = {
         ],
       });
     },
+    async signingMessage() {
+      const exampleMessage = 'Hello Nikoo';
+      try {
+        const from = store.state.selectedAddress;
+        const msg = `0x${Buffer.from(exampleMessage, 'utf8').toString('hex')}`;
+        const sign = await window.ethereum.request({
+          method: 'personal_sign',
+          params: [msg, from, 'Example password'],
+        });
+        store.state.personalSignResult = sign;
+        store.state.personalSignVerify = false;
+        console.log('selectedAddress:',from)
+        console.log('exampleMessage:',exampleMessage)
+        console.log('signiture:',sign)
+      } catch (error) {
+        console.log(error);
+      }
+
+      
+
+    },
     ConnectMetamask() {
       let connectMetamaskEnable = window.ethereum.enable();
       window.web3 = new Web3(window.ethereum);

@@ -400,6 +400,7 @@ export default {
           console.error(error + "this.selectedAddress");
         });
     },
+  
   },
   created() {
     const hasTakenResult = window.localStorage.getItem("hasTakenResult");

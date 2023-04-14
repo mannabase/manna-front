@@ -57,7 +57,7 @@
           card-gradient-border card__one card__item card__action-button
         "
       >
-        GENERATE PAPER WALLET
+      GENERAT MANNA WALLET
         <i
           v-if="$store.state.generateMannaWalletLoading"
           class="fa fa-circle-o-notch fa-spin loader"
