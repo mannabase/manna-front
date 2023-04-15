@@ -8,6 +8,8 @@ import mixin from "./mixin";
 
 import * as Sentry from "@sentry/vue";
 import { Integrations } from "@sentry/tracing";
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 Sentry.init({
   Vue,
@@ -30,6 +32,7 @@ var VueWeb3 = require('vue-web3')
 Vue.use(VueWeb3, { web3: new Web3(Web3.currentProvider) })
 Vue.mixin(mixin);
 Vue.use(VueAxios, axios)
+Vue.use(VueSweetalert2);
 
 import QrcodeVue from 'qrcode.vue'
 Vue.component("QrcodeVue", QrcodeVue);

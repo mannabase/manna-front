@@ -44,20 +44,27 @@ const mixin = {
         ],
       });
     },
-    async signingMessage() {
-      const exampleMessage = 'Hello Nikoo';
+    async convertingManna() {
+      const timeStamp = Date.now().toString();
       try {
         const from = store.state.selectedAddress;
-        const msg = `0x${Buffer.from(exampleMessage, 'utf8').toString('hex')}`;
+        const msg = `0x${Buffer.from(timeStamp, 'utf8').toString('hex')}`;
         const sign = await window.ethereum.request({
           method: 'personal_sign',
           params: [msg, from, 'Example password'],
         });
         store.state.personalSignResult = sign;
         store.state.personalSignVerify = false;
+        this.$store.commit('setTimeStamp',timeStamp);
+        this.$store.commit('setSigniture',sign);
         console.log('selectedAddress:',from)
-        console.log('exampleMessage:',exampleMessage)
-        console.log('signiture:',sign)
+        console.log('timeStamp:',timeStamp)
+        console.log('signiture: ',sign)
+        console.log('timeStamp-store:',store.state.timeStamp)
+        console.log('signiture-store:',store.state.signiture)
+
+          this.$store.dispatch("convertMannaWallet", this.getAddress());
+
       } catch (error) {
         console.log(error);
       }

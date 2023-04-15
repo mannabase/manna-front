@@ -3,26 +3,26 @@
       <div  class="card__center">
   
   
-        <Divider />
+        <!-- <Divider /> -->
         
-        <div
-          @click="signingMessage()"
+        <!-- <div
+          @click="convertingManna()"
           class="btn-selected card-gradient-border card__one card__item card__action-button"
           
         >
-        signingMessage
+        convertingManna
           <i
            
           ></i>
-        </div>
+        </div> -->
         <div
-          v-if="!(isLinked && isLinked.status != 'not linked')"
+          v-if="(isLinked && isLinked.status == 'NOT_LINKED')"
           class="card__header card__item card__item--with-link"
         >
           Link Verified BrightID:
         </div>
         
-        <div v-if="!(isLinked && isLinked.status != 'not linked')">
+        <div v-if="(isLinked && isLinked.status == 'NOT_LINKED')">
           <a
             class="card__link card__link--small card__item"
             href="https://metamask.io/"
@@ -31,15 +31,19 @@
         </div>
   
         <div
-          v-if="isLinked && isLinked.status == 'not linked' || true"
+          v-if="isLinked && isLinked.status == 'NOT_LINKED'"
           class="gradient-border card__barcode card__item"
         >
-          <qrcode-vue value="isLinked.link" :size="112" level="H"></qrcode-vue>
+          <qrcode-vue 
+          :value="
+            'brightid://link-verification/http:%2f%2fnode.brightid.org/idchain/' +
+              getAddress()
+          " :size="112" level="H"></qrcode-vue>
         </div>
   
-        <Divider />
+        <!-- <Divider /> -->
   
-        <div
+        <!-- <div
           @click="ConnectMetamask()"
           class="btn-selected card-gradient-border card__one card__item card__action-button"
           :class="{ 'disable-btn': $store.state.email }"
@@ -49,15 +53,15 @@
             v-if="$store.state.connectLoading"
             class="fa fa-circle-o-notch fa-spin loader"
           ></i>
-        </div>
+        </div> -->
         
-        <div>
+        <!-- <div>
           <a
             class="card__link card__link--small card__item"
             href="https://metamask.io/"
             >Don't have one?</a
           >
-        </div>
+        </div> -->
         <Divider v-if="!mannaWallet" />
         <div
           @click="generateMannaWallet()"
@@ -67,7 +71,7 @@
             card-gradient-border card__one card__item card__action-button
           "
         >
-        CREATE PAPER WALLET
+        GENERATE MANNA WALLET
           <i
             v-if="$store.state.generateMannaWalletLoading"
             class="fa fa-circle-o-notch fa-spin loader"
@@ -80,21 +84,68 @@
           v-if="mannaWallet"
           class="card__wallet-address card__item card__item--with-link"
         >
-          Manna Claim Wallet Address: {{ mannaWallet }}
+          Manna Claim Wallet Address:
         </div>
+        <div
+        @click="copyItem(mannaWallet)"
+        v-if="mannaWallet"
+        class="
+        btn-selected
+        card-gradient-border card__one card__item card__action-button
+      "
+      style="font-size: x-small;"
+      >
+      <!-- {{ mannaWallet }} -->
+
+        <i>
+          {{ mannaWallet }}
+        </i>
+        </div>
+        <!-- <div>
+          <v-icon
+          small
+          class="mr-2"
+          @click="
+            copyItem(Number(item.TnxID))
+            snackbar = true
+          "
+        >
+          mdi-content-copy
+        </v-icon>
+        <v-snackbar
+          v-model="snackbar"
+          timeout="2000"
+          right
+          color="success"
+          outlined
+        >
+          Copied
+        </v-snackbar>
+        </div> -->
   
         <div v-if="mannaWallet" class="card__wallet-address card__item card__item">
           Balance: {{  balance != null ? balance : 'loading...' }}
         </div>
+        <!-- <div
+           v-if="mannaWallet"
+      >
+      {{ getAddress().slice(0, 7) + "...." + getAddress().slice(-4) }} -->
+      <!-- {{ this.hasTakenResult.message }} -->
+      <!-- <i
+        v-if="$store.state.connectLoading"
+        class="fa fa-circle-o-notch fa-spin loader"
+      ></i> -->
+    <!-- </div> -->
         <div v-if="mannaWallet" class="card__wallet-address card__item card__item">
-          Claimable: {{ mannaToClaim ? mannaToClaim.amount : 'loading...' }}
+          Claimable: {{ mannaToClaim ? mannaToClaim : 'loading...' }}
+          <!-- Claimable: {{ mannaToClaim }} -->
         </div>
   
         <Divider v-if="mannaToClaim && mannaToClaim.amount > 0" />
   
         <div
           @click="claimManna()"
-          v-if="mannaToClaim"
+          v-if="mannaToClaim > 0"
           class="
             btn-selected
             card-gradient-border card__one card__item card__action-button
@@ -125,24 +176,25 @@
           />
         </div> -->
   
-        <Divider />
+        <!-- <Divider /> -->
   
-        <div
+        <!-- <div
          
           class="card__header card__item card__item--with-link"
         >
           Send Manna to Paper Wallet
-        </div>
+        </div> -->
   
-        <Divider />
+        <!-- <Divider /> -->
   
         <div
-          @click="visitLink('https://github.com/stequald/bitcoin-sign-message')"
+        @click="convertingManna()"
           class="
             btn-selected
             card-gradient-border card__one card__item card__action-button
           "
-          :class="{ 'disable-btn': $store.state.email }"
+          v-if="mannaWallet && balance > 0 "
+          :class="{ 'disable-btn': balance == 0 }"
         >
         CONVERT YOUR KEY
           <i
@@ -155,7 +207,7 @@
           your wallet address {{ this.getAddress() }}
         </div> -->
   
-        <Divider />
+        <!-- <Divider /> -->
   
         <!-- <div
           v-if="
@@ -182,13 +234,13 @@
   
         <!-- <Divider /> -->
   
-        <div
+        <!-- <div
           v-if="(isLinked && isLinked.status != 'not linked')"
           class="card__header card__item card__item--with-link"
         >
           Import Key to Metamask
         </div>
-  
+   -->
         <div
           class="card__item card__need-help"
         >
@@ -221,21 +273,22 @@
       generateMannaWallet() {
         this.$store.dispatch("generateMannaWallet", this.getAddress());
       },
-    //   async signingMessage() {
-    //   const exampleMessage = 'Example personal_sign message.';
-    //   try {
-    //     const from = window.accounts[0];
-    //     const msg = `0x${Buffer.from(exampleMessage, 'utf8').toString('hex')}`;
-    //     const sign = await window.ethereum.request({
-    //       method: 'personal_sign',
-    //       params: [msg, from, 'Example password'],
-    //     });
-    //     this.$store.state.personalSignResult = sign;
-    //     this.$store.state.personalSignVerify = false;
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
+      convertMannaWallet() {
+        this.$store.dispatch("convertMannaWallet", this.getAddress());
+      },
+      copyItem(mytext) {
+      navigator.clipboard.writeText(mytext)
+      this.$swal('Copied!');
+      this.$swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Copied!',
+          showConfirmButton: false,
+          timer: 1500,
+          width: '15em',
+          timerProgressBar:true
+          })
+    },
     },
     computed: {
       mannaWallet() {

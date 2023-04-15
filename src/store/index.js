@@ -14,6 +14,7 @@ export default new Vuex.Store({
     submitCodeLoading: false,
     submitEmailLoading: false,
     generateMannaWalletLoading: false,
+    convertMannaWalletLoading:false,
 
     haveMetamask: null,
     isMetamaskConnected: null,
@@ -47,6 +48,10 @@ export default new Vuex.Store({
     chainId: null,
     personalSignResult:null,
     personalSignVerify:null,
+  
+    timeStamp:null,
+    signiture:null,
+
 
     contractData: {
       isVerified: null,
@@ -131,6 +136,12 @@ export default new Vuex.Store({
     },
     setSelectedAddress(state, payload) {
       state.selectedAddress = payload;
+    },
+    setTimeStamp(state, payload){
+      state.timeStamp = payload;
+    },
+    setSigniture(state, payload){
+      state.signiture = payload;
     },
     setProviderState(state, payload) {
       state.providerState = payload;
@@ -315,6 +326,7 @@ export default new Vuex.Store({
         .then((res) => {
           context.state.connectLoading = false;
           context.commit("setMannaToClaim", res.data);
+          console.log('claimable',res.data)
         })
         .catch((e) => {
           context.state.connectLoading = false;
@@ -332,8 +344,10 @@ export default new Vuex.Store({
         .then((res) => {
           if (res.data.status == "error") {
             context.dispatch("getMannaToClaimSecondTry", payload);
+            console.log('claimable-error',res.data)
           } else {
-            context.commit("setMannaToClaim", res.data);
+            context.commit("setMannaToClaim", res.data.value);
+            console.log('claimable',res.data.value)
           }
         })
         .catch((e) => {
@@ -366,7 +380,7 @@ export default new Vuex.Store({
         .request({
           method: "GET",
           url:
-            "https://mannatest.hedgeforhumanity.org/backend/manna/balance/" +
+            "https://mannatest.hedgeforhumanity.org/backend/conversion/getBalance/" +
             payload,
         })
         .then((res) => {
@@ -402,7 +416,7 @@ export default new Vuex.Store({
         .request({
           method: "GET",
           url:
-            "https://mannatest.hedgeforhumanity.org/backend/conversion/mannaWallet/" +
+            "https://mannatest.hedgeforhumanity.org/backend/conversion/mannaWallet" +
             payload,
         })
         .then((res) => {
@@ -425,7 +439,7 @@ export default new Vuex.Store({
         .request({
           method: "POST",
           url:
-            "https://mannatest.hedgeforhumanity.org/backend/conversion/mannaWallet/",
+            "https://mannatest.hedgeforhumanity.org/backend/conversion/mannaWallet",
           data: { walletAddress: payload },
         })
         .then((res) => {
@@ -436,6 +450,32 @@ export default new Vuex.Store({
         })
         .catch((e) => {
           context.state.generateMannaWalletLoading = false;
+          console.log(e);
+        });
+    },
+    convertMannaWallet: (context, payload) => {
+      context.state.convertMannaWalletLoading = true;
+      mixin.methods
+        .request({
+          method: "POST",
+          url:
+            "https://mannatest.hedgeforhumanity.org/backend/conversion/convert",
+          data: { "walletAddress": payload ,
+                  "timestamp":context.state.timeStamp,
+                  "signature":context.state.signiture
+           },
+        })
+        .then((res) => {
+          context.state.convertMannaWalletLoading = false;
+          console.log('convertMannaWallet',res.data)
+          console.log('convertMannaWallet-signiture',res.data.timeStamp)
+          console.log('convertMannaWallet-timeStamp',res.data.signiture)
+          context.commit("setMannaWallet", res.data.mannaWallet);
+          context.dispatch("getBalance", res.data.mannaWallet);
+          context.dispatch("getMannaToClaim", context.state.selectedAddress);
+        })
+        .catch((e) => {
+          context.state.convertMannaWalletLoading = false;
           console.log(e);
         });
     },
