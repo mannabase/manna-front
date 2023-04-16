@@ -151,6 +151,14 @@
           level="H"
         ></qrcode-vue>
       </div>
+      <div
+      v-if="isLinked.status == 'NOT_LINKED'"
+          class="btn-selected
+            card-gradient-border card__one card__item card__action-button"
+          @click="checkBrightIDVerification()"
+        >
+        verify connection
+        </div>
       Scan this QR-code with your verified BrightID
     </div>
     <Divider
@@ -317,6 +325,15 @@ export default {
     changeStore(key) {
       this.selectedStore = key;
     },
+    hasTaken() {
+      console.log(this.hasTakenResult.status + "hasTakenResult.status");
+      if (this.$store.state.hasTakenResult) {
+        if (this.$store.state.hasTakenResult.status == "error") {
+          return true;
+        }
+      }
+      return false;
+    },
     isMetamaskConnected() {
       return window.ethereum.selectedAddress != null;
     },
@@ -403,25 +420,18 @@ export default {
           console.error(error + "this.selectedAddress");
         });
     },
-  
+    
   },
   created() {
     const hasTakenResult = window.localStorage.getItem("hasTakenResult");
     console.log(hasTakenResult + " hasTakenResult");
+    this.$store.dispatch("hasTaken", this.getAddress());
   },
   computed: {
     handleChangeEmaill() {
     return 'this.$store.state.email'+this.$store.state.email
     },
-    hasTaken() {
-      console.log(this.hasTakenResult.status + "hasTakenResult.status");
-      if (this.$store.state.hasTakenResult) {
-        if (this.$store.state.hasTakenResult.status == "error") {
-          return true;
-        }
-      }
-      return false;
-    },
+    
     hasTakenResult() {
       return this.$store.state.hasTakenResult;
     },
@@ -435,7 +445,10 @@ export default {
   mounted() {
     this.$store.dispatch("getMannaToClaim", this.getAddress());
     this.$store.dispatch("hasTaken", this.getAddress());
-    this.ConnectMetamask2(); // call ConnectMetamask() method on mount
+    this.ConnectMetamask2(); 
+    this.hasTaken(); // call ConnectMetamask() method on mount
+    console.log('mounted')
+    
   },
 };
 </script>

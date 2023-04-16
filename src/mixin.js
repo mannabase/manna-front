@@ -133,6 +133,59 @@ const mixin = {
       });
       return instance.request(config);
     },
+    checkBrightIDVerification(){
+      console.log('checkBright-sawl')
+      console.log('this.isLinked: ',this.isLinked)
+      console.log('this.$store.state.isLinked: ',this.$store.state.isLinked)
+      this.$store.dispatch("isLinked", this.selectedAddress);
+      
+      if (this.isLinked.status == 'SUCCESSFUL') {
+        this.$swal('you are verified !');
+        this.$swal.fire({
+          position: 'bottom',
+          icon: 'success',
+          title: 'you are verified !',
+          showConfirmButton: false,
+          timer: 1500,
+          width: '15em',
+          timerProgressBar:true
+          }) 
+      } else if(this.isLinked.status == 'NOT_LINKED') {
+        console.log('you are not linked !')
+        this.$swal('Copied!');
+        this.$swal.fire({
+          position: 'bottom',
+          icon: 'error',
+          title: 'you are not linked !',
+          showConfirmButton: false,
+          timer: 1500,
+          width: '15em',
+          timerProgressBar:true
+          })
+      } else if (this.isLinked.status == 'NOT_VERIFIED') {
+        this.$swal('you are not verified !');
+        this.$swal.fire({
+          position: 'bottom',
+          icon: 'error',
+          title: 'you are not verified !',
+          showConfirmButton: false,
+          timer: 1500,
+          width: '15em',
+          timerProgressBar:true
+          }) 
+      } else if (this.isLinked.status == 'TRANSFERRED') {
+        this.$swal('you are transferd !');
+        this.$swal.fire({
+          position: 'bottom',
+          icon: 'error',
+          title: 'you are transferd !',
+          showConfirmButton: false,
+          timer: 1500,
+          width: '15em',
+          timerProgressBar:true
+          }) 
+      }
+    },
     request(config) {
       store.state.isLoading = true;
       const instance = axios.create({
@@ -320,6 +373,12 @@ const mixin = {
     },
     mannaToClaim() {
       return this.$store.state.mannaToClaim;
+    },
+    convertMessage() {
+      return this.$store.state.convertMessage;
+    },
+    convertStatus() {
+      return this.$store.state.convertStatus;
     },
     mannaBalance() {
       return this.$store.state.mannaBalance;

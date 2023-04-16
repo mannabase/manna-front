@@ -450,7 +450,7 @@ export default new Vuex.Store({
           method: "POST",
           url:
             "https://mannatest.hedgeforhumanity.org/backend/conversion/mannaWallet",
-          data: { walletAddress: payload },
+          data: { walletAddress : payload },
         })
         .then((res) => {
           context.state.generateMannaWalletLoading = false;
@@ -478,6 +478,8 @@ export default new Vuex.Store({
         .then((res) => {
           if (res.data.status == 'success') {
             context.state.convertMannaWalletLoading = false;
+             context.dispatch("getBalance", res.data.mannaWallet);
+          context.dispatch("getMannaToClaim", context.state.selectedAddress);
           } else {
             context.state.convertMannaWalletLoading = true;
           }
@@ -485,8 +487,10 @@ export default new Vuex.Store({
           // console.log('convertMannaWallet',res.data.message)
           console.log('convertMannaWallet-status',res.data.status)
           console.log('convertMannaWallet-message',res.data.message)
-          context.commit("setConvertStatus", res.data.status);
-          context.commit("setConvertMessage", context.state.message);
+          context.commit("setConvertStatus", res.data);
+          context.commit("setConvertMessage", context.state);
+          context.dispatch("getBalance", res.data.mannaWallet);
+          context.dispatch("getMannaToClaim", context.state.selectedAddress);
         })
         .catch((e) => {
           context.state.convertMannaWalletLoading = true;

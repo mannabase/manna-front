@@ -99,7 +99,7 @@
         @click="copyItem(mannaWallet)"
         v-if="mannaWallet"
         class="
-        btn-selected
+        mannawalletShow
         card-gradient-border card__one card__item card__action-button
       "
       style="font-size: small;"
@@ -109,7 +109,7 @@
         <i>
           {{ mannaWallet }}
         </i>
-        <i class="fa fa-regular fa-copy"></i>
+        <i class="fa fa-regular fa-copy" style="margin-left: 3px;"></i>
         </div>
         <!-- <div>
           <v-icon
@@ -155,7 +155,7 @@
   
         <div
           @click="convertingManna()"
-          v-if="mannaToClaim == 0 && mannaWallet"
+          v-if="mannaToClaim > 0 > 0 && mannaWallet"
           class="
             btn-selected
             card-gradient-border card__one card__item card__action-button
@@ -169,13 +169,13 @@
           ></i> -->
         </div>
         <div
-        v-if="mannaToClaim == 0 && mannaWallet"
+        v-if="mannaToClaim > 0 && mannaWallet"
     >
       <p
         class="card__center card__desc code-msg"
-        :class="{ green: convertStatus() == 'success',  red: convertStatus() == 'error' }"
+        :class="{ green: $store.state.convertStatus == 'success',  red: $store.state.convertStatus == 'error' }"
       >
-        {{ convertMessage() }}
+        {{$store.state.convertMessage}}
 
       
       </p>
@@ -279,6 +279,7 @@
   
   <script>
   import Divider from "@/components/Divider.vue";
+  // import Store from "../store";
 
   
   export default {
@@ -312,59 +313,6 @@
           timerProgressBar:true
           })
     },
-    async checkBrightIDVerification(){
-      console.log('checkBright-sawl')
-      console.log('this.isLinked: ',this.isLinked)
-      console.log('this.$store.state.isLinked: ',this.$store.state.isLinked)
-      this.$store.dispatch("isLinked", this.selectedAddress);
-      
-      if (this.isLinked.status == 'SUCCESSFUL') {
-        this.$swal('you are verified !');
-        this.$swal.fire({
-          position: 'bottom',
-          icon: 'success',
-          title: 'you are verified !',
-          showConfirmButton: false,
-          timer: 1500,
-          width: '15em',
-          timerProgressBar:true
-          }) 
-      } else if(this.isLinked.status == 'NOT_LINKED') {
-        console.log('you are not linked !')
-        this.$swal('Copied!');
-        this.$swal.fire({
-          position: 'bottom',
-          icon: 'error',
-          title: 'you are not linked !',
-          showConfirmButton: false,
-          timer: 1500,
-          width: '15em',
-          timerProgressBar:true
-          })
-      } else if (this.isLinked.status == 'NOT_VERIFIED') {
-        this.$swal('you are not verified !');
-        this.$swal.fire({
-          position: 'bottom',
-          icon: 'error',
-          title: 'you are not verified !',
-          showConfirmButton: false,
-          timer: 1500,
-          width: '15em',
-          timerProgressBar:true
-          }) 
-      } else if (this.isLinked.status == 'TRANSFERRED') {
-        this.$swal('you are transferd !');
-        this.$swal.fire({
-          position: 'bottom',
-          icon: 'error',
-          title: 'you are transferd !',
-          showConfirmButton: false,
-          timer: 1500,
-          width: '15em',
-          timerProgressBar:true
-          }) 
-      }
-    }
     },
     computed: {
       mannaWallet() {

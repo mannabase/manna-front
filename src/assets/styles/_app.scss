@@ -105,7 +105,14 @@ footer {
     background: $card-button-border-gradient-selected;
   }
 }
-
+.mannawalletShow {
+  background-color: #ffffff;
+  color: $thirdinary-color;
+  cursor: pointer;
+  &:before {
+    background: $card-button-border-gradient-selected;
+  }
+}
 .btn-gradient {
   background-image: $button-background-color-gradient;
   color: white;
@@ -245,4 +252,5 @@ input:focus {
     color: white;
     text-decoration: none;
   }
+
 }
