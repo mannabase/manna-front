@@ -14,7 +14,7 @@ export default new Vuex.Store({
     submitCodeLoading: false,
     submitEmailLoading: false,
     generateMannaWalletLoading: false,
-    convertMannaWalletLoading:false,
+    convertMannaWalletLoading:true,
 
     haveMetamask: null,
     isMetamaskConnected: null,
@@ -51,7 +51,8 @@ export default new Vuex.Store({
   
     timeStamp:null,
     signiture:null,
-
+    convertMessage:null,
+    convertStatus:null,
 
     contractData: {
       isVerified: null,
@@ -96,9 +97,10 @@ export default new Vuex.Store({
       state.emailSecret = payload.secret;
     },
     setSubmitCodeResult(state, payload) {
+      console.log('setSubmitCodeResult',payload)
       if (payload.status == "SUCCESSFUL") {
         state.sendCodeState = payload.status;
-        state.sendCodeMsg = payload.msg;
+        state.sendCodeMsg = payload.message;
         state.txHash = payload.txHash;
         state.txLink = payload.txLink;
         state.mannaBalance = {
@@ -106,11 +108,12 @@ export default new Vuex.Store({
           msg: "SUCCESSFUL",
           status: "SUCCESSFUL",
         };
-      } else if (payload.status == "error") {
+      } else  {
         state.sendCodeState = payload.status;
         state.sendCodeMsg = payload.message;
         state.txHash = null;
         state.txLink = null;
+        console.log('setSubmitCodeResult',payload.message,payload.status)
       }
     },
     setEmail(state, payload) {
@@ -133,6 +136,12 @@ export default new Vuex.Store({
     },
     setMannaWallet(state, payload) {
       state.mannaWallet = payload;
+    },
+    setConvertMessage(state,payload){
+      state.convertMessage = payload;
+    },
+    setConvertStatus(state,payload){
+      state.convertStatus = payload;
     },
     setSelectedAddress(state, payload) {
       state.selectedAddress = payload;
@@ -284,7 +293,8 @@ export default new Vuex.Store({
           context.state.submitCodeLoading = false;
           // e.response.message = 
           console.log('submitCode-catch-paylod', payload)
-          console.log('submitCode-catch-response' , e.response)
+          console.log('submitCode-catch-response' , e.response.data.message)
+          context.commit("setSubmitCodeResult", e.response.data)
           //   console.log('submitCode-message-catch', e.response.data.message)
           console.log('submitCode-data-catch', e.data)
           
@@ -454,7 +464,7 @@ export default new Vuex.Store({
         });
     },
     convertMannaWallet: (context, payload) => {
-      context.state.convertMannaWalletLoading = true;
+      context.state.convertMannaWalletLoading = false;
       mixin.methods
         .request({
           method: "POST",
@@ -466,16 +476,20 @@ export default new Vuex.Store({
            },
         })
         .then((res) => {
-          context.state.convertMannaWalletLoading = false;
-          console.log('convertMannaWallet',res.data)
-          console.log('convertMannaWallet-signiture',res.data.timeStamp)
-          console.log('convertMannaWallet-timeStamp',res.data.signiture)
-          context.commit("setMannaWallet", res.data.mannaWallet);
-          context.dispatch("getBalance", res.data.mannaWallet);
-          context.dispatch("getMannaToClaim", context.state.selectedAddress);
+          if (res.data.status == 'success') {
+            context.state.convertMannaWalletLoading = false;
+          } else {
+            context.state.convertMannaWalletLoading = true;
+          }
+          
+          // console.log('convertMannaWallet',res.data.message)
+          console.log('convertMannaWallet-status',res.data.status)
+          console.log('convertMannaWallet-message',res.data.message)
+          context.commit("setConvertStatus", res.data.status);
+          context.commit("setConvertMessage", context.state.message);
         })
         .catch((e) => {
-          context.state.convertMannaWalletLoading = false;
+          context.state.convertMannaWalletLoading = true;
           console.log(e);
         });
     },

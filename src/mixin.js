@@ -5,6 +5,7 @@ import ENUMS from "@/javascripts/constants/enums"
 import Web3 from "web3";
 import ABI from "@/javascripts/ABI"
 import { ethers } from "ethers"
+import { Icon } from '@iconify/vue2';
 
 const mixin = {
   data() {
@@ -14,6 +15,7 @@ const mixin = {
       MannaABI: ABI.Manna,
       ClaimMannaABI: ABI.ClaimManna,
       MannaBrightIDABI: ABI.MannaBrightID,
+      Icon
     }
   },
   methods: {

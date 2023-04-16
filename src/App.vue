@@ -8,11 +8,13 @@
 import detectEthereumProvider from "@metamask/detect-provider";
 import ENUMS from "@/javascripts/constants/enums";
 import Web3 from "web3";
+import { Icon } from '@iconify/vue2';
 
 export default {
   data() {
     return {
       ENUMS,
+      Icon
     };
   },
   methods: {

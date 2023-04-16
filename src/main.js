@@ -5,6 +5,9 @@ import store from "./store";
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import mixin from "./mixin";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faHatWizard } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import * as Sentry from "@sentry/vue";
 import { Integrations } from "@sentry/tracing";
@@ -33,9 +36,11 @@ Vue.use(VueWeb3, { web3: new Web3(Web3.currentProvider) })
 Vue.mixin(mixin);
 Vue.use(VueAxios, axios)
 Vue.use(VueSweetalert2);
+Vue.use(library,faHatWizard,FontAwesomeIcon)
 
 import QrcodeVue from 'qrcode.vue'
 Vue.component("QrcodeVue", QrcodeVue);
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 /* styles */
 import "@/assets/styles/main.scss";

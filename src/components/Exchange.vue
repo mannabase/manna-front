@@ -33,12 +33,21 @@
         <div
           v-if="isLinked && isLinked.status == 'NOT_LINKED'"
           class="gradient-border card__barcode card__item"
+          @click="visitLink(isLinked.link)"
         >
-          <qrcode-vue 
-          :value="
-            'brightid://link-verification/http:%2f%2fnode.brightid.org/idchain/' +
-              getAddress()
-          " :size="112" level="H"></qrcode-vue>
+        <qrcode-vue
+          :value="isLinked.link"
+          :size="112"
+          level="H"
+        ></qrcode-vue>
+        </div>
+        <div
+          v-if="isLinked && isLinked.status == 'NOT_LINKED'"
+          class="btn-selected
+            card-gradient-border card__one card__item card__action-button"
+          @click="checkBrightIDVerification()"
+        >
+        verify connection
         </div>
   
         <!-- <Divider /> -->
@@ -62,10 +71,10 @@
             >Don't have one?</a
           >
         </div> -->
-        <Divider v-if="!mannaWallet" />
+        <Divider v-if="!mannaWallet && isLinked && isLinked.status == 'SUCCESSFUL'" />
         <div
           @click="generateMannaWallet()"
-          v-if="!mannaWallet"
+          v-if="!mannaWallet && isLinked && isLinked.status == 'SUCCESSFUL'"
           class="
             btn-selected
             card-gradient-border card__one card__item card__action-button
@@ -93,13 +102,14 @@
         btn-selected
         card-gradient-border card__one card__item card__action-button
       "
-      style="font-size: x-small;"
+      style="font-size: small;"
       >
       <!-- {{ mannaWallet }} -->
 
         <i>
           {{ mannaWallet }}
         </i>
+        <i class="fa fa-regular fa-copy"></i>
         </div>
         <!-- <div>
           <v-icon
@@ -144,20 +154,32 @@
         <Divider v-if="mannaToClaim && mannaToClaim.amount > 0" />
   
         <div
-          @click="claimManna()"
-          v-if="mannaToClaim > 0"
+          @click="convertingManna()"
+          v-if="mannaToClaim == 0 && mannaWallet"
           class="
             btn-selected
             card-gradient-border card__one card__item card__action-button
           "
-          :class="{ 'disable-btn': mannaToClaim.amount == 0 }"
+          :class="{ 'disable-btn': !$store.state.convertMannaWalletLoading  }"
         >
-          CLAIM MANNA
-          <i
-            v-if="$store.state.claimLoading"
+          CONVERT OLD MANNA
+          <!-- <i
+            v-if="!$store.state.convertMannaWalletLoading"
             class="fa fa-circle-o-notch fa-spin loader"
-          ></i>
+          ></i> -->
         </div>
+        <div
+        v-if="mannaToClaim == 0 && mannaWallet"
+    >
+      <p
+        class="card__center card__desc code-msg"
+        :class="{ green: convertStatus() == 'success',  red: convertStatus() == 'error' }"
+      >
+        {{ convertMessage() }}
+
+      
+      </p>
+    </div>
   
         <!-- <div
           v-if="
@@ -187,7 +209,7 @@
   
         <!-- <Divider /> -->
   
-        <div
+        <!-- <div
         @click="convertingManna()"
           class="
             btn-selected
@@ -201,7 +223,7 @@
             v-if="$store.state.connectLoading"
             class="fa fa-circle-o-notch fa-spin loader"
           ></i>
-        </div>
+        </div> -->
   
         <!-- <div class="card__wallet-address card__item card__item--with-link">
           your wallet address {{ this.getAddress() }}
@@ -257,6 +279,7 @@
   
   <script>
   import Divider from "@/components/Divider.vue";
+
   
   export default {
     name: "Exchange",
@@ -280,7 +303,7 @@
       navigator.clipboard.writeText(mytext)
       this.$swal('Copied!');
       this.$swal.fire({
-          position: 'top-end',
+          position: 'bottom',
           icon: 'success',
           title: 'Copied!',
           showConfirmButton: false,
@@ -289,15 +312,89 @@
           timerProgressBar:true
           })
     },
+    async checkBrightIDVerification(){
+      console.log('checkBright-sawl')
+      console.log('this.isLinked: ',this.isLinked)
+      console.log('this.$store.state.isLinked: ',this.$store.state.isLinked)
+      this.$store.dispatch("isLinked", this.selectedAddress);
+      
+      if (this.isLinked.status == 'SUCCESSFUL') {
+        this.$swal('you are verified !');
+        this.$swal.fire({
+          position: 'bottom',
+          icon: 'success',
+          title: 'you are verified !',
+          showConfirmButton: false,
+          timer: 1500,
+          width: '15em',
+          timerProgressBar:true
+          }) 
+      } else if(this.isLinked.status == 'NOT_LINKED') {
+        console.log('you are not linked !')
+        this.$swal('Copied!');
+        this.$swal.fire({
+          position: 'bottom',
+          icon: 'error',
+          title: 'you are not linked !',
+          showConfirmButton: false,
+          timer: 1500,
+          width: '15em',
+          timerProgressBar:true
+          })
+      } else if (this.isLinked.status == 'NOT_VERIFIED') {
+        this.$swal('you are not verified !');
+        this.$swal.fire({
+          position: 'bottom',
+          icon: 'error',
+          title: 'you are not verified !',
+          showConfirmButton: false,
+          timer: 1500,
+          width: '15em',
+          timerProgressBar:true
+          }) 
+      } else if (this.isLinked.status == 'TRANSFERRED') {
+        this.$swal('you are transferd !');
+        this.$swal.fire({
+          position: 'bottom',
+          icon: 'error',
+          title: 'you are transferd !',
+          showConfirmButton: false,
+          timer: 1500,
+          width: '15em',
+          timerProgressBar:true
+          }) 
+      }
+    }
     },
     computed: {
       mannaWallet() {
         return this.$store.state.mannaWallet;
       },
+      convertMessage() {
+        return this.$store.state.convertMessage;
+      },
+      convertStatus() {
+        return this.$store.state.convertStatus;
+      },
       balance() {
         return this.$store.state.balance;
       },
+      isLinked(){
+        return this.$store.state.isLinked;
+      },
+      qrCodeSize() {
+      return window.innerWidth > 600
+        ? window.innerWidth * (10 / 100)
+        : window.innerWidth / 3;
     },
+    },
+    // watch:{
+    //   async isBrightIDVerified() {
+    //   if (this.isBrightIDVerified) {
+    //     await this.$store.dispatch('isLinked')
+    //   }
+    // }
+    // },
     mounted() {
       if (this.$store.state.mannaWallet == null) {
         this.$store.dispatch("mannaWallet", this.getAddress());

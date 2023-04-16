@@ -204,7 +204,7 @@
         placeholder="Enter 6-digit code from email..."
         type="number"
         v-model="code"
-        :disabled="$store.state.sendCodeState == 'SUCCESSFUL'"
+        :disabled="$store.state.sendCodeMsg == 'SUCCESSFUL'"
       />
     </div>
     <div
@@ -220,7 +220,7 @@
         btn-selected
         card-gradient-border card__one card__item card__action-button
       "
-      :class="{ 'disable-btn': $store.state.sendCodeState == 'SUCCESSFUL' }"
+      :class="{ 'disable-btn': $store.state.sendCodeMsg == 'SUCCESSFUL' }"
       @click="submitCode()"
     >
       SUBMIT
@@ -251,14 +251,14 @@
     </div>
     <Divider
       v-if="
-        $store.state.sendCodeState &&
+        $store.state.sendCodeMsg &&
           // !hasTaken &&
           (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0 || hasTakenResult.message == 'Email is not set')
       "
     />
     <div
       v-if="
-        $store.state.sendCodeState &&
+        $store.state.sendCodeMsg &&
           // !hasTaken &&
           (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0 || hasTakenResult.message == 'Email is not set')
       "
@@ -267,9 +267,9 @@
         class="card__center card__desc code-msg"
         :class="{ green: $store.state.txLink, red: !$store.state.txLink }"
       >
-        {{ $store.state.sendCodeMsg }}-sendCodeMsg
+        {{ $store.state.sendCodeMsg }}
         <a
-          v-if="$store.state.sendCodeState == 'SUCCESSFUL'"
+          v-if="$store.state.sendCodeMsg == 'SUCCESSFUL'"
           class="green"
           :href="$store.state.txLink"
           >{{ $store.state.txLink }} </a
@@ -356,8 +356,9 @@ export default {
       console.log('sendEmail',this.email)
     },
     submitCode() {
-      if (this.$store.state.sendCodeState != "SUCCESSFUL") {
-        console.log('not successful' ,this.$store.state.sendCodeState )
+      console.log('this.$store.state.sendCodeMsg',this.$store.state.sendCodeMsg)
+      if (this.$store.state.sendCodeMsg != "SUCCESSFUL") {
+        console.log('not successful' ,this.$store.state.sendCodeMsg )
         console.log('this.$store.state.email',this.$store.state.email)
         if (this.code.length > 0) {
           console.log('not successful-codeLength' ,this.$store.state.emailSecret , this.code)
