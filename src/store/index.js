@@ -318,6 +318,7 @@ export default new Vuex.Store({
             //   }) 
           } else if (res.data.status == 'TRANSFERRED') {
             console.log('isLinkedBright called then TRANSFERRED',payload)
+            alert('you are transferred!')
             // this.$swal('you are transferd !');
             // this.$swal.fire({
             //   position: 'bottom',

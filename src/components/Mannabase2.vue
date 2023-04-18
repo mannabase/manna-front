@@ -121,6 +121,19 @@
           level="H"
         ></qrcode-vue>
       </div>
+      <div
+          v-if="isLinked.status == 'TRANSFERRED' && 'NOT_VERIFIED'"
+          class="btn-selected
+            card-gradient-border card__one card__item card__action-button"
+            :class="{ 'disable-btn': $store.state.alertLoading}"
+          @click="checkBrightIDVerification()"
+        >
+        verify connection
+        <i
+            v-if="$store.state.alertLoading"
+            class="fa fa-circle-o-notch fa-spin loader"
+          ></i>
+        </div>
       {{
         isLinked.status == "NOT_VERIFIED"
           ? isLinked.message
