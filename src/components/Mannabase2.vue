@@ -64,7 +64,7 @@
     <div
       v-if="
         isLinked &&
-        isLinked.status == 'SUCCESSFUL' &&
+        isLinked.status == 'SUCCESSFUL' && mannaToClaim.amount > 0 &&
           // !hasTaken &&
           (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
       "
@@ -152,12 +152,17 @@
         ></qrcode-vue>
       </div>
       <div
-      v-if="isLinked.status == 'NOT_LINKED'"
+          v-if="isLinked && isLinked.status == 'NOT_LINKED'"
           class="btn-selected
             card-gradient-border card__one card__item card__action-button"
+            :class="{ 'disable-btn': $store.state.alertLoading}"
           @click="checkBrightIDVerification()"
         >
         verify connection
+        <i
+            v-if="$store.state.alertLoading"
+            class="fa fa-circle-o-notch fa-spin loader"
+          ></i>
         </div>
       Scan this QR-code with your verified BrightID
     </div>

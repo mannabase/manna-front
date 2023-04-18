@@ -45,9 +45,14 @@
           v-if="isLinked && isLinked.status == 'NOT_LINKED'"
           class="btn-selected
             card-gradient-border card__one card__item card__action-button"
+            :class="{ 'disable-btn': $store.state.alertLoading}"
           @click="checkBrightIDVerification()"
         >
         verify connection
+        <i
+            v-if="$store.state.alertLoading"
+            class="fa fa-circle-o-notch fa-spin loader"
+          ></i>
         </div>
   
         <!-- <Divider /> -->
@@ -96,11 +101,10 @@
           Manna Claim Wallet Address:
         </div>
         <div
-        @click="copyItem(mannaWallet)"
         v-if="mannaWallet"
         class="
         mannawalletShow
-        card-gradient-border card__one card__item card__action-button
+         card__one card__item card__action-button
       "
       style="font-size: small;"
       >
@@ -109,8 +113,10 @@
         <i>
           {{ mannaWallet }}
         </i>
-        <i class="fa fa-regular fa-copy" style="margin-left: 3px;"></i>
+        <!-- <i class="fa fa-regular fa-copy" style="margin-left: 3px;"></i> -->
+        <i @click="copyItem(mannaWallet)" class="card__link card__link--small" style="margin-left: 2px;" >copy</i>
         </div>
+        
         <!-- <div>
           <v-icon
           small
@@ -169,7 +175,7 @@
           ></i> -->
         </div>
         <div
-        v-if="mannaToClaim > 0 && mannaWallet"
+        v-if="mannaToClaim.amount > 0 && mannaWallet"
     >
       <p
         class="card__center card__desc code-msg"
@@ -179,6 +185,54 @@
 
       
       </p>
+    </div>
+    <div
+      v-if="
+        isLinked &&
+        isLinked.status != 'NOT_LINKED' &&
+        isLinked.status != 'SUCCESSFUL' &&
+          // !hasTaken &&
+          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
+      "
+      class="card__center card__desc"
+    >
+      <div
+        v-if="isLinked.status == 'NOT_VERIFIED'"
+        @click="visitLink(isLinked.link)"
+        class="gradient-border card__barcode card__item"
+      >
+        <qrcode-vue
+          :value="isLinked.link"
+          :size="qrCodeSize"
+          level="H"
+        ></qrcode-vue>
+      </div>
+      <div
+        v-if="isLinked.status == 'TRANSFERRED'"
+        @click="
+          visitLink(
+            'brightid://link-verification/http:%2f%2fnode.brightid.org/idchain/' +
+              getAddress()
+          )
+        "
+        class="gradient-border card__barcode card__item"
+      >
+        <qrcode-vue
+          :value="
+            'brightid://link-verification/http:%2f%2fnode.brightid.org/idchain/' +
+              getAddress()
+          "
+          :size="112"
+          level="H"
+        ></qrcode-vue>
+      </div>
+      {{
+        isLinked.status == "NOT_VERIFIED"
+          ? isLinked.message
+          : "This BrightID account is linked to " +
+          isLinked.address +
+            " Please use this address or try to use a new address"
+      }}
     </div>
   
         <!-- <div

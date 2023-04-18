@@ -1,8 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import mixin from "../mixin";
-
+import checkBrightIDVerificationAlert from "../mixin";
+// import VueSweetalert2 from 'vue-sweetalert2';
+// import 'sweetalert2/dist/sweetalert2.min.css';
 Vue.use(Vuex);
+// Vue.use(VueSweetalert2);
 
 export default new Vuex.Store({
   state: {
@@ -13,6 +16,7 @@ export default new Vuex.Store({
     registerMeLoading: false,
     submitCodeLoading: false,
     submitEmailLoading: false,
+    alertLoading: false,
     generateMannaWalletLoading: false,
     convertMannaWalletLoading:true,
 
@@ -244,6 +248,102 @@ export default new Vuex.Store({
           console.error("isLinked false");
           context.state.connectLoading = false;
           console.log(e);
+        });
+    },
+    isLinkedBright: (context, payload) => {
+      console.log('isLinkedBright called',payload)
+      context.state.alertLoading = true
+      // for alerts request seperatly to /brightId/isLinked/
+      console.log("isLinked method called");
+      // console.log(this.store.state.testurl)
+      mixin.methods
+        .request({
+          method: "GET",
+          url:
+            "https://mannatest.hedgeforhumanity.org/backend/brightId/isLinked/" +
+            payload,
+            
+        })
+        .then((res) => {
+          console.log('isLinkedBright called then',payload)
+          context.state.alertLoading = false
+          context.commit("setIsLinked", res.data);
+          console.log(res.data.link + " isLinked.link");
+          console.log("getMannaBalance")
+          console.log("I requested isLinked");
+          // checkBrightIDVerificationAlert()
+          if (res.data.status == "SUCCESSFUL") {
+            console.log('isLinkedBright called then SUCCESSFUL',payload)
+            context.dispatch("getMannaBalance", context.state.selectedAddress);
+            console.log("isLinked-status: "+res.data.status)
+            alert('you are verified !')
+          //   this.$swal('you are verified !');
+          //   this.$swal.fire({
+          //   position: 'bottom',
+          //   icon: 'success',
+          //   title: 'you are verified !',
+          //   showConfirmButton: false,
+          //   timer: 1500,
+          //   width: '15em',
+          //   timerProgressBar:true
+          // })
+          }else if(res.data.status == 'NOT_LINKED'){
+            console.log('isLinkedBright called then NOT_LINKED',payload)
+            console.log('you are not linked !')
+            alert('you are not linked!')
+            checkBrightIDVerificationAlert();
+           
+            // this.$swal('you are not linked!');
+          //   this.$swal.fire({
+          //     position: 'bottom',
+          //     icon: 'error',
+          //     title: 'you are not linked !',
+          //     showConfirmButton: false,
+          //     timer: 1500,
+          //     width: '15em',
+          //     timerProgressBar:true
+          // })
+          }else if (res.data.status == 'NOT_VERIFIED') {
+            console.log('isLinkedBright called then NOT_VERIFIED',payload)
+            alert('you are not linked!')
+            // this.$swal('you are not verified !');
+            // this.$swal.fire({
+            //   position: 'bottom',
+            //   icon: 'error',
+            //   title: 'you are not verified !',
+            //   showConfirmButton: false,
+            //   timer: 1500,
+            //   width: '15em',
+            //   timerProgressBar:true
+            //   }) 
+          } else if (res.data.status == 'TRANSFERRED') {
+            console.log('isLinkedBright called then TRANSFERRED',payload)
+            // this.$swal('you are transferd !');
+            // this.$swal.fire({
+            //   position: 'bottom',
+            //   icon: 'error',
+            //   title: 'you are transferd !',
+            //   showConfirmButton: false,
+            //   timer: 1500,
+            //   width: '15em',
+            //   timerProgressBar:true
+            //   }) 
+          }
+        })
+        .catch((e) => {
+          context.state.alertLoading = false
+          console.error("isLinked false");
+          console.log('isLinkedBright',e);
+          // this.$swal('ERROR');
+          // this.$swal.fire({
+          //     position: 'bottom',
+          //     icon: 'error',
+          //     title: 'ERROR',
+          //     showConfirmButton: false,
+          //     timer: 1500,
+          //     width: '15em',
+          //     timerProgressBar:true
+          //     }) 
         });
     },
     submitEmail: (context, payload) => {

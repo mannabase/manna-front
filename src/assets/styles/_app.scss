@@ -90,6 +90,34 @@ footer {
   }
 }
 
+.card-gradient-border {
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  box-sizing: border-box;
+  padding: $base-border-padding;
+  $border: 3px;
+  background-clip: padding-box;
+  border: solid $border transparent;
+  border-radius: $border-radius-gradient;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: -$border;
+
+    border-radius: inherit;
+    background: $card-button-border-gradient;
+  }
+}
+
 .btn {
   background-color: white;
   color: $gray-color;
@@ -109,8 +137,41 @@ footer {
   background-color: #ffffff;
   color: $thirdinary-color;
   cursor: pointer;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
   &:before {
     background: $card-button-border-gradient-selected;
+  }
+}
+.card-gradient-border {
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  box-sizing: border-box;
+  padding: $base-border-padding;
+  $border: 3px;
+  background-clip: padding-box;
+  border: solid $border transparent;
+  border-radius: $border-radius-gradient;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: -$border;
+
+    border-radius: inherit;
+    background: $card-button-border-gradient;
   }
 }
 .btn-gradient {
