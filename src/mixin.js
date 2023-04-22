@@ -136,18 +136,143 @@ const mixin = {
     checkBrightIDVerification(){
       this.$store.dispatch("isLinkedBright",this.getAddress())
     },
-    checkBrightIDVerificationAlert(){
-      this.$swal('worked!');
-        this.$swal.fire({
+    async checkBrightIDVerificationAlert() {
+      let res = await this.$store.dispatch("isLinkedBright", this.getAddress());
+      try {
+        console.log('checkBrightIDVerificationAlert', res);
+        if (res.data.status === "SUCCESSFUL") {
+          await this.$swal('you are verified !');
+          this.$swal.fire({
+            position: 'bottom',
+            icon: 'success',
+            title: 'you are verified !',
+            showConfirmButton: false,
+            timer: 1500,
+            width: '15em',
+            timerProgressBar: true
+          });
+        } else if (res.data.status === 'NOT_LINKED') {
+          await this.$swal('you are not linked!');
+          this.$swal.fire({
+            position: 'bottom',
+            icon: 'error',
+            title: 'you are not linked !',
+            showConfirmButton: false,
+            timer: 1500,
+            width: '15em',
+            timerProgressBar: true
+          });
+        } else if (res.data.status === 'NOT_VERIFIED') {
+          await this.$swal('you are not verified !');
+          this.$swal.fire({
+            position: 'bottom',
+            icon: 'error',
+            title: 'you are not verified !',
+            showConfirmButton: false,
+            timer: 1500,
+            width: '15em',
+            timerProgressBar: true
+          });
+        } else if (res.data.status === 'TRANSFERRED') {
+          await this.$swal('you are transferred!');
+          this.$swal.fire({
+            position: 'bottom',
+            icon: 'error',
+            title: 'you are transferred!',
+            showConfirmButton: false,
+            timer: 1500,
+            width: '15em',
+            timerProgressBar: true
+          });
+        }
+      } catch (error) {
+        console.error(error);
+        // await this.$swal('An error occurred!');
+        await this.$swal.fire({
           position: 'bottom',
-          icon: 'success',
-          title: 'done!',
+          icon: 'error',
+          title: 'An error occurred!',
           showConfirmButton: false,
           timer: 1500,
           width: '15em',
-          timerProgressBar:true
-          }) 
+          timerProgressBar: true
+        });
+      }
     },
+    
+    // async checkBrightIDVerificationAlert(){
+    //   let myPromise = new Promise(this.$store.dispatch("isLinkedBright",this.getAddress()))
+    //   // setTimeout(this.$store.dispatch("isLinkedBright",this.getAddress()), 5000);
+    //   // await this.$swal('worked!');
+    //   let res = await myPromise
+    //   if (res.data.status == "SUCCESSFUL") {
+    //     console.log('isLinkedBright called then SUCCESSFUL',res.data.status)
+    //     // context.dispatch("getMannaBalance", context.state.selectedAddress);
+    //     console.log("isLinked-status: "+res.data.status)
+    //     alert('you are verified !')
+    //   //   this.$swal('you are verified !');
+    //   //   this.$swal.fire({
+    //   //   position: 'bottom',
+    //   //   icon: 'success',
+    //   //   title: 'you are verified !',
+    //   //   showConfirmButton: false,
+    //   //   timer: 1500,
+    //   //   width: '15em',
+    //   //   timerProgressBar:true
+    //   // })
+    //   }else if(res.data.status == 'NOT_LINKED'){
+    //     console.log('isLinkedBright called then NOT_LINKED',payload)
+    //     console.log('you are not linked !')
+    //     alert('you are not linked!')
+    //     checkBrightIDVerificationAlert();
+       
+    //     // this.$swal('you are not linked!');
+    //   //   this.$swal.fire({
+    //   //     position: 'bottom',
+    //   //     icon: 'error',
+    //   //     title: 'you are not linked !',
+    //   //     showConfirmButton: false,
+    //   //     timer: 1500,
+    //   //     width: '15em',
+    //   //     timerProgressBar:true
+    //   // })
+    //   }else if (res.data.status == 'NOT_VERIFIED') {
+    //     console.log('isLinkedBright called then NOT_VERIFIED',payload)
+    //     alert('you are not linked!')
+    //     // this.$swal('you are not verified !');
+    //     // this.$swal.fire({
+    //     //   position: 'bottom',
+    //     //   icon: 'error',
+    //     //   title: 'you are not verified !',
+    //     //   showConfirmButton: false,
+    //     //   timer: 1500,
+    //     //   width: '15em',
+    //     //   timerProgressBar:true
+    //     //   }) 
+    //   } else if (res.data.status == 'TRANSFERRED') {
+    //     console.log('isLinkedBright called then TRANSFERRED',payload)
+    //     alert('you are transferred!')
+    //     // this.$swal('you are transferd !');
+    //     // this.$swal.fire({
+    //     //   position: 'bottom',
+    //     //   icon: 'error',
+    //     //   title: 'you are transferd !',
+    //     //   showConfirmButton: false,
+    //     //   timer: 1500,
+    //     //   width: '15em',
+    //     //   timerProgressBar:true
+    //     //   }) 
+    //   }
+    //   // this.$swal.fire({
+    //   //     position: 'bottom',
+    //   //     icon: 'success',
+    //   //     title: 'done!',
+    //   //     showConfirmButton: false,
+    //   //     timer: 1500,
+    //   //     width: '15em',
+    //   //     timerProgressBar:true
+    //   //     }) 
+    // },
     request(config) {
       store.state.isLoading = true;
       const instance = axios.create({

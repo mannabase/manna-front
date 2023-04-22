@@ -1,7 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import mixin from "../mixin";
-import checkBrightIDVerificationAlert from "../mixin";
+import Swal from 'sweetalert2';
+
+// import checkBrightIDVerificationAlert from "../mixin";
 // import VueSweetalert2 from 'vue-sweetalert2';
 // import 'sweetalert2/dist/sweetalert2.min.css';
 Vue.use(Vuex);
@@ -41,6 +43,7 @@ export default new Vuex.Store({
 
     hasTakenResult: null,
     mannaWallet: null,
+    getMannaWllet:null,
 
     selectedAddress: null,
     providerState: null,
@@ -139,6 +142,9 @@ export default new Vuex.Store({
       state.hasTakenResult = payload
     },
     setMannaWallet(state, payload) {
+      state.mannaWallet = payload;
+    },
+    setGetMannaWallet(state, payload) {
       state.mannaWallet = payload;
     },
     setConvertMessage(state,payload){
@@ -271,82 +277,64 @@ export default new Vuex.Store({
           console.log(res.data.link + " isLinked.link");
           console.log("getMannaBalance")
           console.log("I requested isLinked");
-          // checkBrightIDVerificationAlert()
+    
+          // New code to handle response status
           if (res.data.status == "SUCCESSFUL") {
             console.log('isLinkedBright called then SUCCESSFUL',payload)
             context.dispatch("getMannaBalance", context.state.selectedAddress);
             console.log("isLinked-status: "+res.data.status)
-            alert('you are verified !')
-          //   this.$swal('you are verified !');
-          //   this.$swal.fire({
-          //   position: 'bottom',
-          //   icon: 'success',
-          //   title: 'you are verified !',
-          //   showConfirmButton: false,
-          //   timer: 1500,
-          //   width: '15em',
-          //   timerProgressBar:true
-          // })
-          }else if(res.data.status == 'NOT_LINKED'){
+            Swal.fire({
+                position: 'bottom',
+                icon: 'success',
+                title: 'you are verified !',
+                showConfirmButton: false,
+                timer: 1500,
+                width: '15em',
+                timerProgressBar:true
+              });
+          } else if (res.data.status == 'NOT_LINKED'){
             console.log('isLinkedBright called then NOT_LINKED',payload)
-            console.log('you are not linked !')
-            alert('you are not linked!')
-            checkBrightIDVerificationAlert();
-           
-            // this.$swal('you are not linked!');
-          //   this.$swal.fire({
-          //     position: 'bottom',
-          //     icon: 'error',
-          //     title: 'you are not linked !',
-          //     showConfirmButton: false,
-          //     timer: 1500,
-          //     width: '15em',
-          //     timerProgressBar:true
-          // })
-          }else if (res.data.status == 'NOT_VERIFIED') {
+            Swal.fire({
+              position: 'bottom',
+              icon: 'error',
+              title: 'you are not linked !',
+              showConfirmButton: false,
+              timer: 1500,
+              width: '15em',
+              timerProgressBar:true
+            });
+          } else if (res.data.status == 'NOT_VERIFIED') {
             console.log('isLinkedBright called then NOT_VERIFIED',payload)
-            alert('you are not linked!')
-            // this.$swal('you are not verified !');
-            // this.$swal.fire({
-            //   position: 'bottom',
-            //   icon: 'error',
-            //   title: 'you are not verified !',
-            //   showConfirmButton: false,
-            //   timer: 1500,
-            //   width: '15em',
-            //   timerProgressBar:true
-            //   }) 
+            Swal.fire({
+              position: 'bottom',
+              icon: 'error',
+              title: 'you are not verified !',
+              showConfirmButton: false,
+              timer: 1500,
+              width: '15em',
+              timerProgressBar:true
+            });
           } else if (res.data.status == 'TRANSFERRED') {
             console.log('isLinkedBright called then TRANSFERRED',payload)
-            alert('you are transferred!')
-            // this.$swal('you are transferd !');
-            // this.$swal.fire({
-            //   position: 'bottom',
-            //   icon: 'error',
-            //   title: 'you are transferd !',
-            //   showConfirmButton: false,
-            //   timer: 1500,
-            //   width: '15em',
-            //   timerProgressBar:true
-            //   }) 
+            Swal.fire({
+              position: 'bottom',
+              icon: 'error',
+              title: 'you are transferd !',
+              showConfirmButton: false,
+              timer: 1500,
+              width: '15em',
+              timerProgressBar:true
+            });
           }
         })
         .catch((e) => {
           context.state.alertLoading = false
           console.error("isLinked false");
           console.log('isLinkedBright',e);
-          // this.$swal('ERROR');
-          // this.$swal.fire({
-          //     position: 'bottom',
-          //     icon: 'error',
-          //     title: 'ERROR',
-          //     showConfirmButton: false,
-          //     timer: 1500,
-          //     width: '15em',
-          //     timerProgressBar:true
-          //     }) 
+          Swal.fire('Verification Failed', 'ERROR', 'error');
         });
     },
+    
     submitEmail: (context, payload) => {
       context.state.submitEmailLoading = true;
       mixin.methods
@@ -564,6 +552,27 @@ export default new Vuex.Store({
           console.log(e);
         });
     },
+    getMannaWallet:(context, payload) => {
+      mixin.methods
+        .request({
+          method: "GET",
+          url:
+            "https://mannatest.hedgeforhumanity.org/backend/conversion/getMannaWallet" +
+            payload,
+        })
+        .then((res) => {
+          if (res.data.mannaWallet) {
+            context.commit("setMannaWallet", res.data.mannaWallet);
+            context.dispatch("getBalance", res.data.mannaWallet);
+            context.dispatch("getMannaToClaim", context.state.selectedAddress);
+            console.log('mannaWallet' , res.data.mannaWallet)
+          }
+        })
+        .catch((e) => {
+          context.state.generateMannaWalletLoading = false;
+          console.log('mannaWallet',e);
+        });
+    },
     convertMannaWallet: (context, payload) => {
       context.state.convertMannaWalletLoading = false;
       mixin.methods
@@ -588,8 +597,8 @@ export default new Vuex.Store({
           // console.log('convertMannaWallet',res.data.message)
           console.log('convertMannaWallet-status',res.data.status)
           console.log('convertMannaWallet-message',res.data.message)
-          context.commit("setConvertStatus", res.data);
-          context.commit("setConvertMessage", context.state);
+          context.commit("setConvertStatus", res.data.status);
+          context.commit("setConvertMessage", res.data.message);
           context.dispatch("getBalance", res.data.mannaWallet);
           context.dispatch("getMannaToClaim", context.state.selectedAddress);
         })

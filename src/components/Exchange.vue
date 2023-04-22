@@ -176,6 +176,7 @@
         </i>
         <!-- <i class="fa fa-regular fa-copy" style="margin-left: 3px;"></i> -->
         <i @click="copyItem(mannaWallet)" class="card__link card__link--small" style="margin-left: 2px;" >copy</i>
+
         </div>
         
         <!-- <div>
@@ -217,12 +218,21 @@
           Claimable: {{ mannaToClaim ? mannaToClaim : 'loading...' }}
           <!-- Claimable: {{ mannaToClaim }} -->
         </div>
+        <div v-if="mannaWallet && mannaToClaim == 0 " class="card__wallet-address card__item card__item" style="color: red;">
+          Send your old manna to this address to be converted
+        </div>
+        <!-- <div v-if="mannaWallet && mannaToClaim == 0">
+          
+              this.zeroMannaAlert();
+            
+          </div> -->
+
   
         <Divider v-if="mannaToClaim && mannaToClaim.amount > 0" />
   
         <div
           @click="convertingManna()"
-          v-if="mannaToClaim > 0 > 0 && mannaWallet"
+          v-if="mannaToClaim > 0  && mannaWallet"
           class="
             btn-selected
             card-gradient-border card__one card__item card__action-button
@@ -240,9 +250,9 @@
     >
       <p
         class="card__center card__desc code-msg"
-        :class="{ green: $store.state.convertStatus == 'success',  red: $store.state.convertStatus == 'error' }"
+        :class="{ green: convertMessage == 'success',  red: convertMessage == 'error' }"
       >
-        {{$store.state.convertMessage}}
+        {{convertMessage}}
 
       
       </p>
@@ -347,6 +357,7 @@
   
   <script>
   import Divider from "@/components/Divider.vue";
+  import Swal from 'sweetalert2';
   // import Store from "../store";
 
   
@@ -385,6 +396,25 @@
           timerProgressBar:true
           })
     },
+    zeroMannaAlert(){
+      Swal.fire({
+  title: '<strong>HTML <u>example</u></strong>',
+  icon: 'info',
+  html:
+    'You can use <b>bold text</b>, ' +
+    '<a href="//sweetalert2.github.io">links</a> ' +
+    'and other HTML tags',
+  showCloseButton: true,
+  showCancelButton: true,
+  focusConfirm: false,
+  confirmButtonText:
+    '<i class="fa fa-thumbs-up"></i> Great!',
+  confirmButtonAriaLabel: 'Thumbs up, great!',
+  cancelButtonText:
+    '<i class="fa fa-thumbs-down"></i>',
+  cancelButtonAriaLabel: 'Thumbs down'
+})
+    }
     },
     computed: {
       mannaWallet() {
@@ -407,6 +437,7 @@
         ? window.innerWidth * (10 / 100)
         : window.innerWidth / 3;
     },
+    
     },
     // watch:{
     //   async isBrightIDVerified() {

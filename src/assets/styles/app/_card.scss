@@ -33,6 +33,16 @@
     text-align: center;
   }
 
+  &__wallet-address-message {
+    color: $primary-color;
+    font-weight: 400;
+    font-size: 1rem;
+    margin: 5px 0 -2px !important;
+    max-width: 22vw;
+    overflow-wrap: break-word;
+    text-align: center;
+  }
+
   &__buttons {
     width: 100%;
     display: flex;
