@@ -43,7 +43,7 @@ export default new Vuex.Store({
 
     hasTakenResult: null,
     mannaWallet: null,
-    getMannaWllet:null,
+    getMannaWallet:null,
 
     selectedAddress: null,
     providerState: null,
@@ -145,7 +145,7 @@ export default new Vuex.Store({
       state.mannaWallet = payload;
     },
     setGetMannaWallet(state, payload) {
-      state.mannaWallet = payload;
+      state.getMannaWallet = payload;
     },
     setConvertMessage(state,payload){
       state.convertMessage = payload;
@@ -544,6 +544,7 @@ export default new Vuex.Store({
         .then((res) => {
           context.state.generateMannaWalletLoading = false;
           context.commit("setMannaWallet", res.data.mannaWallet);
+          context.commit("setGetMannaWallet", res.data.mannaWallet);
           context.dispatch("getBalance", res.data.mannaWallet);
           context.dispatch("getMannaToClaim", context.state.selectedAddress);
         })
@@ -557,19 +558,28 @@ export default new Vuex.Store({
         .request({
           method: "GET",
           url:
-            "https://mannatest.hedgeforhumanity.org/backend/conversion/getMannaWallet" +
+            "https://mannatest.hedgeforhumanity.org/backend/conversion/getMannaWallet/" +
             payload,
         })
         .then((res) => {
-          if (res.data.mannaWallet) {
-            context.commit("setMannaWallet", res.data.mannaWallet);
+          if (res.data.status) {
+            context.commit("setGetMannaWallet", res.data);
             context.dispatch("getBalance", res.data.mannaWallet);
             context.dispatch("getMannaToClaim", context.state.selectedAddress);
-            console.log('mannaWallet' , res.data.mannaWallet)
+            console.log('getMannaWallet' , res.data,res.data.mannaWallet)
+            console.log('getMannaWallet' , context.state.getMannaWallet.mannaWallet)
           }
         })
         .catch((e) => {
-          context.state.generateMannaWalletLoading = false;
+          if(e.response.message == 'No Manna wallet'){
+            context.commit("setGetMannaWallet", e.response.message);
+            console.log('getMannaWallet-message',e.response.message)
+          } else if (e.response.message == 'BrightId is not linked'){
+            context.commit("setGetMannaWallet",e.response.message)
+            console.log('getMannaWallet-message',e.response.message)
+          }else{
+            console.log('mannaWallet',e);
+          }
           console.log('mannaWallet',e);
         });
     },

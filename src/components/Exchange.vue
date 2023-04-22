@@ -136,10 +136,10 @@
             >Don't have one?</a
           >
         </div> -->
-        <Divider v-if="!mannaWallet && isLinked && isLinked.status == 'SUCCESSFUL'" />
+        <Divider v-if="getMannaWallet == 'No Manna wallet' && isLinked && isLinked.status == 'SUCCESSFUL'"/>
         <div
           @click="generateMannaWallet()"
-          v-if="!mannaWallet && isLinked && isLinked.status == 'SUCCESSFUL'"
+          v-if="getMannaWallet == 'No Manna wallet' && isLinked && isLinked.status == 'SUCCESSFUL'"
           class="
             btn-selected
             card-gradient-border card__one card__item card__action-button
@@ -153,16 +153,16 @@
         </div>
         
   
-        <Divider v-if="mannaWallet" />
+        <Divider v-if="getMannaWallet.status == 'success'" />
   
         <div
-          v-if="mannaWallet"
+        v-if="getMannaWallet.status == 'success'"
           class="card__wallet-address card__item card__item--with-link"
         >
           Manna Claim Wallet Address:
         </div>
         <div
-        v-if="mannaWallet"
+        v-if="getMannaWallet.status == 'success'"
         class="
         mannawalletShow
          card__one card__item card__action-button
@@ -172,10 +172,10 @@
       <!-- {{ mannaWallet }} -->
 
         <i>
-          {{ mannaWallet }}
+          {{ getMannaWallet.mannaWallet }}
         </i>
         <!-- <i class="fa fa-regular fa-copy" style="margin-left: 3px;"></i> -->
-        <i @click="copyItem(mannaWallet)" class="card__link card__link--small" style="margin-left: 2px;" >copy</i>
+        <i @click="copyItem(getMannaWallet.mannaWallet)" class="card__link card__link--small" style="margin-left: 2px;" >copy</i>
 
         </div>
         
@@ -201,7 +201,7 @@
         </v-snackbar>
         </div> -->
   
-        <div v-if="mannaWallet" class="card__wallet-address card__item card__item">
+        <div v-if="getMannaWallet.status == 'success'" class="card__wallet-address card__item card__item">
           Balance: {{  balance != null ? balance : 'loading...' }}
         </div>
         <!-- <div
@@ -214,11 +214,11 @@
         class="fa fa-circle-o-notch fa-spin loader"
       ></i> -->
     <!-- </div> -->
-        <div v-if="mannaWallet" class="card__wallet-address card__item card__item">
+        <div v-if="getMannaWallet.status == 'success'" class="card__wallet-address card__item card__item">
           Claimable: {{ mannaToClaim ? mannaToClaim : 'loading...' }}
           <!-- Claimable: {{ mannaToClaim }} -->
         </div>
-        <div v-if="mannaWallet && mannaToClaim == 0 " class="card__wallet-address card__item card__item" style="color: red;">
+        <div v-if="getMannaWallet.status == 'success' && mannaToClaim == 0 " class="card__wallet-address card__item card__item" style="color: red;">
           Send your old manna to this address to be converted
         </div>
         <!-- <div v-if="mannaWallet && mannaToClaim == 0">
@@ -232,7 +232,7 @@
   
         <div
           @click="convertingManna()"
-          v-if="mannaToClaim > 0  && mannaWallet"
+          v-if="mannaToClaim > 0  && getMannaWallet.status == 'success'"
           class="
             btn-selected
             card-gradient-border card__one card__item card__action-button
@@ -246,7 +246,7 @@
           ></i> -->
         </div>
         <div
-        v-if="mannaToClaim.amount > 0 && mannaWallet"
+        v-if="mannaToClaim.amount > 0 && getMannaWallet.status == 'success'"
     >
       <p
         class="card__center card__desc code-msg"
@@ -420,6 +420,9 @@
       mannaWallet() {
         return this.$store.state.mannaWallet;
       },
+      getMannaWallet() {
+        return this.$store.state.getMannaWallet;
+      },
       convertMessage() {
         return this.$store.state.convertMessage;
       },
@@ -447,8 +450,8 @@
     // }
     // },
     mounted() {
-      if (this.$store.state.mannaWallet == null) {
-        this.$store.dispatch("mannaWallet", this.getAddress());
+      if (this.$store.state.getMannaWallet == null) {
+        this.$store.dispatch("getMannaWallet", this.getAddress());
       }
     },
   };
