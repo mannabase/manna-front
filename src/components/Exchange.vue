@@ -74,7 +74,7 @@
           class="btn-selected
             card-gradient-border card__one card__item card__action-button"
             :class="{ 'disable-btn': $store.state.alertLoading}"
-          @click="checkBrightIDVerification()"
+          @click="checkGetMannaWallet()"
         >
         verify connection
         <i
@@ -456,15 +456,15 @@
       if (this.$store.state.getMannaWallet == null) {
         this.$store.dispatch("getMannaWallet", this.getAddress());
       }
-      if (this.$store.state.getMannaWallet.message == 'No Manna wallet') {
-        this.$store.dispatch("getMannaWallet", this.getAddress());
-      }
-      if (this.$store.state.getMannaWallet.message == 'BrightId is not linked') {
-        this.$store.dispatch("getMannaWallet", this.getAddress());
-      }
-      if (this.$store.state.getMannaWallet.status == 'success') {
-        this.$store.dispatch("getMannaWallet", this.getAddress());
-      }
+      // if (this.$store.state.getMannaWallet.message == 'No Manna wallet') {
+      //   this.$store.dispatch("getMannaWallet", this.getAddress());
+      // }
+      // if (this.$store.state.getMannaWallet.message == 'BrightId is not linked') {
+      //   this.$store.dispatch("getMannaWallet", this.getAddress());
+      // }
+      // if (this.$store.state.getMannaWallet.status == 'success') {
+      //   this.$store.dispatch("getMannaWallet", this.getAddress());
+      // }
       
     }
   };
