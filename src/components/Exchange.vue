@@ -139,7 +139,7 @@
         <Divider v-if="getMannaWallet == 'No Manna wallet' && isLinked && isLinked.status == 'SUCCESSFUL'"/>
         <div
           @click="generateMannaWallet()"
-          v-if="getMannaWallet == 'No Manna wallet' && isLinked && isLinked.status == 'SUCCESSFUL'"
+          v-if="getMannaWallet.message == 'No Manna wallet' && isLinked && isLinked.status == 'SUCCESSFUL'"
           class="
             btn-selected
             card-gradient-border card__one card__item card__action-button
@@ -456,6 +456,16 @@
       if (this.$store.state.getMannaWallet == null) {
         this.$store.dispatch("getMannaWallet", this.getAddress());
       }
-    },
+      if (this.$store.state.getMannaWallet.message == 'No Manna wallet') {
+        this.$store.dispatch("getMannaWallet", this.getAddress());
+      }
+      if (this.$store.state.getMannaWallet.message == 'BrightId is not linked') {
+        this.$store.dispatch("getMannaWallet", this.getAddress());
+      }
+      if (this.$store.state.getMannaWallet.status == 'success') {
+        this.$store.dispatch("getMannaWallet", this.getAddress());
+      }
+      
+    }
   };
   </script>
