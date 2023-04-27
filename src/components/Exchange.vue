@@ -450,6 +450,9 @@
     // }
     // },
     mounted() {
+      if (this.$store.state.mannaWallet == null) {
+        this.$store.dispatch("mannaWallet", this.getAddress());
+      }
       if (this.$store.state.getMannaWallet == null) {
         this.$store.dispatch("getMannaWallet", this.getAddress());
       }
