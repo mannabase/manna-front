@@ -562,24 +562,23 @@ export default new Vuex.Store({
             payload,
         })
         .then((res) => {
-          if (res.data.status) {
+          if (res.data.status == 'success') {
             context.commit("setGetMannaWallet", res.data);
             context.dispatch("getBalance", res.data.mannaWallet);
             context.dispatch("getMannaToClaim", context.state.selectedAddress);
             console.log('getMannaWallet' , res.data,res.data.mannaWallet)
             console.log('getMannaWallet' , context.state.getMannaWallet.mannaWallet)
+          }else if(res.data.status == 'error'){
+            if (res.data.message == 'No Manna wallet') {
+              context.commit("setGetMannaWallet", res.data.message);
+              console.log('getMannaWallet-message',res.data.message)
+            }else if(res.data.message == 'BrightId is not linked'){
+              context.commit("setGetMannaWallet",res.data.message)
+              console.log('getMannaWallet-message',res.data.message)
+            }
           }
         })
         .catch((e) => {
-          if(e.response.message == 'No Manna wallet'){
-            context.commit("setGetMannaWallet", e.response.message);
-            console.log('getMannaWallet-message',e.response.message)
-          } else if (e.response.message == 'BrightId is not linked'){
-            context.commit("setGetMannaWallet",e.response.message)
-            console.log('getMannaWallet-message',e.response.message)
-          }else{
-            console.log('mannaWallet',e);
-          }
           console.log('mannaWallet',e);
         });
     },
