@@ -20,7 +20,7 @@ Sentry.init({
   integrations: [
     new Integrations.BrowserTracing({
       routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-      tracingOrigins: ["localhost", "https://mannatest.hedgeforhumanity.org/", /^\//],
+      tracingOrigins: ["localhost", "https://mannabase.com/", /^\//],
     }),
   ],
   // Set tracesSampleRate to 1.0 to capture 100%
