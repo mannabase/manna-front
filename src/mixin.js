@@ -1,11 +1,11 @@
 import store from "./store/index";
 import axios from "axios";
-import configs from "./javascripts/config"
-import ENUMS from "@/javascripts/constants/enums"
+import configs from "./javascripts/config";
+import ENUMS from "@/javascripts/constants/enums";
 import Web3 from "web3";
-import ABI from "@/javascripts/ABI"
-import { ethers } from "ethers"
-import { Icon } from '@iconify/vue2';
+import ABI from "@/javascripts/ABI";
+import { ethers } from "ethers";
+import { Icon } from "@iconify/vue2";
 
 const mixin = {
   data() {
@@ -15,8 +15,8 @@ const mixin = {
       MannaABI: ABI.Manna,
       ClaimMannaABI: ABI.ClaimManna,
       MannaBrightIDABI: ABI.MannaBrightID,
-      Icon
-    }
+      Icon,
+    };
   },
   methods: {
     visitLink(link) {
@@ -50,41 +50,38 @@ const mixin = {
       const timeStamp = Date.now().toString();
       try {
         const from = store.state.selectedAddress;
-        const msg = `0x${Buffer.from(timeStamp, 'utf8').toString('hex')}`;
+        const msg = `0x${Buffer.from(timeStamp, "utf8").toString("hex")}`;
         const sign = await window.ethereum.request({
-          method: 'personal_sign',
-          params: [msg, from, 'Example password'],
+          method: "personal_sign",
+          params: [msg, from, "Example password"],
         });
         store.state.personalSignResult = sign;
         store.state.personalSignVerify = false;
-        this.$store.commit('setTimeStamp',timeStamp);
-        this.$store.commit('setSigniture',sign);
-        console.log('selectedAddress:',from)
-        console.log('timeStamp:',timeStamp)
-        console.log('signiture: ',sign)
-        console.log('timeStamp-store:',store.state.timeStamp)
-        console.log('signiture-store:',store.state.signiture)
+        this.$store.commit("setTimeStamp", timeStamp);
+        this.$store.commit("setSigniture", sign);
 
-          this.$store.dispatch("convertMannaWallet", this.getAddress());
-
+        this.$store.dispatch("convertMannaWallet", this.getAddress());
       } catch (error) {
         console.log(error);
       }
-
-      
-
     },
     ConnectMetamask() {
       let connectMetamaskEnable = window.ethereum.enable();
       window.web3 = new Web3(window.ethereum);
 
       if (this.isMetamaskConnected()) {
-        this.$store.commit('setSelectedAddress', window.ethereum.selectedAddress);
+        this.$store.commit(
+          "setSelectedAddress",
+          window.ethereum.selectedAddress
+        );
       } else {
         if (this.mixinInterval == null) {
           this.mixinInterval = setInterval(() => {
             if (this.isMetamaskConnected()) {
-              this.$store.commit('setSelectedAddress', window.ethereum.selectedAddress);
+              this.$store.commit(
+                "setSelectedAddress",
+                window.ethereum.selectedAddress
+              );
               clearInterval(this.mixinInterval);
               this.mixinInterval = null;
             }
@@ -97,12 +94,11 @@ const mixin = {
       axios
         .get(configs.baseURL + "/backend/manna/tokenInfo")
         .then((res) => {
-
           const tokenAddress = res.data.address;
           const tokenSymbol = res.data.symbol;
           const tokenDecimals = res.data.decimals;
-          const tokenImage = res.data.image
-          "https://mannabase.com/img/logo.c0b699a7.png";
+          const tokenImage = res.data.image;
+          ("https://mannatest.hedgeforhumanity.org/img/logo.c0b699a7.png");
 
           try {
             window.ethereum.request({
@@ -124,86 +120,82 @@ const mixin = {
         .catch((err) => {
           console.log(err);
         });
-
     },
     baseRequest(config) {
       store.state.isLoading = true;
       const instance = axios.create({
-        baseURL: configs.baseURL
+        baseURL: configs.baseURL,
       });
       return instance.request(config);
     },
-    checkBrightIDVerification(){
-      this.$store.dispatch("isLinkedBright",this.getAddress())
-    },
-    checkGetMannaWallet(){
-      this.$store.dispatch("isLinkedBright",this.getAddress())
-      this.$store.dispatch("getMannaWallet",this.getAddress)
+    checkBrightIDVerification() {
+      this.$store.dispatch("isLinkedBright", this.getAddress());
+      this.$store.dispatch("getMannaWallet", this.getAddress());
     },
     async checkBrightIDVerificationAlert() {
       let res = await this.$store.dispatch("isLinkedBright", this.getAddress());
       try {
-        console.log('checkBrightIDVerificationAlert', res);
+        console.log("checkBrightIDVerificationAlert", res);
         if (res.data.status === "SUCCESSFUL") {
-          await this.$swal('you are verified !');
+          await this.$swal("you are verified !");
           this.$swal.fire({
-            position: 'bottom',
-            icon: 'success',
-            title: 'you are verified !',
+            position: "bottom",
+            icon: "success",
+            title: "you are verified !",
             showConfirmButton: false,
             timer: 1500,
-            width: '15em',
-            timerProgressBar: true
+            width: "15em",
+            timerProgressBar: true,
           });
-        } else if (res.data.status === 'NOT_LINKED') {
-          await this.$swal('you are not linked!');
+        } else if (res.data.status === "NOT_LINKED") {
+          await this.$swal("you are not linked!");
           this.$swal.fire({
-            position: 'bottom',
-            icon: 'error',
-            title: 'you are not linked !',
+            position: "bottom",
+            icon: "error",
+            title: "you are not linked !",
             showConfirmButton: false,
             timer: 1500,
-            width: '15em',
-            timerProgressBar: true
+            width: "15em",
+            timerProgressBar: true,
           });
-        } else if (res.data.status === 'NOT_VERIFIED') {
-          await this.$swal('you are not verified !');
+        } else if (res.data.status === "NOT_VERIFIED") {
+          await this.$swal("you are not verified !");
           this.$swal.fire({
-            position: 'bottom',
-            icon: 'error',
-            title: 'you are not verified !',
+            position: "bottom",
+            icon: "error",
+            title: "you are not verified !",
             showConfirmButton: false,
             timer: 1500,
-            width: '15em',
-            timerProgressBar: true
+            width: "15em",
+            timerProgressBar: true,
           });
-        } else if (res.data.status === 'TRANSFERRED') {
-          await this.$swal('you are transferred!');
+        } else if (res.data.status === "TRANSFERRED") {
+          await this.$swal("you are transferred!");
           this.$swal.fire({
-            position: 'bottom',
-            icon: 'error',
-            title: 'you are transferred!',
+            position: "bottom",
+            icon: "error",
+            title: "you are transferred!",
             showConfirmButton: false,
             timer: 1500,
-            width: '15em',
-            timerProgressBar: true
+            width: "15em",
+            timerProgressBar: true,
           });
         }
       } catch (error) {
         console.error(error);
         // await this.$swal('An error occurred!');
         await this.$swal.fire({
-          position: 'bottom',
-          icon: 'error',
-          title: 'An error occurred!',
+          position: "bottom",
+          icon: "error",
+          title: "An error occurred!",
           showConfirmButton: false,
           timer: 1500,
-          width: '15em',
-          timerProgressBar: true
+          width: "15em",
+          timerProgressBar: true,
         });
       }
     },
-    
+
     // async checkBrightIDVerificationAlert(){
     //   let myPromise = new Promise(this.$store.dispatch("isLinkedBright",this.getAddress()))
     //   // setTimeout(this.$store.dispatch("isLinkedBright",this.getAddress()), 5000);
@@ -229,7 +221,7 @@ const mixin = {
     //     console.log('you are not linked !')
     //     alert('you are not linked!')
     //     checkBrightIDVerificationAlert();
-       
+
     //     // this.$swal('you are not linked!');
     //   //   this.$swal.fire({
     //   //     position: 'bottom',
@@ -252,7 +244,7 @@ const mixin = {
     //     //   timer: 1500,
     //     //   width: '15em',
     //     //   timerProgressBar:true
-    //     //   }) 
+    //     //   })
     //   } else if (res.data.status == 'TRANSFERRED') {
     //     console.log('isLinkedBright called then TRANSFERRED',payload)
     //     alert('you are transferred!')
@@ -265,7 +257,7 @@ const mixin = {
     //     //   timer: 1500,
     //     //   width: '15em',
     //     //   timerProgressBar:true
-    //     //   }) 
+    //     //   })
     //   }
     //   // this.$swal.fire({
     //   //     position: 'bottom',
@@ -275,7 +267,7 @@ const mixin = {
     //   //     timer: 1500,
     //   //     width: '15em',
     //   //     timerProgressBar:true
-    //   //     }) 
+    //   //     })
     // },
     request(config) {
       store.state.isLoading = true;
@@ -284,16 +276,16 @@ const mixin = {
         headers: {
           authorization: "Token " + store.state.token,
           "Content-Type": "application/json",
-          'Access-Control-Allow-Origin': '*',
-        }
+          "Access-Control-Allow-Origin": "*",
+        },
       });
       instance.interceptors.response.use(
-        response => {
+        (response) => {
           store.state.isLoading = false;
 
           return response;
         },
-        error => {
+        (error) => {
           store.state.isLoading = false;
 
           return Promise.reject(error);
@@ -312,13 +304,16 @@ const mixin = {
      */
     getNetworkId() {
       return new Promise((resolve, reject) => {
-        window.ethereum.request({ method: 'net_version' }).then((res) => {
-          this.$store.commit('setNetworkId', res)
-          resolve(res)
-        }).catch(err => {
-          console.log(err);
-          reject(new Error('BcExplorer error: networkId not available.'));
-        })
+        window.ethereum
+          .request({ method: "net_version" })
+          .then((res) => {
+            this.$store.commit("setNetworkId", res);
+            resolve(res);
+          })
+          .catch((err) => {
+            console.log(err);
+            reject(new Error("BcExplorer error: networkId not available."));
+          });
       });
     },
 
@@ -329,72 +324,99 @@ const mixin = {
      */
     getChainId() {
       return new Promise((resolve, reject) => {
-        window.ethereum.request({ method: 'eth_chainId' }).then((res) => {
-          this.$store.commit('setChainId', res);
-          resolve(res)
-        }).catch(err => {
-          console.log(err);
-          reject(new Error('BcExplorer error: chainId not available.'));
-        })
+        window.ethereum
+          .request({ method: "eth_chainId" })
+          .then((res) => {
+            this.$store.commit("setChainId", res);
+            resolve(res);
+          })
+          .catch((err) => {
+            console.log(err);
+            reject(new Error("BcExplorer error: chainId not available."));
+          });
       });
     },
     claimManna() {
-      if (!this.$store.state.claimLoading && parseInt(this.$store.state.contractData.toClaim._hex, 16) != '0') {
-        this.$store.state.claimLoading = true
-        this.claimMannaContract.claim().then(res => {
-          res.wait().then(() => {
-            this.$store.state.claimLoading = false
-            this.loadInfo()
-            this.$store.state.contractData.toClaim = 0
-            this.$store.dispatch('getMannaBalance', window.ethereum.selectedAddress);
-          }).catch(err => {
-            this.$store.state.claimLoading = false
-            console.error(err.message);
+      if (
+        !this.$store.state.claimLoading &&
+        parseInt(this.$store.state.contractData.toClaim._hex, 16) != "0"
+      ) {
+        this.$store.state.claimLoading = true;
+        this.claimMannaContract
+          .claim()
+          .then((res) => {
+            res
+              .wait()
+              .then(() => {
+                this.$store.state.claimLoading = false;
+                this.loadInfo();
+                this.$store.state.contractData.toClaim = 0;
+                this.$store.dispatch(
+                  "getMannaBalance",
+                  window.ethereum.selectedAddress
+                );
+              })
+              .catch((err) => {
+                this.$store.state.claimLoading = false;
+                console.error(err.message);
+              });
           })
-        }).catch(err => {
-          this.$store.state.claimLoading = false
-          console.error(err.message);
-        })
+          .catch((err) => {
+            this.$store.state.claimLoading = false;
+            console.error(err.message);
+          });
       }
     },
     registerMe() {
       if (!this.$store.state.registerMeLoading) {
-        this.$store.state.registerMeLoading = true
-        this.claimMannaContract.register().then(res => {
-          res.wait().then(() => {
-            this.$store.state.registerMeLoading = false
-            this.loadInfo()
-          }).catch(err => {
-            this.$store.state.registerMeLoading = false
-            console.error(err.message);
+        this.$store.state.registerMeLoading = true;
+        this.claimMannaContract
+          .register()
+          .then((res) => {
+            res
+              .wait()
+              .then(() => {
+                this.$store.state.registerMeLoading = false;
+                this.loadInfo();
+              })
+              .catch((err) => {
+                this.$store.state.registerMeLoading = false;
+                console.error(err.message);
+              });
           })
-        }).catch(err => {
-          this.$store.state.registerMeLoading = false
-          console.error(err.message);
-        })
+          .catch((err) => {
+            this.$store.state.registerMeLoading = false;
+            console.error(err.message);
+          });
       }
     },
     verifyMe() {
       if (!this.$store.state.verifyMeLoading) {
-        this.$store.state.verifyMeLoading = true
-        this.mannaBrightIDContract.verify(
-          this.getAddress(),
-          this.$store.state.isBrightIDVerifiedData.timestamp,
-          this.$store.state.isBrightIDVerifiedData.sig.v,
-          '0x' + this.$store.state.isBrightIDVerifiedData.sig.r,
-          '0x' + this.$store.state.isBrightIDVerifiedData.sig.s
-        ).then(res => {
-          res.wait().then(() => {
-            this.$store.state.verifyMeLoading = false
-            this.loadInfo()
-          }).catch(err => {
-            this.$store.state.verifyMeLoading = false
-            console.error(err.message);
+        this.$store.state.verifyMeLoading = true;
+        this.mannaBrightIDContract
+          .verify(
+            this.getAddress(),
+            this.$store.state.isBrightIDVerifiedData.timestamp,
+            this.$store.state.isBrightIDVerifiedData.sig.v,
+            "0x" + this.$store.state.isBrightIDVerifiedData.sig.r,
+            "0x" + this.$store.state.isBrightIDVerifiedData.sig.s
+          )
+          .then((res) => {
+            res
+              .wait()
+              .then(() => {
+                this.$store.state.verifyMeLoading = false;
+                this.loadInfo();
+              })
+              .catch((err) => {
+                this.$store.state.verifyMeLoading = false;
+                console.error(err.message);
+              });
           })
-        }).catch(err => {
-          this.$store.state.verifyMeLoading = false
-          console.error(err.message);
-        })
+          .catch((err) => {
+            this.$store.state.verifyMeLoading = false;
+            console.error(err.message);
+          });
       }
     },
     async loadInfo() {
@@ -402,44 +424,64 @@ const mixin = {
         if (this.selectedAddress) {
           await this.getNetworkId();
           await this.getChainId();
-          let mannaContractAddress = '0xC0DE5623db360495Fc67af4eB03313A42360eC23'
-          let claimMannaContractAddress = '0xeb2873A6ee9786C1EfD715DF0D62C34BE2Fd5D27'
-          let mannaBrightIDContractAddress = '0x1b7705B07229D238F045B2b3a13688fb50B737Ed'
+          let mannaContractAddress =
+            "0xC0DE5623db360495Fc67af4eB03313A42360eC23";
+          let claimMannaContractAddress =
+            "0xeb2873A6ee9786C1EfD715DF0D62C34BE2Fd5D27";
+          let mannaBrightIDContractAddress =
+            "0x1b7705B07229D238F045B2b3a13688fb50B737Ed";
 
           this.provider = new ethers.providers.Web3Provider(window.ethereum);
           this.signer = this.provider.getSigner();
 
-          this.mannaContract = new ethers.Contract(mannaContractAddress, this.MannaABI, this.signer);
-          this.claimMannaContract = new ethers.Contract(claimMannaContractAddress, this.ClaimMannaABI, this.signer);
-          this.mannaBrightIDContract = new ethers.Contract(mannaBrightIDContractAddress, this.MannaBrightIDABI, this.signer);
+          this.mannaContract = new ethers.Contract(
+            mannaContractAddress,
+            this.MannaABI,
+            this.signer
+          );
+          this.claimMannaContract = new ethers.Contract(
+            claimMannaContractAddress,
+            this.ClaimMannaABI,
+            this.signer
+          );
+          this.mannaBrightIDContract = new ethers.Contract(
+            mannaBrightIDContractAddress,
+            this.MannaBrightIDABI,
+            this.signer
+          );
 
-          this.mannaContract.balanceOf(this.getAddress()).then(balance => {
-            this.$store.commit("setMannaBalance", balance/(10**18));
-          })
+          this.mannaContract.balanceOf(this.getAddress()).then((balance) => {
+            this.$store.commit("setMannaBalance", balance / 10 ** 18);
+          });
 
-          this.claimMannaContract.isVerified(this.getAddress()).then(isVerif => {
-            if (isVerif) {
-              this.$store.commit('setContractIsVerified', true)
-              this.claimMannaContract.isRegistered(this.getAddress()).then(isRegist => {
-                this.claimMannaContract.toClaim(this.getAddress()).then(toClaim => {
-                  this.$store.commit('setContractToClaim', toClaim)
-                })
-                if (isRegist) {
-                  this.$store.commit('setContractIsRegistered', true)
-                }
-                else {
-                  this.$store.commit('setContractIsRegistered', false)
-                }
-              })
-            } else {
-              this.$store.commit('setContractIsVerified', false)
-            }
-          })
+          this.claimMannaContract
+            .isVerified(this.getAddress())
+            .then((isVerif) => {
+              if (isVerif) {
+                this.$store.commit("setContractIsVerified", true);
+                this.claimMannaContract
+                  .isRegistered(this.getAddress())
+                  .then((isRegist) => {
+                    this.claimMannaContract
+                      .toClaim(this.getAddress())
+                      .then((toClaim) => {
+                        this.$store.commit("setContractToClaim", toClaim);
+                      });
+                    if (isRegist) {
+                      this.$store.commit("setContractIsRegistered", true);
+                    } else {
+                      this.$store.commit("setContractIsRegistered", false);
+                    }
+                  });
+              } else {
+                this.$store.commit("setContractIsVerified", false);
+              }
+            });
         } else {
-          this.$store.commit('setNetworkId', 0)
-          this.$store.commit('setCoinbase', null)
-          this.$store.commit('setBalance', 0)
-          this.$store.commit('setChainId', null)
+          this.$store.commit("setNetworkId", 0);
+          this.$store.commit("setCoinbase", null);
+          this.$store.commit("setBalance", 0);
+          this.$store.commit("setChainId", null);
         }
       } catch (e) {
         console.log(e);
@@ -454,16 +496,16 @@ const mixin = {
       return this.$store.state.guidePage;
     },
     isLoading() {
-      return store.state.isLoading
+      return store.state.isLoading;
     },
     isLinked() {
-      return this.$store.state.isLinked
+      return this.$store.state.isLinked;
     },
     selectedAddress() {
-      return this.$store.state.selectedAddress
+      return this.$store.state.selectedAddress;
     },
     providerState() {
-      return this.$store.state.providerState
+      return this.$store.state.providerState;
     },
     mannaToClaim() {
       return this.$store.state.mannaToClaim;
@@ -481,50 +523,53 @@ const mixin = {
       return this.$store.state.isBrightIDVerifiedData;
     },
     isBrightIDVerifiedUnique() {
-      return this.isBrightIDVerifiedData && this.isBrightIDVerifiedData.unique == true;
+      return (
+        this.isBrightIDVerifiedData &&
+        this.isBrightIDVerifiedData.unique == true
+      );
     },
     isIDChain() {
       return this.$store.state.chainId && this.$store.state.chainId == "0x4a";
     },
     mannaContract: {
       get() {
-        return this.$store.state.mannaContract
+        return this.$store.state.mannaContract;
       },
       set(value) {
-        this.$store.commit('setMannaContract', value)
-      }
+        this.$store.commit("setMannaContract", value);
+      },
     },
     claimMannaContract: {
       get() {
-        return this.$store.state.claimMannaContract
+        return this.$store.state.claimMannaContract;
       },
       set(value) {
-        this.$store.commit('setClaimMannaContract', value)
-      }
+        this.$store.commit("setClaimMannaContract", value);
+      },
     },
     mannaBrightIDContract: {
       get() {
-        return this.$store.state.mannaBrightIDContract
+        return this.$store.state.mannaBrightIDContract;
       },
       set(value) {
-        this.$store.commit('setMannaBrightIDContract', value)
-      }
+        this.$store.commit("setMannaBrightIDContract", value);
+      },
     },
     signer: {
       get() {
-        return this.$store.state.signer
+        return this.$store.state.signer;
       },
       set(value) {
-        this.$store.commit('setSigner', value)
-      }
+        this.$store.commit("setSigner", value);
+      },
     },
     providers: {
       get() {
-        return this.$store.state.provider
+        return this.$store.state.provider;
       },
       set(value) {
-        this.$store.commit('setProvider', value)
-      }
+        this.$store.commit("setProvider", value);
+      },
     },
     // isLinkedBright:{
     //   get(){
@@ -532,7 +577,7 @@ const mixin = {
     //   },
     //   if(value){}
     // }
-  }
+  },
 };
 
 export default mixin;

@@ -1,322 +1,345 @@
 <template>
   <div class="card__center">
-    <Divider />
-    <div
-      v-if="!selectedAddress"
-      @click="ConnectMetamask()"
-      class="
+    <div v-if="$store.state.isLinkedFooterLoading">
+      <i class="fa fa-circle-o-notch fa-spin loader"></i>
+      Loading...
+    </div>
+    <div v-else class="card__center">
+      <Divider />
+      <div
+        v-if="!selectedAddress"
+        @click="ConnectMetamask()"
+        class="
         btn-selected
         card-gradient-border card__one card__item card__action-button
       "
-      :class="{ 'disable-btn': $store.state.email }"
-    >
-      CONNECT METAMASK
-      <i
-        v-if="$store.state.connectLoading"
-        class="fa fa-circle-o-notch fa-spin loader"
-      ></i>
-    </div>
-    <div
-      v-else
-      class="
+        :class="{ 'disable-btn': $store.state.email }"
+      >
+        CONNECT METAMASK
+        <i
+          v-if="$store.state.connectLoading"
+          class="fa fa-circle-o-notch fa-spin loader"
+        ></i>
+      </div>
+      <div
+        v-else
+        class="
         btn-selected
         card-gradient-border card__one card__item card__action-button
         address
       "
-    >
-      {{ getAddress().slice(0, 7) + "...." + getAddress().slice(-4) }}
-      <!-- {{ this.hasTakenResult.message }} -->
-      <i
-        v-if="$store.state.connectLoading"
-        class="fa fa-circle-o-notch fa-spin loader"
-      ></i>
-    </div>
-    <!-- <div>
+      >
+        {{ getAddress().slice(0, 7) + "...." + getAddress().slice(-4) }}
+        <!-- {{ this.hasTakenResult.message }} -->
+        <i
+          v-if="$store.state.connectLoading"
+          class="fa fa-circle-o-notch fa-spin loader"
+        ></i>
+      </div>
+      <!-- <div>
       {{ this.isLinked +' isLinked'}}
     </div> -->
-    <!-- <div>
+      <!-- <div>
       {{ this.isLinked.status + ' isLinked.status'}}
     </div> -->
-    <!-- <div>
+      <!-- <div>
       {{ this.hasTakenResult.message  + ' hasTakenResult.message'}}
     </div> -->
-    <!-- <div>
+      <!-- <div>
       {{ this.hasTakenResult.value +' hasTakenResult.value'}}
     </div> -->
-    <div
-      v-if="hasTaken && 
-      hasTakenResult.message != 'Not found'&& 
-      hasTakenResult.message != 'Email is not set'"
-      class="card__center card__desc"
-    >
-      You have taken your manna version 1
-    </div>
+      <div
+        v-if="
+          hasTaken &&
+            hasTakenResult.message != 'Not found' &&
+            hasTakenResult.message != 'Email is not set'
+        "
+        class="card__center card__desc"
+      >
+        You have taken your manna version 1
+      </div>
 
-    <!-- not taken -->
-    <Divider
-      v-if="
-        isLinked &&
-        isLinked.status == 'SUCCESSFUL' &&
-          // !hasTaken &&
-          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
-      "
-    />
-    <div
-      v-if="
-        isLinked &&
-        isLinked.status == 'SUCCESSFUL' && mannaToClaim.amount > 0 &&
-          // !hasTaken &&
-          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
-      "
-      class="
+      <!-- not taken -->
+      <Divider
+        v-if="
+          isLinked &&
+            isLinked.status == 'SUCCESSFUL' &&
+            // !hasTaken &&
+            (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
+        "
+      />
+      <div
+        v-if="
+          isLinked &&
+            isLinked.status == 'SUCCESSFUL' &&
+            mannaToClaim.amount > 0 &&
+            // !hasTaken &&
+            (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
+        "
+        class="
         btn-selected
         card-gradient-border card__one card__item card__action-button
       "
-      @click="claimManna()"
-    >
-      Claim
-      <i
-        v-if="$store.state.claimLoading"
-        class="fa fa-circle-o-notch fa-spin loader"
-      ></i>
-    </div>
-    <!--  -->
-    <div
-      v-if="
-        isLinked &&
-        isLinked.status != 'NOT_LINKED' &&
-        isLinked.status != 'SUCCESSFUL' &&
-          // !hasTaken &&
-          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
-      "
-      class="card__center card__desc"
-    >
-      <div
-        v-if="isLinked.status == 'NOT_VERIFIED'"
-        @click="visitLink(isLinked.link)"
-        class="gradient-border card__barcode card__item"
+        @click="claimManna()"
       >
-        <qrcode-vue
-          :value="isLinked.link"
-          :size="qrCodeSize"
-          level="H"
-        ></qrcode-vue>
+        Claim
+        <i
+          v-if="$store.state.claimLoading"
+          class="fa fa-circle-o-notch fa-spin loader"
+        ></i>
       </div>
+      <!--  -->
       <div
-        v-if="isLinked.status == 'TRANSFERRED'"
-        @click="
-          visitLink(
-            'brightid://link-verification/http:%2f%2fnode.brightid.org/idchain/' +
-              getAddress()
-          )
+        v-if="
+          isLinked &&
+            isLinked.status != 'NOT_LINKED' &&
+            isLinked.status != 'SUCCESSFUL' &&
+            // !hasTaken &&
+            (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
         "
-        class="gradient-border card__barcode card__item"
+        class="card__center card__desc"
       >
-        <qrcode-vue
-          :value="
-            'brightid://link-verification/http:%2f%2fnode.brightid.org/idchain/' +
-              getAddress()
+        <div
+          v-if="isLinked.status == 'NOT_VERIFIED'"
+          @click="visitLink(isLinked.link)"
+          class="gradient-border card__barcode card__item"
+        >
+          <qrcode-vue
+            :value="isLinked.link"
+            :size="qrCodeSize"
+            level="H"
+          ></qrcode-vue>
+        </div>
+        <div
+          v-if="isLinked.status == 'TRANSFERRED'"
+          @click="
+            visitLink(
+              'brightid://link-verification/http:%2f%2fnode.brightid.org/idchain/' +
+                getAddress()
+            )
           "
-          :size="112"
-          level="H"
-        ></qrcode-vue>
-      </div>
-      <div
+          class="gradient-border card__barcode card__item"
+        >
+          <qrcode-vue
+            :value="
+              'brightid://link-verification/http:%2f%2fnode.brightid.org/idchain/' +
+                getAddress()
+            "
+            :size="112"
+            level="H"
+          ></qrcode-vue>
+        </div>
+        <div
           v-if="isLinked.status == 'TRANSFERRED' && 'NOT_VERIFIED'"
           class="btn-selected
             card-gradient-border card__one card__item card__action-button"
-            :class="{ 'disable-btn': $store.state.alertLoading}"
+          :class="{ 'disable-btn': $store.state.alertLoading }"
           @click="checkBrightIDVerification()"
         >
-        verify connection
-        <i
+          verify connection
+          <i
             v-if="$store.state.alertLoading"
             class="fa fa-circle-o-notch fa-spin loader"
           ></i>
         </div>
-      {{
-        isLinked.status == "NOT_VERIFIED"
-          ? isLinked.message
-          : "This BrightID account is linked to " +
-          isLinked.address +
-            " Please use this address or try to use a new address"
-      }}
-    </div>
-
-    <div
-      v-if="
-        isLinked &&
-        isLinked.status == 'NOT_LINKED' &&
-          // !hasTaken &&
-          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
-      "
-      class="card__center card__desc"
-    >
-      <div
-        v-if="isLinked.status == 'NOT_LINKED'"
-        @click="visitLink(isLinked.link)"
-        class="gradient-border card__barcode card__item"
-      >
-        <qrcode-vue
-          @click.native="visitLink(isLinked.link)"
-          :value="isLinked.link"
-          :size="112"
-          level="H"
-        ></qrcode-vue>
+        {{
+          isLinked.status == "NOT_VERIFIED"
+            ? isLinked.message
+            : "This BrightID account is linked to " +
+              isLinked.address +
+              " Please use this address or try to use a new address"
+        }}
       </div>
+
       <div
+        v-if="
+          isLinked &&
+            isLinked.status == 'NOT_LINKED' &&
+            // !hasTaken &&
+            (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
+        "
+        class="card__center card__desc"
+      >
+        <div
+          v-if="isLinked.status == 'NOT_LINKED'"
+          @click="visitLink(isLinked.link)"
+          class="gradient-border card__barcode card__item"
+        >
+          <qrcode-vue
+            @click.native="visitLink(isLinked.link)"
+            :value="isLinked.link"
+            :size="112"
+            level="H"
+          ></qrcode-vue>
+        </div>
+        <div
           v-if="isLinked && isLinked.status == 'NOT_LINKED'"
           class="btn-selected
             card-gradient-border card__one card__item card__action-button"
-            :class="{ 'disable-btn': $store.state.alertLoading}"
+          :class="{ 'disable-btn': $store.state.alertLoading }"
           @click="checkBrightIDVerification()"
         >
-        verify connection
-        <i
+          verify connection
+          <i
             v-if="$store.state.alertLoading"
             class="fa fa-circle-o-notch fa-spin loader"
           ></i>
         </div>
-      Scan this QR-code with your verified BrightID
-    </div>
-    <Divider
-      v-if="
-        isLinked &&
-        isLinked.status == 'SUCCESSFUL' &&
-          // !hasTaken &&
-          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
-      "
-    />
-    <div
-      v-if="
-        isLinked &&
-        isLinked.status == 'SUCCESSFUL' &&
-          // !hasTaken &&
-          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
-      "
-      class="card__center card__desc"
-    >
-      {{ isLinked.msg }}
-    </div>
-    <div
-      v-if="
-        isLinked &&
-        isLinked.status == 'SUCCESSFUL' &&
-          // !hasTaken &&
-          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0 || hasTakenResult.message == 'Email is not set')
-      "
-      class="card-gradient-border card__item"
-    >
-      <input
-        class="card__input card__one"
-        placeholder="Enter Mannabase Email..."
-        type="email"
-        v-model="email"
-        :disabled="$store.state.email"
+        Scan this QR-code with your verified BrightID
+      </div>
+      <Divider
+        v-if="
+          isLinked &&
+            isLinked.status == 'SUCCESSFUL' &&
+            // !hasTaken &&
+            (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
+        "
       />
-    </div>
-    <div
-      v-if="
-        isLinked &&
-        isLinked.status == 'SUCCESSFUL' &&
-          $store.state.emailSecret &&
-          // !hasTaken &&
-          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0 || hasTakenResult.message == 'Email is not set')
-      "
-      class="card-gradient-border card__item"
-    >
-      <input
-        class="card__input card__one"
-        placeholder="Enter 6-digit code from email..."
-        type="number"
-        v-model="code"
-        :disabled="$store.state.sendCodeMsg == 'SUCCESSFUL'"
-      />
-    </div>
-    <div
-      v-if="
-        isLinked &&
-        isLinked.status == 'SUCCESSFUL' &&
-          $store.state.email &&
-          $store.state.emailSecret &&
-          // !hasTaken &&
-          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0 || hasTakenResult.message == 'Email is not set')
-      "
-      class="
-        btn-selected
-        card-gradient-border card__one card__item card__action-button
-      "
-      :class="{ 'disable-btn': $store.state.sendCodeMsg == 'SUCCESSFUL' }"
-      @click="submitCode()"
-    >
-      SUBMIT
-      <i
-        v-if="$store.state.submitCodeLoading"
-        class="fa fa-circle-o-notch fa-spin loader"
-      ></i>
-    </div>
-    <div
-      v-if="
-        isLinked &&
-        isLinked.status == 'SUCCESSFUL' &&
-          !$store.state.email &&
-          // !hasTaken &&
-          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0 || hasTakenResult.message == 'Email is not set')
-      "
-      class="
-        btn-selected
-        card-gradient-border card__one card__item card__action-button
-      "
-      @click="sendEmail()"
-    >
-      SEND EMAIL
-      <i
-        v-if="$store.state.submitEmailLoading"
-        class="fa fa-circle-o-notch fa-spin loader"
-      ></i>
-    </div>
-    <Divider
-      v-if="
-        $store.state.sendCodeMsg &&
-          // !hasTaken &&
-          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0 || hasTakenResult.message == 'Email is not set')
-      "
-    />
-    <div
-      v-if="
-        $store.state.sendCodeMsg &&
-          // !hasTaken &&
-          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0 || hasTakenResult.message == 'Email is not set')
-      "
-    >
-      <p
-        class="card__center card__desc code-msg"
-        :class="{ green: $store.state.txLink, red: !$store.state.txLink }"
-      >
-        {{ $store.state.sendCodeMsg }}
-        <a
-          v-if="$store.state.sendCodeMsg == 'SUCCESSFUL'"
-          class="green"
-          :href="$store.state.txLink"
-          >{{ $store.state.txLink }} </a
-        >
-      </p>
-    </div>
-    <div
-      v-if="
-        isLinked &&
-        isLinked.status == 'SUCCESSFUL' &&
-          $store.state.email &&
-          // !hasTaken &&
-          (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0 || hasTakenResult.message == 'Email is not set')
-      "
-    >
       <div
-        class="card__link card__link--big card__item"
-        href=""
-        @click="handleChangeEmail()"
+        v-if="
+          isLinked &&
+            isLinked.status == 'SUCCESSFUL' &&
+            // !hasTaken &&
+            (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
+        "
+        class="card__center card__desc"
       >
-        Change Email
+        {{ isLinked.msg }}
+      </div>
+      <div
+        v-if="
+          isLinked &&
+            isLinked.status == 'SUCCESSFUL' &&
+            // !hasTaken &&
+            (hasTakenResult.message == 'Not found' ||
+              hasTakenResult.value > 0 ||
+              hasTakenResult.message == 'Email is not set')
+        "
+        class="card-gradient-border card__item"
+      >
+        <input
+          class="card__input card__one"
+          placeholder="Enter Mannabase Email..."
+          type="email"
+          v-model="email"
+          :disabled="$store.state.email"
+        />
+      </div>
+      <div
+        v-if="
+          isLinked &&
+            isLinked.status == 'SUCCESSFUL' &&
+            $store.state.emailSecret &&
+            // !hasTaken &&
+            (hasTakenResult.message == 'Not found' ||
+              hasTakenResult.value > 0 ||
+              hasTakenResult.message == 'Email is not set')
+        "
+        class="card-gradient-border card__item"
+      >
+        <input
+          class="card__input card__one"
+          placeholder="Enter 6-digit code from email..."
+          type="number"
+          v-model="code"
+          :disabled="$store.state.sendCodeMsg == 'SUCCESSFUL'"
+        />
+      </div>
+      <div
+        v-if="
+          isLinked &&
+            isLinked.status == 'SUCCESSFUL' &&
+            $store.state.email &&
+            $store.state.emailSecret &&
+            // !hasTaken &&
+            (hasTakenResult.message == 'Not found' ||
+              hasTakenResult.value > 0 ||
+              hasTakenResult.message == 'Email is not set')
+        "
+        class="
+        btn-selected
+        card-gradient-border card__one card__item card__action-button
+      "
+        :class="{ 'disable-btn': $store.state.sendCodeMsg == 'SUCCESSFUL' }"
+        @click="submitCode()"
+      >
+        SUBMIT
+        <i
+          v-if="$store.state.submitCodeLoading"
+          class="fa fa-circle-o-notch fa-spin loader"
+        ></i>
+      </div>
+      <div
+        v-if="
+          isLinked &&
+            isLinked.status == 'SUCCESSFUL' &&
+            !$store.state.email &&
+            // !hasTaken &&
+            (hasTakenResult.message == 'Not found' ||
+              hasTakenResult.value > 0 ||
+              hasTakenResult.message == 'Email is not set')
+        "
+        class="
+        btn-selected
+        card-gradient-border card__one card__item card__action-button
+      "
+        @click="sendEmail()"
+      >
+        SEND EMAIL
+        <i
+          v-if="$store.state.submitEmailLoading"
+          class="fa fa-circle-o-notch fa-spin loader"
+        ></i>
+      </div>
+      <Divider
+        v-if="
+          $store.state.sendCodeMsg &&
+            // !hasTaken &&
+            (hasTakenResult.message == 'Not found' ||
+              hasTakenResult.value > 0 ||
+              hasTakenResult.message == 'Email is not set')
+        "
+      />
+      <div
+        v-if="
+          $store.state.sendCodeMsg &&
+            // !hasTaken &&
+            (hasTakenResult.message == 'Not found' ||
+              hasTakenResult.value > 0 ||
+              hasTakenResult.message == 'Email is not set')
+        "
+      >
+        <p
+          class="card__center card__desc code-msg"
+          :class="{ green: $store.state.txLink, red: !$store.state.txLink }"
+        >
+          {{ $store.state.sendCodeMsg }}
+          <a
+            v-if="$store.state.sendCodeMsg == 'SUCCESSFUL'"
+            class="green"
+            :href="$store.state.txLink"
+            >{{ $store.state.txLink }}
+          </a>
+        </p>
+      </div>
+      <div
+        v-if="
+          isLinked &&
+            isLinked.status == 'SUCCESSFUL' &&
+            $store.state.email &&
+            // !hasTaken &&
+            (hasTakenResult.message == 'Not found' ||
+              hasTakenResult.value > 0 ||
+              hasTakenResult.message == 'Email is not set')
+        "
+      >
+        <div
+          class="card__link card__link--big card__item"
+          href=""
+          @click="handleChangeEmail()"
+        >
+          Change Email
+        </div>
       </div>
     </div>
   </div>
@@ -333,8 +356,8 @@ export default {
   data() {
     return {
       interval: null,
-      email:'',
-      code:''
+      email: "",
+      code: "",
       // isLinked: false,
     };
   },
@@ -344,7 +367,6 @@ export default {
       this.selectedStore = key;
     },
     hasTaken() {
-      console.log(this.hasTakenResult.status + "hasTakenResult.status");
       if (this.$store.state.hasTakenResult) {
         if (this.$store.state.hasTakenResult.status == "error") {
           return true;
@@ -388,15 +410,15 @@ export default {
           walletAddress: this.getAddress(),
         });
       }
-      console.log('sendEmail',this.email)
     },
     submitCode() {
-      console.log('this.$store.state.sendCodeMsg',this.$store.state.sendCodeMsg)
       if (this.$store.state.sendCodeMsg != "SUCCESSFUL") {
-        console.log('not successful' ,this.$store.state.sendCodeMsg )
-        console.log('this.$store.state.email',this.$store.state.email)
         if (this.code.length > 0) {
-          console.log('not successful-codeLength' ,this.$store.state.emailSecret , this.code)
+          console.log(
+            "not successful-codeLength",
+            this.$store.state.emailSecret,
+            this.code
+          );
           this.$store.dispatch("submitCode", {
             secret: this.$store.state.emailSecret,
             code: this.code,
@@ -438,7 +460,6 @@ export default {
           console.error(error + "this.selectedAddress");
         });
     },
-    
   },
   created() {
     const hasTakenResult = window.localStorage.getItem("hasTakenResult");
@@ -447,9 +468,9 @@ export default {
   },
   computed: {
     handleChangeEmaill() {
-    return 'this.$store.state.email'+this.$store.state.email
+      return "this.$store.state.email" + this.$store.state.email;
     },
-    
+
     hasTakenResult() {
       return this.$store.state.hasTakenResult;
     },
@@ -463,10 +484,9 @@ export default {
   mounted() {
     this.$store.dispatch("getMannaToClaim", this.getAddress());
     this.$store.dispatch("hasTaken", this.getAddress());
-    this.ConnectMetamask2(); 
+    this.ConnectMetamask2();
     this.hasTaken(); // call ConnectMetamask() method on mount
-    console.log('mounted')
-    
+    console.log("mounted");
   },
 };
 </script>

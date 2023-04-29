@@ -1,5 +1,4 @@
 <template>
-   
   <div class="card__center">
     <Divider />
     <div
@@ -39,17 +38,17 @@
     <Divider
       v-if="
         isLinked &&
-        isLinked.status == 'SUCCESSFUL' &&
-        !hasTaken &&
-        hasTakenResult.value > 0
+          isLinked.status == 'SUCCESSFUL' &&
+          !hasTaken &&
+          hasTakenResult.value > 0
       "
     />
     <div
       v-if="
         isLinked &&
-        isLinked.status == 'SUCCESSFUL' &&
-        !hasTaken &&
-        hasTakenResult.value > 0
+          isLinked.status == 'SUCCESSFUL' &&
+          !hasTaken &&
+          hasTakenResult.value > 0
       "
       class="
         btn-selected
@@ -67,10 +66,10 @@
     <div
       v-if="
         isLinked &&
-        isLinked.status != 'NOT_LINKED' &&
-        isLinked.status != 'SUCCESSFUL' &&
-        !hasTaken &&
-        hasTakenResult.value > 0
+          isLinked.status != 'NOT_LINKED' &&
+          isLinked.status != 'SUCCESSFUL' &&
+          !hasTaken &&
+          hasTakenResult.value > 0
       "
       class="card__center card__desc"
     >
@@ -79,7 +78,11 @@
         @click="visitLink(isLinked.link)"
         class="gradient-border card__barcode card__item"
       >
-        <qrcode-vue :value="isLinked.link" :size="qrCodeSize" level="H"></qrcode-vue>
+        <qrcode-vue
+          :value="isLinked.link"
+          :size="qrCodeSize"
+          level="H"
+        ></qrcode-vue>
       </div>
       <div
         v-if="isLinked.status == 'TRANSFERRED'"
@@ -94,7 +97,7 @@
         <qrcode-vue
           :value="
             'brightid://link-verification/http:%2f%2fnode.brightid.org/idchain/' +
-            getAddress()
+              getAddress()
           "
           :size="112"
           level="H"
@@ -112,9 +115,9 @@
     <div
       v-if="
         isLinked &&
-        isLinked.status == 'NOT_LINKED' &&
-        !hasTaken &&
-        hasTakenResult.value > 0
+          isLinked.status == 'NOT_LINKED' &&
+          !hasTaken &&
+          hasTakenResult.value > 0
       "
       class="card__center card__desc"
     >
@@ -135,17 +138,17 @@
     <Divider
       v-if="
         isLinked &&
-        isLinked.status == 'SUCCESSFUL' &&
-        !hasTaken &&
-        hasTakenResult.value > 0
+          isLinked.status == 'SUCCESSFUL' &&
+          !hasTaken &&
+          hasTakenResult.value > 0
       "
     />
     <div
       v-if="
         isLinked &&
-        isLinked.status == 'SUCCESSFUL' &&
-        !hasTaken &&
-        hasTakenResult.value > 0
+          isLinked.status == 'SUCCESSFUL' &&
+          !hasTaken &&
+          hasTakenResult.value > 0
       "
       class="card__center card__desc"
     >
@@ -154,9 +157,9 @@
     <div
       v-if="
         isLinked &&
-        isLinked.status == 'SUCCESSFUL' &&
-        !hasTaken &&
-        hasTakenResult.value > 0
+          isLinked.status == 'SUCCESSFUL' &&
+          !hasTaken &&
+          hasTakenResult.value > 0
       "
       class="card-gradient-border card__item"
     >
@@ -171,10 +174,10 @@
     <div
       v-if="
         isLinked &&
-        isLinked.status == 'SUCCESSFUL' &&
-        $store.state.emailSecret &&
-        !hasTaken &&
-        hasTakenResult.value > 0
+          isLinked.status == 'SUCCESSFUL' &&
+          $store.state.emailSecret &&
+          !hasTaken &&
+          hasTakenResult.value > 0
       "
       class="card-gradient-border card__item"
     >
@@ -189,11 +192,11 @@
     <div
       v-if="
         isLinked &&
-        isLinked.status == 'SUCCESSFUL' &&
-        $store.state.email &&
-        $store.state.emailSecret &&
-        !hasTaken &&
-        hasTakenResult.value > 0
+          isLinked.status == 'SUCCESSFUL' &&
+          $store.state.email &&
+          $store.state.emailSecret &&
+          !hasTaken &&
+          hasTakenResult.value > 0
       "
       class="
         btn-selected
@@ -211,10 +214,10 @@
     <div
       v-if="
         isLinked &&
-        isLinked.status == 'SUCCESSFUL' &&
-        !$store.state.email &&
-        !hasTaken &&
-        hasTakenResult.value > 0
+          isLinked.status == 'SUCCESSFUL' &&
+          !$store.state.email &&
+          !hasTaken &&
+          hasTakenResult.value > 0
       "
       class="
         btn-selected
@@ -229,18 +232,10 @@
       ></i>
     </div>
     <Divider
-      v-if="
-        $store.state.sendCodeState &&
-        !hasTaken &&
-        hasTakenResult.value > 0
-      "
+      v-if="$store.state.sendCodeState && !hasTaken && hasTakenResult.value > 0"
     />
     <div
-      v-if="
-        $store.state.sendCodeState &&
-        !hasTaken &&
-        hasTakenResult.value > 0
-      "
+      v-if="$store.state.sendCodeState && !hasTaken && hasTakenResult.value > 0"
     >
       <p
         class="card__center card__desc code-msg"
@@ -258,10 +253,10 @@
     <div
       v-if="
         isLinked &&
-        isLinked.status == 'SUCCESSFUL' &&
-        $store.state.email &&
-        !hasTaken &&
-        hasTakenResult.value > 0
+          isLinked.status == 'SUCCESSFUL' &&
+          $store.state.email &&
+          !hasTaken &&
+          hasTakenResult.value > 0
       "
     >
       <div
@@ -276,7 +271,7 @@
 </template>
 
 <script>
-import Divider from './Divider.vue'
+import Divider from "./Divider.vue";
 
 export default {
   name: "Mannabase",
@@ -289,21 +284,19 @@ export default {
       isLinked: false,
     };
   },
-  
+
   methods: {
     changeStore(key) {
       this.selectedStore = key;
     },
     isMetamaskConnected() {
       return window.ethereum.selectedAddress != null;
-      
     },
     getAddress() {
       window.ethereum.enable();
       return window.ethereum.selectedAddress;
     },
     ConnectMetamask() {
-      console.log("salam")
       if (!this.$store.state.email) {
         let connectMetamaskEnable = window.ethereum.enable();
 
@@ -366,23 +359,24 @@ export default {
       }
     },
     ConnectMetamask2() {
-      this.$ethereum.request({ method: 'eth_requestAccounts' })
+      this.$ethereum
+        .request({ method: "eth_requestAccounts" })
         .then((accounts) => {
           this.selectedAddress = accounts[0];
-          console.log(this.selectedAddress+" this.selectedAddress"); // log selected address to console
+          console.log(this.selectedAddress + " this.selectedAddress"); // log selected address to console
         })
         .catch((error) => {
-          console.error(error +"this.selectedAddress");
+          console.error(error + "this.selectedAddress");
         });
-    }
+    },
   },
   created() {
-    const hasTakenResult = window.localStorage.getItem('hasTakenResult');
-      console.log(hasTakenResult +" hasTakenResult");
+    const hasTakenResult = window.localStorage.getItem("hasTakenResult");
+    console.log(hasTakenResult + " hasTakenResult");
   },
   computed: {
     hasTaken() {
-      console.log(this.hasTakenResult.status+"hasTakenResult.status")
+      console.log(this.hasTakenResult.status + "hasTakenResult.status");
       if (this.$store.state.hasTakenResult) {
         if (this.$store.state.hasTakenResult.status == "error") {
           return true;
@@ -394,8 +388,10 @@ export default {
       return this.$store.state.hasTakenResult;
     },
     qrCodeSize() {
-        return window.innerWidth > 600 ? window.innerWidth*(8/100) : window.innerWidth*(28/100)
-    }
+      return window.innerWidth > 600
+        ? window.innerWidth * (8 / 100)
+        : window.innerWidth * (28 / 100);
+    },
   },
 
   mounted() {
@@ -406,5 +402,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
