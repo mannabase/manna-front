@@ -67,8 +67,8 @@ export default {
     },
   },
   created() {
-    if (window.location.href.includes('https://www.mannabase.com/')) {
-      window.location.href = 'https://mannabase.com/';
+    if (window.location.href.includes('https://www.mannatest.hedgeforhumanity.org/')) {
+      window.location.href = 'https://mannatest.hedgeforhumanity.org/';
     }
     this.checkProvider();
   },

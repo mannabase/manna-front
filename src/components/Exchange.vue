@@ -1,43 +1,43 @@
 <template>
-    <span>  
-      <div  class="card__center">
-  
-  
-        <!-- <Divider /> -->
-        
-        <!-- <div
-          @click="convertingManna()"
-          class="btn-selected card-gradient-border card__one card__item card__action-button"
-          
-        >
-        convertingManna
-          <i
-           
-          ></i>
-        </div> -->
-        <div
-          v-if="(isLinked && isLinked.status == 'NOT_LINKED')"
-          class="card__header card__item card__item--with-link"
-        >
-          Link Verified BrightID:
-        </div>
-        
-        <div v-if="(isLinked && isLinked.status == 'NOT_LINKED')">
-          <a
-            class="card__link card__link--small card__item"
-            href="https://metamask.io/"
-            >Don't have one?</a
-          >
-        </div>
-        <div
-      v-if="
-        isLinked &&
-        isLinked.status != 'NOT_LINKED' &&
-        isLinked.status != 'SUCCESSFUL' 
-      "
+  <span>  
+    <div  class="card__center">
+
+
+      <!-- <Divider /> -->
       
-      class="card__center card__desc"
-    >
+      <!-- <div
+        @click="convertingManna()"
+        class="btn-selected card-gradient-border card__one card__item card__action-button"
+        
+      >
+      convertingManna
+        <i
+         
+        ></i>
+      </div> -->
+      <div
+        v-if="(isLinked && isLinked.status == 'NOT_LINKED')"
+        class="card__header card__item card__item--with-link"
+      >
+        Link Verified BrightID:
+      </div>
+      
+      <div v-if="(isLinked && isLinked.status == 'NOT_LINKED')">
+        <a
+          class="card__link card__link--small card__item"
+          href="https://metamask.io/"
+          >Don't have one?</a
+        >
+      </div>
+      <div
+    v-if="
+      isLinked &&
+      isLinked.status != 'NOT_LINKED' &&
+      isLinked.status != 'SUCCESSFUL' 
+    "
+    
+    class="card__center card__desc"
+  >
 
       <div
         v-if="isLinked.status == 'NOT_VERIFIED'"
@@ -171,248 +171,248 @@
       >
       <!-- {{ mannaWallet }} -->
 
-        <i>
-          {{ getMannaWallet.mannaWallet }}
-        </i>
-        <!-- <i class="fa fa-regular fa-copy" style="margin-left: 3px;"></i> -->
-        <i @click="copyItem(getMannaWallet.mannaWallet)" class="card__link card__link--small" style="margin-left: 2px;" >copy</i>
+      <i>
+        {{ getMannaWallet.mannaWallet }}
+      </i>
+      <!-- <i class="fa fa-regular fa-copy" style="margin-left: 3px;"></i> -->
+      <i @click="copyItem(getMannaWallet.mannaWallet)" class="card__link card__link--small" style="margin-left: 2px;" >copy</i>
 
-        </div>
-        
-        <!-- <div>
-          <v-icon
-          small
-          class="mr-2"
-          @click="
-            copyItem(Number(item.TnxID))
-            snackbar = true
-          "
-        >
-          mdi-content-copy
-        </v-icon>
-        <v-snackbar
-          v-model="snackbar"
-          timeout="2000"
-          right
-          color="success"
-          outlined
-        >
-          Copied
-        </v-snackbar>
-        </div> -->
-  
-        <div v-if="getMannaWallet.status == 'success'" class="card__wallet-address card__item card__item">
-          Balance: {{  balance != null ? balance : 'loading...' }}
-        </div>
-        <!-- <div
-           v-if="mannaWallet"
-      >
-      {{ getAddress().slice(0, 7) + "...." + getAddress().slice(-4) }} -->
-      <!-- {{ this.hasTakenResult.message }} -->
-      <!-- <i
-        v-if="$store.state.connectLoading"
-        class="fa fa-circle-o-notch fa-spin loader"
-      ></i> -->
-    <!-- </div> -->
-        <div v-if="getMannaWallet.status == 'success'" class="card__wallet-address card__item card__item">
-          Claimable: {{ mannaToClaim ? mannaToClaim : 'loading...' }}
-          <!-- Claimable: {{ mannaToClaim }} -->
-        </div>
-        <div v-if="getMannaWallet.status == 'success' && mannaToClaim == 0 " class="card__wallet-address card__item card__item" style="color: red;">
-          Send your old manna to this address to be converted
-        </div>
-        <!-- <div v-if="mannaWallet && mannaToClaim == 0">
-          
-              this.zeroMannaAlert();
-            
-          </div> -->
-
-  
-        <Divider v-if="mannaToClaim && mannaToClaim.amount > 0" />
-  
-        <div
-          @click="convertingManna()"
-          v-if="mannaToClaim > 0  && getMannaWallet.status == 'success'"
-          class="
-            btn-selected
-            card-gradient-border card__one card__item card__action-button
-          "
-          :class="{ 'disable-btn': !$store.state.convertMannaWalletLoading  }"
-        >
-          CONVERT OLD MANNA
-          <!-- <i
-            v-if="!$store.state.convertMannaWalletLoading"
-            class="fa fa-circle-o-notch fa-spin loader"
-          ></i> -->
-        </div>
-        <div
-        v-if="mannaToClaim.amount > 0 && getMannaWallet.status == 'success'"
-    >
-      <p
-        class="card__center card__desc code-msg"
-        :class="{ green: convertMessage == 'success',  red: convertMessage == 'error' }"
-      >
-        {{convertMessage}}
-
-      
-      </p>
-    </div>
-  
-  
-        <!-- <div
-          v-if="
-            (isLinked &&
-              isLinked.status == 'SUCCESSFUL' &&
-              $store.state.emailSecret) ||
-            true
-          "
-          class="card-gradient-border card__item"
-        >
-          <input
-            class="card__input card__one"
-            placeholder="Enter your paper wallet share address"
-            v-model="paperWalletShare"
-            :disabled="$store.state.sendCodeState == 'SUCCESSFUL'"
-          />
-        </div> -->
-  
-        <!-- <Divider /> -->
-  
-        <!-- <div
-         
-          class="card__header card__item card__item--with-link"
-        >
-          Send Manna to Paper Wallet
-        </div> -->
-  
-        <!-- <Divider /> -->
-  
-        <!-- <div
-        @click="convertingManna()"
-          class="
-            btn-selected
-            card-gradient-border card__one card__item card__action-button
-          "
-          v-if="mannaWallet && balance > 0 "
-          :class="{ 'disable-btn': balance == 0 }"
-        >
-        CONVERT YOUR KEY
-          <i
-            v-if="$store.state.connectLoading"
-            class="fa fa-circle-o-notch fa-spin loader"
-          ></i>
-        </div> -->
-  
-        <!-- <div class="card__wallet-address card__item card__item--with-link">
-          your wallet address {{ this.getAddress() }}
-        </div> -->
-  
-        <!-- <Divider /> -->
-  
-        <!-- <div
-          v-if="
-            (isLinked &&
-              isLinked.status == 'SUCCESSFUL' &&
-              $store.state.emailSecret) ||
-            true
-          "
-          class="card-gradient-border card__item"
-        >
-          <input
-            class="card__header card__item card__item--with-link"
-            placeholder="Import Key to Metamask"
-            v-model="signedShareAddress"
-            :disabled="$store.state.sendCodeState == 'SUCCESSFUL'"
-          />
-        </div> -->
-        <!-- <div
-         
-          class="card__header card__item card__item--with-link"
-        >
-        Import Key to Metamask
-        </div> -->
-  
-        <!-- <Divider /> -->
-  
-        <!-- <div
-          v-if="(isLinked && isLinked.status != 'not linked')"
-          class="card__header card__item card__item--with-link"
-        >
-          Import Key to Metamask
-        </div>
-   -->
-        <div
-          class="card__item card__need-help"
-        >
-          <a class="card__link card__link--small" href="">Need Help?</a>
-        </div>
       </div>
-      <!-- <div v-else class="card__center">
-        <div class="card__wallet-address card__item card__item--with-link">
-          In Testing...
-        </div>
+      
+      <!-- <div>
+        <v-icon
+        small
+        class="mr-2"
+        @click="
+          copyItem(Number(item.TnxID))
+          snackbar = true
+        "
+      >
+        mdi-content-copy
+      </v-icon>
+      <v-snackbar
+        v-model="snackbar"
+        timeout="2000"
+        right
+        color="success"
+        outlined
+      >
+        Copied
+      </v-snackbar>
       </div> -->
-    </span>
-  </template>
-  
-  <script>
-  import Divider from "@/components/Divider.vue";
-  import Swal from 'sweetalert2';
-  // import Store from "../store";
 
-  
-  export default {
-    name: "Exchange",
-    components: {
-      Divider,
+      <div v-if="getMannaWallet.status == 'success'" class="card__wallet-address card__item card__item">
+        Balance: {{  balance != null ? balance : 'loading...' }}
+      </div>
+      <!-- <div
+         v-if="mannaWallet"
+    >
+    {{ getAddress().slice(0, 7) + "...." + getAddress().slice(-4) }} -->
+    <!-- {{ this.hasTakenResult.message }} -->
+    <!-- <i
+      v-if="$store.state.connectLoading"
+      class="fa fa-circle-o-notch fa-spin loader"
+    ></i> -->
+  <!-- </div> -->
+      <div v-if="getMannaWallet.status == 'success'" class="card__wallet-address card__item card__item">
+        Claimable: {{ mannaToClaim ? mannaToClaim : 'loading...' }}
+        <!-- Claimable: {{ mannaToClaim }} -->
+      </div>
+      <div v-if="getMannaWallet.status == 'success' && mannaToClaim == 0 " class="card__wallet-address card__item card__item" style="color: red;">
+        Send your old manna to this address to be converted
+      </div>
+      <!-- <div v-if="mannaWallet && mannaToClaim == 0">
+        
+            this.zeroMannaAlert();
+          
+        </div> -->
+
+
+      <Divider v-if="mannaToClaim && mannaToClaim.amount > 0" />
+
+      <div
+        @click="convertingManna()"
+        v-if="mannaToClaim > 0  && getMannaWallet.status == 'success'"
+        class="
+          btn-selected
+          card-gradient-border card__one card__item card__action-button
+        "
+        :class="{ 'disable-btn': !$store.state.convertMannaWalletLoading  }"
+      >
+        CONVERT OLD MANNA
+        <!-- <i
+          v-if="!$store.state.convertMannaWalletLoading"
+          class="fa fa-circle-o-notch fa-spin loader"
+        ></i> -->
+      </div>
+      <div
+      v-if="mannaToClaim.amount > 0 && getMannaWallet.status == 'success'"
+  >
+    <p
+      class="card__center card__desc code-msg"
+      :class="{ green: convertMessage == 'success',  red: convertMessage == 'error' }"
+    >
+      {{convertMessage}}
+
+    
+    </p>
+  </div>
+
+
+      <!-- <div
+        v-if="
+          (isLinked &&
+            isLinked.status == 'SUCCESSFUL' &&
+            $store.state.emailSecret) ||
+          true
+        "
+        class="card-gradient-border card__item"
+      >
+        <input
+          class="card__input card__one"
+          placeholder="Enter your paper wallet share address"
+          v-model="paperWalletShare"
+          :disabled="$store.state.sendCodeState == 'SUCCESSFUL'"
+        />
+      </div> -->
+
+      <!-- <Divider /> -->
+
+      <!-- <div
+       
+        class="card__header card__item card__item--with-link"
+      >
+        Send Manna to Paper Wallet
+      </div> -->
+
+      <!-- <Divider /> -->
+
+      <!-- <div
+      @click="convertingManna()"
+        class="
+          btn-selected
+          card-gradient-border card__one card__item card__action-button
+        "
+        v-if="mannaWallet && balance > 0 "
+        :class="{ 'disable-btn': balance == 0 }"
+      >
+      CONVERT YOUR KEY
+        <i
+          v-if="$store.state.connectLoading"
+          class="fa fa-circle-o-notch fa-spin loader"
+        ></i>
+      </div> -->
+
+      <!-- <div class="card__wallet-address card__item card__item--with-link">
+        your wallet address {{ this.getAddress() }}
+      </div> -->
+
+      <!-- <Divider /> -->
+
+      <!-- <div
+        v-if="
+          (isLinked &&
+            isLinked.status == 'SUCCESSFUL' &&
+            $store.state.emailSecret) ||
+          true
+        "
+        class="card-gradient-border card__item"
+      >
+        <input
+          class="card__header card__item card__item--with-link"
+          placeholder="Import Key to Metamask"
+          v-model="signedShareAddress"
+          :disabled="$store.state.sendCodeState == 'SUCCESSFUL'"
+        />
+      </div> -->
+      <!-- <div
+       
+        class="card__header card__item card__item--with-link"
+      >
+      Import Key to Metamask
+      </div> -->
+
+      <!-- <Divider /> -->
+
+      <!-- <div
+        v-if="(isLinked && isLinked.status != 'not linked')"
+        class="card__header card__item card__item--with-link"
+      >
+        Import Key to Metamask
+      </div>
+ -->
+      <div
+        class="card__item card__need-help"
+      >
+        <a class="card__link card__link--small" href="">Need Help?</a>
+      </div>
+    </div>
+    <!-- <div v-else class="card__center">
+      <div class="card__wallet-address card__item card__item--with-link">
+        In Testing...
+      </div>
+    </div> -->
+  </span>
+</template>
+
+<script>
+import Divider from "@/components/Divider.vue";
+import Swal from 'sweetalert2';
+// import Store from "../store";
+
+
+export default {
+  name: "Exchange",
+  components: {
+    Divider,
+  },
+  data() {
+    return {
+      paperWalletShare: "",
+      signedShareAddress: "",
+    };
+  },
+  methods: {
+    generateMannaWallet() {
+      this.$store.dispatch("generateMannaWallet", this.getAddress());
     },
-    data() {
-      return {
-        paperWalletShare: "",
-        signedShareAddress: "",
-      };
+    convertMannaWallet() {
+      this.$store.dispatch("convertMannaWallet", this.getAddress());
     },
-    methods: {
-      generateMannaWallet() {
-        this.$store.dispatch("generateMannaWallet", this.getAddress());
-      },
-      convertMannaWallet() {
-        this.$store.dispatch("convertMannaWallet", this.getAddress());
-      },
-      getAddress() {
-      window.ethereum.enable();
-      return window.ethereum.selectedAddress;
-    },
-      copyItem(mytext) {
-      navigator.clipboard.writeText(mytext)
-      this.$swal('Copied!');
-      this.$swal.fire({
-          position: 'bottom',
-          icon: 'success',
-          title: 'Copied!',
-          showConfirmButton: false,
-          timer: 1500,
-          width: '15em',
-          timerProgressBar:true
-          })
-    },
-    zeroMannaAlert(){
-      Swal.fire({
-  title: '<strong>HTML <u>example</u></strong>',
-  icon: 'info',
-  html:
-    'You can use <b>bold text</b>, ' +
-    '<a href="//sweetalert2.github.io">links</a> ' +
-    'and other HTML tags',
-  showCloseButton: true,
-  showCancelButton: true,
-  focusConfirm: false,
-  confirmButtonText:
-    '<i class="fa fa-thumbs-up"></i> Great!',
-  confirmButtonAriaLabel: 'Thumbs up, great!',
-  cancelButtonText:
-    '<i class="fa fa-thumbs-down"></i>',
-  cancelButtonAriaLabel: 'Thumbs down'
+    getAddress() {
+    window.ethereum.enable();
+    return window.ethereum.selectedAddress;
+  },
+    copyItem(mytext) {
+    navigator.clipboard.writeText(mytext)
+    this.$swal('Copied!');
+    this.$swal.fire({
+        position: 'bottom',
+        icon: 'success',
+        title: 'Copied!',
+        showConfirmButton: false,
+        timer: 1500,
+        width: '15em',
+        timerProgressBar:true
+        })
+  },
+  zeroMannaAlert(){
+    Swal.fire({
+title: '<strong>HTML <u>example</u></strong>',
+icon: 'info',
+html:
+  'You can use <b>bold text</b>, ' +
+  '<a href="//sweetalert2.github.io">links</a> ' +
+  'and other HTML tags',
+showCloseButton: true,
+showCancelButton: true,
+focusConfirm: false,
+confirmButtonText:
+  '<i class="fa fa-thumbs-up"></i> Great!',
+confirmButtonAriaLabel: 'Thumbs up, great!',
+cancelButtonText:
+  '<i class="fa fa-thumbs-down"></i>',
+cancelButtonAriaLabel: 'Thumbs down'
 })
     }
     },
