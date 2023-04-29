@@ -102,7 +102,7 @@ const mixin = {
           const tokenSymbol = res.data.symbol;
           const tokenDecimals = res.data.decimals;
           const tokenImage = res.data.image
-          "https://mannatest.hedgeforhumanity.org/img/logo.c0b699a7.png";
+          "https://mannabase.com/img/logo.c0b699a7.png";
 
           try {
             window.ethereum.request({

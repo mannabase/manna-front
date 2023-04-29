@@ -74,7 +74,7 @@
           class="btn-selected
             card-gradient-border card__one card__item card__action-button"
             :class="{ 'disable-btn': $store.state.alertLoading}"
-          @click="checkBrightIDVerification()"
+          @click="checkGetMannaWallet()"
         >
         verify connection
         <i
@@ -139,7 +139,7 @@
         <Divider v-if="getMannaWallet == 'No Manna wallet' && isLinked && isLinked.status == 'SUCCESSFUL'"/>
         <div
           @click="generateMannaWallet()"
-          v-if="getMannaWallet == 'No Manna wallet' && isLinked && isLinked.status == 'SUCCESSFUL'"
+          v-if="getMannaWallet.message == 'No Manna wallet' && isLinked && isLinked.status == 'SUCCESSFUL'"
           class="
             btn-selected
             card-gradient-border card__one card__item card__action-button
@@ -417,9 +417,9 @@ cancelButtonAriaLabel: 'Thumbs down'
     }
     },
     computed: {
-      mannaWallet() {
-        return this.$store.state.mannaWallet;
-      },
+      // mannaWallet() {
+      //   return this.$store.state.mannaWallet;
+      // },
       getMannaWallet() {
         return this.$store.state.getMannaWallet;
       },
@@ -450,9 +450,22 @@ cancelButtonAriaLabel: 'Thumbs down'
     // }
     // },
     mounted() {
+      // if (this.$store.state.mannaWallet == null) {
+      //   this.$store.dispatch("mannaWallet", this.getAddress());
+      // }
       if (this.$store.state.getMannaWallet == null) {
         this.$store.dispatch("getMannaWallet", this.getAddress());
       }
-    },
+      // if (this.$store.state.getMannaWallet.message == 'No Manna wallet') {
+      //   this.$store.dispatch("getMannaWallet", this.getAddress());
+      // }
+      // if (this.$store.state.getMannaWallet.message == 'BrightId is not linked') {
+      //   this.$store.dispatch("getMannaWallet", this.getAddress());
+      // }
+      // if (this.$store.state.getMannaWallet.status == 'success') {
+      //   this.$store.dispatch("getMannaWallet", this.getAddress());
+      // }
+      
+    }
   };
   </script>
