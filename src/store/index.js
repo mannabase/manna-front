@@ -333,6 +333,15 @@ export default new Vuex.Store({
         .catch((e) => {
           context.state.submitEmailLoading = false;
           console.log("setEmail", e);
+          Swal.fire({
+            position: "bottom",
+            icon: "error",
+            title: "Invalid Email!",
+            showConfirmButton: false,
+            timer: 1500,
+            width: "15em",
+            timerProgressBar: true,
+          });
         });
     },
     submitCode: (context, payload) => {

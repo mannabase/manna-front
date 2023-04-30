@@ -131,7 +131,6 @@ const mixin = {
     checkBrightIDVerification() {
       this.$store.dispatch("isLinkedBright", this.getAddress());
       this.$store.dispatch("getMannaWallet", this.getAddress());
-      this.$store.dispatch("isLinked", this.getAddress());
     },
     async checkBrightIDVerificationAlert() {
       let res = await this.$store.dispatch("isLinkedBright", this.getAddress());

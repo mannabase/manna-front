@@ -60,14 +60,14 @@
       </div>
 
       <!-- not taken -->
-      <Divider
+      <!-- <Divider
         v-if="
           isLinked &&
             isLinked.status == 'SUCCESSFUL' &&
             // !hasTaken &&
             (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
         "
-      />
+      /> -->
       <div
         v-if="
           isLinked &&
@@ -187,14 +187,14 @@
         </div>
         Scan this QR-code with your verified BrightID
       </div>
-      <Divider
+      <!-- <Divider
         v-if="
           isLinked &&
             isLinked.status == 'SUCCESSFUL' &&
             // !hasTaken &&
             (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
         "
-      />
+      /> -->
       <div
         v-if="
           isLinked &&
