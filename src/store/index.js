@@ -310,7 +310,7 @@ export default new Vuex.Store({
           }
         })
         .catch((e) => {
-          console.log(e)
+          console.log(e);
           context.state.alertLoading = false;
           Swal.fire("Verification Failed", "ERROR", "error");
         });
@@ -369,7 +369,7 @@ export default new Vuex.Store({
           }
         })
         .catch((e) => {
-          context.state.submitCodeLoading = false;;
+          context.state.submitCodeLoading = false;
           console.log("submitCode-catch-response", e.response.data.message);
 
           if (!e.response) {
@@ -445,7 +445,7 @@ export default new Vuex.Store({
         })
         .catch((e) => {
           context.state.claimLoading = false;
-          console.log(e)
+          console.log(e);
         });
     },
     getBalance: (context, payload) => {
@@ -476,7 +476,6 @@ export default new Vuex.Store({
         })
         .catch((e) => {
           console.log("hasTakenResult_errors" + e);
-          console.log(e);
         });
     },
     mannaWallet: (context, payload) => {
@@ -585,7 +584,6 @@ export default new Vuex.Store({
         .request({
           method: "GET",
           url:
-            this.testurl +
             "https://mannatest.hedgeforhumanity.org/backend/brightId/verifications/" +
             payload,
         })

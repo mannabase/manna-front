@@ -10,16 +10,18 @@
         <h2 class="header__logo__name">mannabase</h2>
       </div>
       <div
-        v-if="
-          isLinked &&
-          mannaBalance != null
-        "
+        v-if="isLinked && mannaBalance != null"
         class="header__manna-amount"
         @click="addMannaTokenToWallet()"
       >
         <div class="header__manna-amount__button">
           <div class="gradient-border btn btn-back-orange address">
-            {{ parseFloat(mannaBalance).toFixed(2) + " Manna" }}
+            <div v-if="balance == null">
+              loading...
+            </div>
+            <div v-else>
+              {{ parseFloat(balance).toFixed(2) + " Manna" }}
+            </div>
           </div>
         </div>
       </div>
@@ -29,8 +31,8 @@
       <div
         v-if="
           $store.state.contractData.isVerified == false &&
-          isBrightIDVerifiedUnique &&
-          isIDChain
+            isBrightIDVerifiedUnique &&
+            isIDChain
         "
         class="header__buttons__claim"
       >
@@ -50,9 +52,9 @@
       <div
         v-if="
           $store.state.contractData.isVerified &&
-          $store.state.contractData.isRegistered == false &&
-          isBrightIDVerifiedUnique &&
-          isIDChain
+            $store.state.contractData.isRegistered == false &&
+            isBrightIDVerifiedUnique &&
+            isIDChain
         "
         class="header__buttons__claim"
       >
@@ -72,9 +74,9 @@
       <div
         v-if="
           $store.state.contractData.isVerified &&
-          $store.state.contractData.isRegistered &&
-          $store.state.contractData.toClaim &&
-          isIDChain
+            $store.state.contractData.isRegistered &&
+            $store.state.contractData.toClaim &&
+            isIDChain
         "
         class="header__buttons__claim"
       >
@@ -143,7 +145,10 @@
       <p @click="visitLink('https://t.me/Manna_Currency')">Telegram</p>
     </div>
 
-    <div @click="$store.commit('setGuidePage', true)" class="header__center-logo">
+    <div
+      @click="$store.commit('setGuidePage', true)"
+      class="header__center-logo"
+    >
       <img
         src="@/assets/images/logo.png"
         alt=""
@@ -166,6 +171,11 @@ export default {
     goToMannaOne() {
       this.$store.commit("setGuidePage", false);
       this.showNavLinks = false;
+    },
+  },
+  computed: {
+    balance() {
+      return this.$store.state.balance;
     },
   },
 };
