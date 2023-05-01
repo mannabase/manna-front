@@ -132,6 +132,10 @@ const mixin = {
       this.$store.dispatch("isLinkedBright", this.getAddress());
       this.$store.dispatch("getMannaWallet", this.getAddress());
     },
+    generateMannaWallet() {
+      this.$store.dispatch("generateMannaWallet", this.getAddress());
+      this.$store.dispatch("getMannaWallet", this.getAddress());
+    },
     async checkBrightIDVerificationAlert() {
       let res = await this.$store.dispatch("isLinkedBright", this.getAddress());
       try {
@@ -489,6 +493,7 @@ const mixin = {
     },
     goToMannaOne() {
       this.$store.commit("setGuidePage", false);
+      this.$store.dispatch("isLinked",this.selectedAddress)
     },
   },
   computed: {

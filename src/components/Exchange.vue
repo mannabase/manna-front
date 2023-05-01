@@ -262,10 +262,10 @@
         :class="{ 'disable-btn': !$store.state.convertMannaWalletLoading }"
       >
         CONVERT OLD MANNA
-        <!-- <i
+        <i
             v-if="!$store.state.convertMannaWalletLoading"
             class="fa fa-circle-o-notch fa-spin loader"
-          ></i> -->
+          ></i>
       </div>
       <div v-if="mannaToClaim.amount > 0 && getMannaWallet.status == 'success'">
         <p
@@ -390,10 +390,6 @@ export default {
     };
   },
   methods: {
-    generateMannaWallet() {
-      this.$store.dispatch("generateMannaWallet", this.getAddress());
-      this.$store.dispatch("getMannaWallet", this.getAddress());
-    },
     convertMannaWallet() {
       this.$store.dispatch("convertMannaWallet", this.getAddress());
     },

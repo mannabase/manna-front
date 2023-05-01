@@ -72,6 +72,9 @@ export default {
     }
     this.checkProvider();
   },
+  mounted() {
+    this.$store.dispatch("getMannaWallet", this.getAddress());
+  },
   watch: {
     selectedAddress(newAddress, oldAddress) {
       if (newAddress != oldAddress && newAddress != null) {
@@ -84,6 +87,7 @@ export default {
         this.loadInfo();
       }
     },
+
   },
 };
 </script>
