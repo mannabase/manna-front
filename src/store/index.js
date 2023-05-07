@@ -60,7 +60,6 @@ export default new Vuex.Store({
     timeStamp: null,
     signiture: null,
     convertMessage: null,
-    convertStatus: null,
 
     contractData: {
       isVerified: null,
@@ -150,9 +149,6 @@ export default new Vuex.Store({
     setConvertMessage(state, payload) {
       state.convertMessage = payload;
     },
-    setConvertStatus(state, payload) {
-      state.convertStatus = payload;
-    },
     setSelectedAddress(state, payload) {
       state.selectedAddress = payload;
     },
@@ -198,6 +194,7 @@ export default new Vuex.Store({
       state.mannaBalance = null;
       state.hasTakenResult = null;
       state.mannaWallet = null;
+      state.getMannaWallet = null;
       state.balance = 0;
       state.signer = null;
       state.mannaContract = null;
@@ -371,7 +368,15 @@ export default new Vuex.Store({
         .catch((e) => {
           context.state.submitCodeLoading = false;
           console.log("submitCode-catch-response", e.response.data.message);
-
+          Swal.fire({
+            position: "bottom",
+            icon: "error",
+            title: "Invalid code!",
+            showConfirmButton: false,
+            timer: 1500,
+            width: "15em",
+            timerProgressBar: true,
+          });
           if (!e.response) {
             e.response.data = "Error: Unable to submit code";
           }
@@ -563,16 +568,14 @@ export default new Vuex.Store({
         })
         .then((res) => {
           if (res.data.status == "success") {
-            context.state.convertMannaWalletLoading = false;
-            context.dispatch("getBalance", res.data.mannaWallet);
+            context.state.convertMannaWalletLoading = true;
+            context.dispatch("getBalance", context.state.getMannaWallet);
             context.dispatch("getMannaToClaim", context.state.selectedAddress);
+            context.commit("setConvertMessage", 'successful converted');
           } else {
             context.state.convertMannaWalletLoading = true;
+            context.commit("setConvertMessage", 'error converting');
           }
-          context.commit("setConvertStatus", res.data.status);
-          context.commit("setConvertMessage", res.data.message);
-          context.dispatch("getBalance", res.data.mannaWallet);
-          context.dispatch("getMannaToClaim", context.state.selectedAddress);
         })
         .catch((e) => {
           context.state.convertMannaWalletLoading = true;

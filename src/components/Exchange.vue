@@ -271,8 +271,8 @@
         <p
           class="card__center card__desc code-msg"
           :class="{
-            green: convertMessage == 'success',
-            red: convertMessage == 'error',
+            green: convertMessage == 'successful converted',
+            red: convertMessage == 'error converting',
           }"
         >
           {{ convertMessage }}
@@ -437,9 +437,6 @@ export default {
     },
     convertMessage() {
       return this.$store.state.convertMessage;
-    },
-    convertStatus() {
-      return this.$store.state.convertStatus;
     },
     balance() {
       return this.$store.state.balance;

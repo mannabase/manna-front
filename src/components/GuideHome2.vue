@@ -266,10 +266,7 @@
             class="guide-home2__content__link-content__icon__barcode"
           >
             <qrcode-vue
-            :value="
-              'brightid://link-verification/http:%2f%2fnode.brightid.org/idchain/' +
-                getAddress()
-            "
+              :value="'brightid://link-verification/Manna/' + selectedAddress"
               :size="qrCodeSize"
               level="H"
             ></qrcode-vue>

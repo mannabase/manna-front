@@ -72,7 +72,7 @@
         v-if="
           isLinked &&
             isLinked.status == 'SUCCESSFUL' &&
-            mannaToClaim.amount > 0 &&
+            mannaToClaim.value > 0 &&
             // !hasTaken &&
             (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
         "

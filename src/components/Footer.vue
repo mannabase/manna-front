@@ -7,6 +7,11 @@
       <a href="https://twitter.com/mannatoken" target="blank">Twitter</a>
       <a href="https://medium.com/@hedgeforhumanity" target="blank">Medium</a>
       <div
+      v-if="
+              isBrightIDVerifiedData &&
+                (isBrightIDVerifiedData.unique == false ||
+                  isBrightIDVerifiedData.error)
+            "
         class="link "
         :class="{ 'disable-link': !isLinked }"
         @click="goToMannaOne()"
