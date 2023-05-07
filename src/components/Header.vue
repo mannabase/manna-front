@@ -20,7 +20,7 @@
               loading...
             </div>
             <div v-else>
-              {{ parseFloat(balance).toFixed(2) + " Manna" }}
+              {{ parseFloat(mannaBalance).toFixed(2) + " Manna" }}
             </div>
           </div>
         </div>
