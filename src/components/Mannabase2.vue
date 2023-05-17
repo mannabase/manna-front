@@ -49,11 +49,7 @@
       {{ this.hasTakenResult.value +' hasTakenResult.value'}}
     </div> -->
       <div
-        v-if="
-          hasTaken &&
-            hasTakenResult.message != 'Not found' &&
-            hasTakenResult.message != 'Email is not set'
-        "
+        v-if="hasTaken && hasTakenResult.message != 'Email is not set'"
         class="card__center card__desc"
       >
         You have taken your manna version 1
@@ -65,7 +61,7 @@
           isLinked &&
             isLinked.status == 'SUCCESSFUL' &&
             // !hasTaken &&
-            (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
+            (hasTakenResult.message == 'Email is not set' || hasTakenResult.value > 0)
         "
       /> -->
       <div
@@ -74,7 +70,8 @@
             isLinked.status == 'SUCCESSFUL' &&
             mannaToClaim.value > 0 &&
             // !hasTaken &&
-            (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
+            (hasTakenResult.message == 'Email is not set' ||
+              hasTakenResult.value > 0)
         "
         class="
         btn-selected
@@ -95,7 +92,8 @@
             isLinked.status != 'NOT_LINKED' &&
             isLinked.status != 'SUCCESSFUL' &&
             // !hasTaken &&
-            (hasTakenResult.message == 'Email is not set' || hasTakenResult.value > 0)
+            (hasTakenResult.message == 'Email is not set' ||
+              hasTakenResult.value > 0)
         "
         class="card__center card__desc"
       >
@@ -156,7 +154,8 @@
           isLinked &&
             isLinked.status == 'NOT_LINKED' &&
             // !hasTaken &&
-            (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
+            (hasTakenResult.message == 'Email is not set' ||
+              hasTakenResult.value > 0)
         "
         class="card__center card__desc"
       >
@@ -192,7 +191,7 @@
           isLinked &&
             isLinked.status == 'SUCCESSFUL' &&
             // !hasTaken &&
-            (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
+            (hasTakenResult.message == 'Email is not set' || hasTakenResult.value > 0)
         "
       /> -->
       <div
@@ -200,7 +199,8 @@
           isLinked &&
             isLinked.status == 'SUCCESSFUL' &&
             // !hasTaken &&
-            (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
+            (hasTakenResult.message == 'Email is not set' ||
+              hasTakenResult.value > 0)
         "
         class="card__center card__desc"
       >
@@ -211,7 +211,7 @@
           isLinked &&
             isLinked.status == 'SUCCESSFUL' &&
             // !hasTaken &&
-            (hasTakenResult.message == 'Not found' ||
+            (hasTakenResult.message == 'Email is not set' ||
               hasTakenResult.value > 0 ||
               hasTakenResult.message == 'Email is not set')
         "
@@ -231,7 +231,7 @@
             isLinked.status == 'SUCCESSFUL' &&
             $store.state.emailSecret &&
             // !hasTaken &&
-            (hasTakenResult.message == 'Not found' ||
+            (hasTakenResult.message == 'Email is not set' ||
               hasTakenResult.value > 0 ||
               hasTakenResult.message == 'Email is not set')
         "
@@ -252,7 +252,7 @@
             $store.state.email &&
             $store.state.emailSecret &&
             // !hasTaken &&
-            (hasTakenResult.message == 'Not found' ||
+            (hasTakenResult.message == 'Email is not set' ||
               hasTakenResult.value > 0 ||
               hasTakenResult.message == 'Email is not set')
         "
@@ -275,7 +275,7 @@
             isLinked.status == 'SUCCESSFUL' &&
             !$store.state.email &&
             // !hasTaken &&
-            (hasTakenResult.message == 'Not found' ||
+            (hasTakenResult.message == 'Email is not set' ||
               hasTakenResult.value > 0 ||
               hasTakenResult.message == 'Email is not set')
         "
@@ -295,7 +295,7 @@
         v-if="
           $store.state.sendCodeMsg &&
             // !hasTaken &&
-            (hasTakenResult.message == 'Not found' ||
+            (hasTakenResult.message == 'Email is not set' ||
               hasTakenResult.value > 0 ||
               hasTakenResult.message == 'Email is not set')
         "
@@ -304,7 +304,7 @@
         v-if="
           $store.state.sendCodeMsg &&
             // !hasTaken &&
-            (hasTakenResult.message == 'Not found' ||
+            (hasTakenResult.message == 'Email is not set' ||
               hasTakenResult.value > 0 ||
               hasTakenResult.message == 'Email is not set')
         "
@@ -328,7 +328,7 @@
             isLinked.status == 'SUCCESSFUL' &&
             $store.state.email &&
             // !hasTaken &&
-            (hasTakenResult.message == 'Not found' ||
+            (hasTakenResult.message == 'Email is not set' ||
               hasTakenResult.value > 0 ||
               hasTakenResult.message == 'Email is not set')
         "
