@@ -250,6 +250,7 @@ export default new Vuex.Store({
           console.log(e);
         });
     },
+    //this action for handel a notifications
     isLinkedBright: (context, payload) => {
       context.state.alertLoading = true;
       mixin.methods

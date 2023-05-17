@@ -95,7 +95,7 @@
             isLinked.status != 'NOT_LINKED' &&
             isLinked.status != 'SUCCESSFUL' &&
             // !hasTaken &&
-            (hasTakenResult.message == 'Not found' || hasTakenResult.value > 0)
+            (hasTakenResult.message == 'Email is not set' || hasTakenResult.value > 0)
         "
         class="card__center card__desc"
       >
