@@ -14,14 +14,9 @@
         class="header__manna-amount"
         @click="addMannaTokenToWallet()"
       >
-        <div class="header__manna-amount__button">
+      <div class="header__manna-amount__button">
           <div class="gradient-border btn btn-back-orange address">
-            <div v-if="balance == null">
-              loading...
-            </div>
-            <div v-else>
-              {{ parseFloat(mannaBalance).toFixed(2) + " Manna" }}
-            </div>
+            {{ parseFloat(mannaBalance).toFixed(2) + " Manna" }}
           </div>
         </div>
       </div>
