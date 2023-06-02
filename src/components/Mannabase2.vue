@@ -253,8 +253,7 @@
             $store.state.emailSecret &&
             // !hasTaken &&
             (hasTakenResult.message == 'Email is not set' ||
-              hasTakenResult.value > 0 ||
-              hasTakenResult.message == 'Email is not set')
+              hasTakenResult.value > 0 )
         "
         class="
         btn-selected
@@ -296,8 +295,7 @@
           $store.state.sendCodeMsg &&
             // !hasTaken &&
             (hasTakenResult.message == 'Email is not set' ||
-              hasTakenResult.value > 0 ||
-              hasTakenResult.message == 'Email is not set')
+              hasTakenResult.value > 0 )
         "
       />
       <div
@@ -305,8 +303,7 @@
           $store.state.sendCodeMsg &&
             // !hasTaken &&
             (hasTakenResult.message == 'Email is not set' ||
-              hasTakenResult.value > 0 ||
-              hasTakenResult.message == 'Email is not set')
+              hasTakenResult.value > 0 )
         "
       >
         <p
@@ -329,8 +326,7 @@
             $store.state.email &&
             // !hasTaken &&
             (hasTakenResult.message == 'Email is not set' ||
-              hasTakenResult.value > 0 ||
-              hasTakenResult.message == 'Email is not set')
+              hasTakenResult.value > 0 )
         "
       >
         <div
