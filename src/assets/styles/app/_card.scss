@@ -25,7 +25,8 @@
 
   &__wallet-address {
     color: $gray-color;
-    font-weight: 400;
+    font-weight: 400
+    ;
     font-size: 1rem;
     margin: 5px 0 -2px !important;
     max-width: 22vw;
@@ -149,6 +150,20 @@
     text-align: center;
     width: 400px;
     margin: 20px 0 10px;
+  }
+  &__conversion{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    color: $thirdinary-color;
+    font-size: 14px;
+    text-align: center;
+    width: 400px;
+    margin: 20px 0 10px;
+    &--text{
+     color: $thirdinary-color;
+    }
   }
   &__item {
     margin: 5px 0;
