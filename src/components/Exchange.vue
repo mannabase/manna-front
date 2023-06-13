@@ -1,6 +1,7 @@
 <template>
   <span>
-    <div v-if="$store.state.isLinkedFooterLoading">
+    <div  class="card__center card__desc" 
+    v-if="$store.state.isLinkedFooterLoading">
       <i
           class="fa fa-circle-o-notch fa-spin loader"
         ></i>
@@ -204,7 +205,8 @@
           {{ convertMessage }}
         </p>
       </div>
-   <div class="card__conversion">
+   <div v-if="getMannaWallet.status == 'success'"
+    class="card__conversion">
     <p class="card__conversion--text">
       Send your old manna 1.0 to this wallet address. It will convert into 
         <a class="card__link card__link--small"

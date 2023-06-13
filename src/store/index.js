@@ -528,6 +528,7 @@ export default new Vuex.Store({
         });
     },
     getMannaWallet: (context, payload) => {
+      context.state.generateMannaWalletLoading = true;
       mixin.methods
         .request({
           method: "GET",
@@ -536,6 +537,7 @@ export default new Vuex.Store({
             payload,
         })
         .then((res) => {
+          context.state.generateMannaWalletLoading = false;
           if (res.data.status == "success") {
             context.commit("setGetMannaWallet", res.data);
             context.dispatch("getBalance", res.data.mannaWallet);
@@ -551,6 +553,7 @@ export default new Vuex.Store({
           }
         })
         .catch((e) => {
+          context.state.generateMannaWalletLoading = false;
           console.log("mannaWallet", e);
         });
     },
