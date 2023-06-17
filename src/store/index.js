@@ -230,7 +230,7 @@ export default new Vuex.Store({
         .request({
           method: "GET",
           url:
-            "https://mannatest.hedgeforhumanity.org/backend/brightId/isLinked/" +
+            "https://mannabase.com/backend/brightId/isLinked/" +
             payload,
         })
         .then((res) => {
@@ -257,7 +257,7 @@ export default new Vuex.Store({
         .request({
           method: "GET",
           url:
-            "https://mannatest.hedgeforhumanity.org/backend/brightId/isLinked/" +
+            "https://mannabase.com/backend/brightId/isLinked/" +
             payload,
         })
         .then((res) => {
@@ -320,7 +320,7 @@ export default new Vuex.Store({
         .request({
           method: "POST",
           url:
-            "https://mannatest.hedgeforhumanity.org/backend/conversion/requestMailCode",
+            "https://mannabase.com/backend/conversion/requestMailCode",
           data: payload,
         })
         .then((res) => {
@@ -349,7 +349,7 @@ export default new Vuex.Store({
         .request({
           method: "POST",
           url:
-            "https://mannatest.hedgeforhumanity.org/backend/conversion/submitMailCode",
+            "https://mannabase.com/backend/conversion/submitMailCode",
           data: payload,
         })
         .then((res) => {
@@ -402,7 +402,7 @@ export default new Vuex.Store({
         .request({
           method: "GET",
           url:
-            "https://mannatest.hedgeforhumanity.org/backend/conversion/claimable/" +
+            "https://mannabase.com/backend/conversion/claimable/" +
             payload,
         })
         .then((res) => {
@@ -419,7 +419,7 @@ export default new Vuex.Store({
         .request({
           method: "GET",
           url:
-            "https://mannatest.hedgeforhumanity.org/backend/conversion/claimable/" +
+            "https://mannabase.com/backend/conversion/claimable/" +
             payload,
         })
         .then((res) => {
@@ -438,7 +438,7 @@ export default new Vuex.Store({
       mixin.methods
         .request({
           method: "POST",
-          url: "https://mannatest.hedgeforhumanity.org/backend/manna/claim",
+          url: "https://mannabase.com/backend/manna/claim",
           data: { walletAddress: payload },
         })
         .then((res) => {
@@ -459,7 +459,7 @@ export default new Vuex.Store({
         .request({
           method: "GET",
           url:
-            "https://mannatest.hedgeforhumanity.org/backend/conversion/getBalance/" +
+            "https://mannabase.com/backend/conversion/getBalance/" +
             payload,
         })
         .then((res) => {
@@ -474,7 +474,7 @@ export default new Vuex.Store({
         .request({
           method: "GET",
           url:
-            "https://mannatest.hedgeforhumanity.org/backend/conversion/claimable/" +
+            "https://mannabase.com/backend/conversion/claimable/" +
             payload,
         })
         .then((res) => {
@@ -490,7 +490,7 @@ export default new Vuex.Store({
         .request({
           method: "GET",
           url:
-            "https://mannatest.hedgeforhumanity.org/backend/conversion/mannaWallet" +
+            "https://mannabase.com/backend/conversion/mannaWallet" +
             payload,
         })
         .then((res) => {
@@ -512,7 +512,7 @@ export default new Vuex.Store({
         .request({
           method: "POST",
           url:
-            "https://mannatest.hedgeforhumanity.org/backend/conversion/mannaWallet",
+            "https://mannabase.com/backend/conversion/mannaWallet",
           data: { walletAddress: payload },
         })
         .then((res) => {
@@ -533,7 +533,7 @@ export default new Vuex.Store({
         .request({
           method: "GET",
           url:
-            "https://mannatest.hedgeforhumanity.org/backend/conversion/getMannaWallet/" +
+            "https://mannabase.com/backend/conversion/getMannaWallet/" +
             payload,
         })
         .then((res) => {
@@ -563,7 +563,7 @@ export default new Vuex.Store({
         .request({
           method: "POST",
           url:
-            "https://mannatest.hedgeforhumanity.org/backend/conversion/convert",
+            "https://mannabase.com/backend/conversion/convert",
           data: {
             walletAddress: payload,
             timestamp: context.state.timeStamp,
@@ -591,7 +591,7 @@ export default new Vuex.Store({
         .request({
           method: "GET",
           url:
-            "https://mannatest.hedgeforhumanity.org/backend/brightId/verifications/" +
+            "https://mannabase.com/backend/brightId/verifications/" +
             payload,
         })
         .then((res) => {
