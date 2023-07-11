@@ -49,7 +49,7 @@
       {{ this.hasTakenResult.value +' hasTakenResult.value'}}
     </div> -->
       <div
-        v-if="hasTaken && hasTakenResult.message != 'Email is not set'"
+        v-if="hasTaken && hasTakenResult.message != 'Email is not set' &&  hasTakenResult.status == 'success' "
         class="card__center card__desc"
       >
         You have taken your manna version 1
