@@ -277,10 +277,9 @@ const mixin = {
       store.state.isLoading = true;
       const instance = axios.create({
         baseURL: configs.baseURL,
+        crossDomain: true,
         headers: {
-          authorization: "Token " + store.state.token,
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
         },
       });
       instance.interceptors.response.use(
@@ -493,7 +492,7 @@ const mixin = {
     },
     goToMannaOne() {
       this.$store.commit("setGuidePage", false);
-      this.$store.dispatch("isLinked",this.selectedAddress)
+      this.$store.dispatch("isLinked", this.selectedAddress);
     },
   },
   computed: {

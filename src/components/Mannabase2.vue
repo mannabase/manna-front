@@ -152,11 +152,7 @@
       <div
         v-if="
           isLinked &&
-            isLinked.status == 'NOT_LINKED' &&
-            // !hasTaken &&
-            (hasTakenResult.message == 'Email is not set' ||
-              hasTakenResult.value > 0)
-        "
+            isLinked.status == 'NOT_LINKED'"
         class="card__center card__desc"
       >
         <div
