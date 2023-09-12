@@ -34,6 +34,7 @@ export default new Vuex.Store({
     sendCodeMsg: null,
     txHash: null,
     txLink: null,
+    claimed: null,
 
     guidePage: true,
 
@@ -104,11 +105,12 @@ export default new Vuex.Store({
       state.emailSecret = payload.secret;
     },
     setSubmitCodeResult(state, payload) {
-      if (payload.status == "SUCCESSFUL") {
+      if (payload.status == "success") {
         state.sendCodeState = payload.status;
         state.sendCodeMsg = payload.message;
         state.txHash = payload.txHash;
         state.txLink = payload.txLink;
+        state.claimed = payload.claimed;
         state.mannaBalance = {
           balance: payload.balance,
           msg: "SUCCESSFUL",
@@ -119,6 +121,7 @@ export default new Vuex.Store({
         state.sendCodeMsg = payload.message;
         state.txHash = null;
         state.txLink = null;
+        state.claimed = null;
         console.log("setSubmitCodeResult", payload.message, payload.status);
       }
     },
@@ -132,7 +135,7 @@ export default new Vuex.Store({
       state.mannaBalance = payload;
     },
     setNewMannaBalance(state, payload) {
-      state.mannaBalance.balance = payload;
+      state.mannaBalance = payload;
     },
     setNewMannaToClaim(state, payload) {
       state.mannaToClaim.amount = payload;
@@ -357,6 +360,7 @@ export default new Vuex.Store({
           if (res.data.status == "success") {
             context.state.submitCodeLoading = false;
             context.commit("setSubmitCodeResult", res.data);
+            context.commit("setNewMannaBalance", res.data.balance);
             context.state.retryRequest = 0;
           } else if (res.data.status == "error") {
             context.state.submitCodeLoading = false;

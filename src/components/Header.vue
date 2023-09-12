@@ -173,5 +173,10 @@ export default {
       return this.$store.state.balance;
     },
   },
+  watch: {
+    balance(newValue) {
+      this.mannaBalance = newValue;
+    },
+  },
 };
 </script>

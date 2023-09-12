@@ -36,40 +36,21 @@
           class="fa fa-circle-o-notch fa-spin loader"
         ></i>
       </div>
-      <!-- <div>
-      {{ this.isLinked +' isLinked'}}
-    </div> -->
-      <!-- <div>
-      {{ this.isLinked.status + ' isLinked.status'}}
-    </div> -->
-      <!-- <div>
-      {{ this.hasTakenResult.message  + ' hasTakenResult.message'}}
-    </div> -->
-      <!-- <div>
-      {{ this.hasTakenResult.value +' hasTakenResult.value'}}
-    </div> -->
       <div
-        v-if="hasTaken && hasTakenResult.message != 'Email is not set' &&  hasTakenResult.status == 'success' "
+        v-if="
+          hasTaken &&
+            hasTakenResult.message != 'Email is not set' &&
+            hasTakenResult.status == 'success'
+        "
         class="card__center card__desc"
       >
         You have taken your manna version 1
       </div>
-
-      <!-- not taken -->
-      <!-- <Divider
-        v-if="
-          isLinked &&
-            isLinked.status == 'SUCCESSFUL' &&
-            // !hasTaken &&
-            (hasTakenResult.message == 'Email is not set' || hasTakenResult.value > 0)
-        "
-      /> -->
       <div
         v-if="
           isLinked &&
             isLinked.status == 'SUCCESSFUL' &&
             mannaToClaim.value > 0 &&
-            // !hasTaken &&
             (hasTakenResult.message == 'Email is not set' ||
               hasTakenResult.value > 0)
         "
@@ -90,10 +71,7 @@
         v-if="
           isLinked &&
             isLinked.status != 'NOT_LINKED' &&
-            isLinked.status != 'SUCCESSFUL' &&
-            // !hasTaken &&
-            (hasTakenResult.message == 'Email is not set' ||
-              hasTakenResult.value > 0)
+            isLinked.status != 'SUCCESSFUL'
         "
         class="card__center card__desc"
       >
@@ -150,9 +128,7 @@
       </div>
 
       <div
-        v-if="
-          isLinked &&
-            isLinked.status == 'NOT_LINKED'"
+        v-if="isLinked && isLinked.status == 'NOT_LINKED'"
         class="card__center card__desc"
       >
         <div
@@ -182,14 +158,14 @@
         </div>
         Scan this QR-code with your verified BrightID
       </div>
-      <!-- <Divider
+      <Divider
         v-if="
           isLinked &&
             isLinked.status == 'SUCCESSFUL' &&
             // !hasTaken &&
             (hasTakenResult.message == 'Email is not set' || hasTakenResult.value > 0)
         "
-      /> -->
+      />
       <div
         v-if="
           isLinked &&
@@ -206,10 +182,8 @@
         v-if="
           isLinked &&
             isLinked.status == 'SUCCESSFUL' &&
-            // !hasTaken &&
             (hasTakenResult.message == 'Email is not set' ||
-              hasTakenResult.value > 0 ||
-              hasTakenResult.message == 'Email is not set')
+              hasTakenResult.value > 0 )
         "
         class="card-gradient-border card__item"
       >
@@ -228,8 +202,7 @@
             $store.state.emailSecret &&
             // !hasTaken &&
             (hasTakenResult.message == 'Email is not set' ||
-              hasTakenResult.value > 0 ||
-              hasTakenResult.message == 'Email is not set')
+              hasTakenResult.value > 0 )
         "
         class="card-gradient-border card__item"
       >
@@ -249,7 +222,7 @@
             $store.state.emailSecret &&
             // !hasTaken &&
             (hasTakenResult.message == 'Email is not set' ||
-              hasTakenResult.value > 0 )
+              hasTakenResult.value > 0)
         "
         class="
         btn-selected
@@ -291,7 +264,7 @@
           $store.state.sendCodeMsg &&
             // !hasTaken &&
             (hasTakenResult.message == 'Email is not set' ||
-              hasTakenResult.value > 0 )
+              hasTakenResult.value > 0)
         "
       />
       <div
@@ -299,21 +272,26 @@
           $store.state.sendCodeMsg &&
             // !hasTaken &&
             (hasTakenResult.message == 'Email is not set' ||
-              hasTakenResult.value > 0 )
+              hasTakenResult.value > 0)
         "
       >
-        <p
+        <div
           class="card__center card__desc code-msg"
           :class="{ green: $store.state.txLink, red: !$store.state.txLink }"
         >
-          {{ $store.state.sendCodeMsg }}
+          <h3 v-if="$store.state.sendCodeState == 'success'" class="green">
+            Successfully calimed :{{ $store.state.claimed }} Manna
+          </h3>
+          <p v-if="$store.state.sendCodeState == 'success'" class="green">
+            Transaction link:
+          </p>
           <a
-            v-if="$store.state.sendCodeMsg == 'SUCCESSFUL'"
+            v-if="$store.state.sendCodeState == 'success'"
             class="green"
             :href="$store.state.txLink"
             >{{ $store.state.txLink }}
           </a>
-        </p>
+        </div>
       </div>
       <div
         v-if="
@@ -322,7 +300,7 @@
             $store.state.email &&
             // !hasTaken &&
             (hasTakenResult.message == 'Email is not set' ||
-              hasTakenResult.value > 0 )
+              hasTakenResult.value > 0)
         "
       >
         <div
@@ -446,7 +424,7 @@ export default {
         .request({ method: "eth_requestAccounts" })
         .then((accounts) => {
           this.selectedAddress = accounts[0];
-          console.log(this.selectedAddress + " this.selectedAddress"); // log selected address to console
+          console.log(this.selectedAddress + " this.selectedAddress");
         })
         .catch((error) => {
           console.error(error + "this.selectedAddress");
@@ -471,13 +449,35 @@ export default {
         ? window.innerWidth * (8 / 100)
         : window.innerWidth * (28 / 100);
     },
+    isLinked() {
+      return this.$store.state.isLinked;
+    },
   },
-
+  // watch: {
+  //   isLinked: {
+  //     handler(newVal) {
+  //       // Check if conditions are met and set email accordingly
+  //       if (newVal.status === 'SUCCESSFUL' && this.hasTakenResult.message === 'Email is not set') {
+  //         this.email = ''; // Clear the email input field
+  //       }
+  //     },
+  //     immediate: true, // Trigger the handler immediately on component mount
+  //   },
+  //   hasTakenResult: {
+  //     handler(newVal) {
+  //       // Check if conditions are met and set email accordingly
+  //       if (this.isLinked.status === 'SUCCESSFUL' && newVal.message === 'Email is not set') {
+  //         this.email = ''; // Clear the email input field
+  //       }
+  //     },
+  //     immediate: true, // Trigger the handler immediately on component mount
+  //   },
+  // },
   mounted() {
     this.$store.dispatch("getMannaToClaim", this.getAddress());
     this.$store.dispatch("hasTaken", this.getAddress());
     this.ConnectMetamask2();
-    this.hasTaken(); // call ConnectMetamask() method on mount
+    this.hasTaken(); 
     console.log("mounted");
   },
 };

@@ -131,6 +131,7 @@ const mixin = {
     checkBrightIDVerification() {
       this.$store.dispatch("isLinkedBright", this.getAddress());
       this.$store.dispatch("getMannaWallet", this.getAddress());
+      this.$store.dispatch("hasTaken", this.getAddress());
     },
     generateMannaWallet() {
       this.$store.dispatch("generateMannaWallet", this.getAddress());
@@ -277,7 +278,7 @@ const mixin = {
       store.state.isLoading = true;
       const instance = axios.create({
         baseURL: configs.baseURL,
-        crossDomain: true,
+        // crossDomain: true,
         headers: {
           "Content-Type": "application/json",
         },
